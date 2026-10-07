@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{dfd17a2f-72c0-4b1e-87ce-12f7204ff746}">
+		<property name="assetPath">
+			<value>Rock My World.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>266.08326530612243</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91c72700-99eb-488f-b1e2-0d027f0b2693}</destination>
+		</relationship>
+	</object>
+</objects>

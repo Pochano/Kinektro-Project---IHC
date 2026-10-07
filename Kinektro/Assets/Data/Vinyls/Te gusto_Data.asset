@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5717b15e5a1300b4fa39c87ba96a559c, type: 3}
+  m_Name: Te gusto_Data
+  m_EditorClassIdentifier: 
+  songTitle: "Te Gust\xF3"
+  artistName: Temple Sour
+  baseBPM: 100
+  fmodAudioEvent:
+    Guid:
+      Data1: 163083458
+      Data2: 1300622825
+      Data3: 1351659401
+      Data4: -474332482
+    Path: "event:/Te gust\xF3"
+  coverArt: {fileID: 2800000, guid: c0dcea7eb3ac39b49a9e6bddb74bfdcf, type: 3}

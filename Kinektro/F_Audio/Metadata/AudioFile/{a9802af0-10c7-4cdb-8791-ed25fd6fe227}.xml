@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a9802af0-10c7-4cdb-8791-ed25fd6fe227}">
+		<property name="assetPath">
+			<value>Magia.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>231.44489795918366</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91c72700-99eb-488f-b1e2-0d027f0b2693}</destination>
+		</relationship>
+	</object>
+</objects>

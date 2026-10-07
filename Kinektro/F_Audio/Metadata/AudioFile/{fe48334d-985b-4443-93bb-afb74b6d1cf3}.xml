@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{fe48334d-985b-4443-93bb-afb74b6d1cf3}">
+		<property name="assetPath">
+			<value>The Emptiness Machine.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>190.61551020408163</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91c72700-99eb-488f-b1e2-0d027f0b2693}</destination>
+		</relationship>
+	</object>
+</objects>

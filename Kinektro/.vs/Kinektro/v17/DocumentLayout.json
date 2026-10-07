@@ -1,0 +1,91 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VinylData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\VinylData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\ShelfSocketTrigger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\ShelfSocketTrigger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\ShelfManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\ShelfManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\Layout\\CanvasScaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\Layout\\CanvasScaler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VinylData.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VinylData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\VinylData.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VinylData.cs",
+              "RelativeToolTip": "Assets\\Scripts_Code\\VinylData.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAIkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T22:34:12.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ShelfSocketTrigger.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\ShelfSocketTrigger.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\ShelfSocketTrigger.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\ShelfSocketTrigger.cs",
+              "RelativeToolTip": "Assets\\Scripts_Code\\ShelfSocketTrigger.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAuwF4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T22:23:58.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CanvasScaler.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\Layout\\CanvasScaler.cs",
+              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\Layout\\CanvasScaler.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\Layout\\CanvasScaler.cs",
+              "RelativeToolTip": "Library\\PackageCache\\com.unity.ugui@1.0.0\\Runtime\\UI\\Core\\Layout\\CanvasScaler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T20:29:15.838Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ShelfManager.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\ShelfManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\ShelfManager.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\ShelfManager.cs",
+              "RelativeToolTip": "Assets\\Scripts_Code\\ShelfManager.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAuwHgAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-04T18:20:01.64Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

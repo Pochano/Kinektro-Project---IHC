@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5717b15e5a1300b4fa39c87ba96a559c, type: 3}
+  m_Name: Virtual Insanity_Data
+  m_EditorClassIdentifier: 
+  songTitle: Virtual Insanity
+  artistName: Jamiroquai
+  baseBPM: 92
+  fmodAudioEvent:
+    Guid:
+      Data1: 2096639737
+      Data2: 1118570016
+      Data3: -1243268430
+      Data4: 268206735
+    Path: event:/Virtual Insanity
+  coverArt: {fileID: 2800000, guid: b2d29b878b092844c9756d7ae94e68e1, type: 3}
