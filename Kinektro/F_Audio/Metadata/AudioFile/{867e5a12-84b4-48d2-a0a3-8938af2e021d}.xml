@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{867e5a12-84b4-48d2-a0a3-8938af2e021d}">
 		<property name="assetPath">
 			<value>Virtual Insanity.mp3</value>

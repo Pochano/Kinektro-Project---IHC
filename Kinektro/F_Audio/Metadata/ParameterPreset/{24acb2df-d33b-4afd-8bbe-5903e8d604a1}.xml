@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{24acb2df-d33b-4afd-8bbe-5903e8d604a1}">
+		<property name="name">
+			<value>FX_Select</value>
+		</property>
+		<relationship name="folder">
+			<destination>{afe9dbc4-17bb-491d-a78e-6e0cd65eb573}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{b05acdc3-e0aa-486e-aba6-19641997f37b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{b05acdc3-e0aa-486e-aba6-19641997f37b}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>6</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>None</value>
+			<value>Reverb</value>
+			<value>Delay</value>
+			<value>Distortion</value>
+			<value>LowPass</value>
+			<value>Flanger</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

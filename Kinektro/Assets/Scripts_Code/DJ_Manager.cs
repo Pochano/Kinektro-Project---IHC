@@ -373,6 +373,16 @@ public class DJ_Manager : MonoBehaviour
         instance.setParameterByName(paramName, dbValue);
     }
 
+    // --- CONTROL DE EFECTOS (FX_Select) ---
+    // effectIndex: 0 = None, 1 = Reverb, 2 = Delay, 3 = Distortion, 4 = LowPass, 5 = Flanger
+    public void SetFXSelect(int channel, int effectIndex)
+    {
+        FMOD.Studio.EventInstance instance = (channel == 1) ? songInstanceCh1 : songInstanceCh2;
+        if (!instance.isValid()) return;
+
+        instance.setParameterByName("FX_Select", effectIndex);
+    }
+
     private void OnDestroy()
     {
         StopSong(1);

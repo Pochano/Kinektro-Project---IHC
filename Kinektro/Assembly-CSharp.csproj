@@ -55,6 +55,7 @@
     <UnityVersion>2022.3.62f2</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -75,6 +76,7 @@
     <Compile Include="Assets\Scripts_Code\DJ_Manager.cs" />
     <Compile Include="Assets\KinectUDP\IJointDataSource.cs" />
     <Compile Include="Assets\KinectUDP\KinectUdpReceiver.cs" />
+    <Compile Include="Assets\Scripts_Code\FXSelector.cs" />
     <Compile Include="Assets\Scripts_Code\TurntableDeck.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRPokeFollowAffordanceFill.cs" />

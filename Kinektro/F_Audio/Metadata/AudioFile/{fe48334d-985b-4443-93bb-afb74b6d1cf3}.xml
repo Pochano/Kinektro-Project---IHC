@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{fe48334d-985b-4443-93bb-afb74b6d1cf3}">
 		<property name="assetPath">
 			<value>The Emptiness Machine.mp3</value>
