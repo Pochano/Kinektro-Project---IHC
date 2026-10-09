@@ -4,76 +4,91 @@ using UnityEngine.InputSystem;
 
 public class MockKinectSource : MonoBehaviour, IJointDataSource
 {
-    [Header("Velocidad de movimiento simulado (m/s)")]
-    public float moveSpeed = 1.0f;
+    [Header("Posicion del muneco en el mundo (arrastra esto en Play Mode para")]
+    [Tooltip("ubicarlo donde quieras, por ejemplo detras de la consola. Se puede" +
+             " cambiar en vivo mientras estas en Play.")]
+    public Vector3 originOffset = new Vector3(0f, 0f, 1.2f);
 
+    [Header("Posicion Y de la mano cuando esta 'levantada' (prueba), relativa al origen")]
+    public float raisedHandY = 1.9f;
+
+    [Header("Posicion Y de la mano en reposo (abajo), relativa al origen")]
+    public float idleHandY = 0.9f;
+
+    [Header("Velocidad de levantado/bajado de la mano (m/s), para que se vea como un")]
+    [Tooltip("movimiento real en vez de un salto instantaneo")]
+    public float raiseSpeed = 0.8f;
+
+    // Posiciones LOCALES (relativas a originOffset). Start() las llena una sola vez;
+    // Update() las recalcula sumando originOffset, por lo que originOffset se puede
+    // mover en vivo (incluso en Play Mode) y el muneco entero se desplaza con el.
+    private Dictionary<string, Vector3> localJointPositions = new Dictionary<string, Vector3>();
     private Dictionary<string, Vector3> jointPositions = new Dictionary<string, Vector3>();
     private string mockHandStateRight = "Open";
     private string mockHandStateLeft = "Open";
 
     void Start()
     {
-        jointPositions["Head"] = new Vector3(0f, 1.6f, 2f);
-        jointPositions["Neck"] = new Vector3(0f, 1.45f, 2f);
-        jointPositions["SpineShoulder"] = new Vector3(0f, 1.35f, 2f);
-        jointPositions["SpineMid"] = new Vector3(0f, 1.0f, 2f);
-        jointPositions["SpineBase"] = new Vector3(0f, 0.7f, 2f);
+        localJointPositions["Head"] = new Vector3(0f, 1.6f, 0f);
+        localJointPositions["Neck"] = new Vector3(0f, 1.45f, 0f);
+        localJointPositions["SpineShoulder"] = new Vector3(0f, 1.35f, 0f);
+        localJointPositions["SpineMid"] = new Vector3(0f, 1.0f, 0f);
+        localJointPositions["SpineBase"] = new Vector3(0f, 0.7f, 0f);
 
-        jointPositions["ShoulderLeft"] = new Vector3(0.2f, 1.35f, 2f);
-        jointPositions["ElbowLeft"] = new Vector3(0.35f, 1.1f, 2f);
-        jointPositions["HandLeft"] = new Vector3(0.4f, 0.9f, 2f);
+        localJointPositions["ShoulderLeft"] = new Vector3(0.2f, 1.35f, 0f);
+        localJointPositions["ElbowLeft"] = new Vector3(0.35f, 1.1f, 0f);
+        localJointPositions["HandLeft"] = new Vector3(0.4f, idleHandY, 0f);
 
-        jointPositions["ShoulderRight"] = new Vector3(-0.2f, 1.35f, 2f);
-        jointPositions["ElbowRight"] = new Vector3(-0.35f, 1.1f, 2f);
-        jointPositions["HandRight"] = new Vector3(-0.4f, 0.9f, 2f);
+        localJointPositions["ShoulderRight"] = new Vector3(-0.2f, 1.35f, 0f);
+        localJointPositions["ElbowRight"] = new Vector3(-0.35f, 1.1f, 0f);
+        localJointPositions["HandRight"] = new Vector3(-0.4f, idleHandY, 0f);
+
+        RecomputeWorldPositions();
+    }
+
+    void RecomputeWorldPositions()
+    {
+        foreach (var kvp in localJointPositions)
+        {
+            jointPositions[kvp.Key] = kvp.Value + originOffset;
+        }
     }
 
     void Update()
     {
         var keyboard = Keyboard.current;
-        if (keyboard == null) return;
 
-        // --- MANO DERECHA: TECLADO NUMÉRICO (NUMPAD) ---
-        Vector3 rightHand = jointPositions["HandRight"];
+        bool raiseRight = false, fistRight = false, raiseLeft = false, fistLeft = false;
 
-        float rdx = 0f, rdy = 0f, rdz = 0f;
+        if (keyboard != null)
+        {
+            // --- ESQUEMA DE 4 TECLAS DE FUNCION (F1-F4): no aparecen en NINGUN .cs ni
+            // .inputactions del proyecto (revisado el proyecto completo, incluidas TODAS
+            // las muestras de XR Interaction Toolkit), y funcionan igual en cualquier
+            // teclado sin depender del numpad.
+            // F1 = mano DERECHA arriba (levantada)   | F2 = mano DERECHA puno cerrado
+            // F3 = mano IZQUIERDA arriba (levantada) | F4 = mano IZQUIERDA puno cerrado
+            raiseRight = keyboard.f1Key.isPressed;
+            fistRight = keyboard.f2Key.isPressed;
+            raiseLeft = keyboard.f3Key.isPressed;
+            fistLeft = keyboard.f4Key.isPressed;
+        }
 
-        if (keyboard.numpad8Key.isPressed) rdy += 1f;
-        if (keyboard.numpad2Key.isPressed) rdy -= 1f;
-        if (keyboard.numpad4Key.isPressed) rdx -= 1f;
-        if (keyboard.numpad6Key.isPressed) rdx += 1f;
-        if (keyboard.numpad9Key.isPressed) rdz += 1f;
-        if (keyboard.numpad3Key.isPressed) rdz -= 1f;
+        Vector3 rightHandLocal = localJointPositions["HandRight"];
+        float targetRightY = raiseRight ? raisedHandY : idleHandY;
+        rightHandLocal.y = Mathf.MoveTowards(rightHandLocal.y, targetRightY, raiseSpeed * Time.deltaTime);
+        localJointPositions["HandRight"] = rightHandLocal;
+        mockHandStateRight = fistRight ? "Closed" : "Open";
 
-        rightHand += new Vector3(rdx, rdy, rdz) * moveSpeed * Time.deltaTime;
-        jointPositions["HandRight"] = rightHand;
+        Vector3 leftHandLocal = localJointPositions["HandLeft"];
+        float targetLeftY = raiseLeft ? raisedHandY : idleHandY;
+        leftHandLocal.y = Mathf.MoveTowards(leftHandLocal.y, targetLeftY, raiseSpeed * Time.deltaTime);
+        localJointPositions["HandLeft"] = leftHandLocal;
+        mockHandStateLeft = fistLeft ? "Closed" : "Open";
 
-        bool fistPressedRight = keyboard.numpad5Key.isPressed ||
-                            keyboard.numpad0Key.isPressed ||
-                            keyboard.numpadEnterKey.isPressed;
-
-        mockHandStateRight = fistPressedRight ? "Closed" : "Open";
-
-        // --- MANO IZQUIERDA: IJKL + U/O (independiente de la derecha; no choca con
-        // los atajos WASD/QE/flechas del XR Interaction Simulator) ---
-        // I = arriba, K = abajo, J = izquierda, L = derecha, U = adelante, O = atras, N = puno cerrado
-        Vector3 leftHand = jointPositions["HandLeft"];
-
-        float ldx = 0f, ldy = 0f, ldz = 0f;
-
-        if (keyboard.iKey.isPressed) ldy += 1f;
-        if (keyboard.kKey.isPressed) ldy -= 1f;
-        if (keyboard.jKey.isPressed) ldx -= 1f;
-        if (keyboard.lKey.isPressed) ldx += 1f;
-        if (keyboard.uKey.isPressed) ldz += 1f;
-        if (keyboard.oKey.isPressed) ldz -= 1f;
-
-        leftHand += new Vector3(ldx, ldy, ldz) * moveSpeed * Time.deltaTime;
-        jointPositions["HandLeft"] = leftHand;
-
-        bool fistPressedLeft = keyboard.nKey.isPressed;
-
-        mockHandStateLeft = fistPressedLeft ? "Closed" : "Open";
+        // Se recalcula TODOS los frames para que mover originOffset en el Inspector
+        // (incluso en Play Mode) desplace el muneco entero al instante.
+        RecomputeWorldPositions();
     }
 
     public bool TryGetJointPosition(string jointName, out Vector3 pos)

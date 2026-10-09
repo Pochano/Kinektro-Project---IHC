@@ -378,9 +378,15 @@ public class DJ_Manager : MonoBehaviour
     public void SetFXSelect(int channel, int effectIndex)
     {
         FMOD.Studio.EventInstance instance = (channel == 1) ? songInstanceCh1 : songInstanceCh2;
-        if (!instance.isValid()) return;
 
-        instance.setParameterByName("FX_Select", effectIndex);
+        if (!instance.isValid())
+        {
+            Debug.Log($"[DJ_Manager DEBUG] SetFXSelect(ch={channel}, fx={effectIndex}) IGNORADO: la EventInstance del canal {channel} no es valida (no hay cancion cargada/sonando en ese canal en este momento).");
+            return;
+        }
+
+        FMOD.RESULT result = instance.setParameterByName("FX_Select", effectIndex);
+        Debug.Log($"[DJ_Manager DEBUG] SetFXSelect(ch={channel}, fx={effectIndex}) -> instance valida, FMOD.setParameterByName resultado: {result}");
     }
 
     private void OnDestroy()

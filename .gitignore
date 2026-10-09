@@ -5,3 +5,11 @@ Build/
 Builds/
 Logs/
 UserSettings/
+
+# IDE / Visual Studio
+.vs/
+*.csproj
+*.sln
+*.user
+.idea/
+*.suo

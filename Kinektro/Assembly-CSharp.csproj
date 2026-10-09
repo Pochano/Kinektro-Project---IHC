@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts_Code\DJ_Manager.cs" />
     <Compile Include="Assets\KinectUDP\IJointDataSource.cs" />
     <Compile Include="Assets\KinectUDP\KinectUdpReceiver.cs" />
+    <Compile Include="Assets\FXLabelBillboard.cs" />
     <Compile Include="Assets\Scripts_Code\FXSelector.cs" />
     <Compile Include="Assets\Scripts_Code\TurntableDeck.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />

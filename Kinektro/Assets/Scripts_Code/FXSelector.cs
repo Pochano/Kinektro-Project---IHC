@@ -56,6 +56,7 @@ public class FXSelector : MonoBehaviour
     public void ActivateSelected()
     {
         isActive = true;
+        Debug.Log($"[FXSelector Ch{channelNumber}] ActivateSelected() llamado. armedEffect={armedEffect}, djManager nulo? {djManager == null}");
         ApplyArmedEffect();
     }
 

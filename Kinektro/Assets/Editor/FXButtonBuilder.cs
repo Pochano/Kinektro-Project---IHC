@@ -18,12 +18,13 @@ public static class FXButtonBuilder
     // --- Constantes de posicionamiento, ajustables para iterar visualmente ---
     // Los botones van APOYADOS sobre la mesa (misma altura, sin apilarse en Y),
     // al costado de la consola, en una fila a lo largo de la profundidad de la mesa (eje Z).
-    static float sideExtra = 0.64f;       // cuanto se empujan los botones hacia el lateral, sobre la mesa, al costado de la consola
+    static float sideExtraCh1 = 1f;       // cuanto se empuja el bloque del canal 1 (izquierda) hacia el lateral, al costado de la consola
+    static float sideExtraCh2 = 1f;       // lo mismo para el canal 2 (derecha); separado para poder ajustar cada lado de forma independiente
     static float verticalStart = -0.08f;  // offset vertical (Y) respecto al boton "Effect": deja los botones apoyados sobre la mesa, no flotando
-    static float depthSpacing = 0.15f;    // separacion entre botones a lo largo de la profundidad de la mesa (Z)
-    static float depthStart = -0.21f;     // offset de profundidad (Z) del primer boton respecto al boton "Effect"
-    static float labelHeightOffset = 0.065f; // altura de la etiqueta sobre cada boton
-    static float labelScale = 0.012f;
+    static float depthSpacing = 0.08f;    // separacion entre botones a lo largo de la profundidad de la mesa (Z)
+    static float depthStart = -0.16f;     // offset de profundidad (Z) del primer boton respecto al boton "Effect"
+    static float labelHeightOffset = 0.05f; // altura de la etiqueta sobre cada boton
+    static float labelScale = 0.03f;
     static float fontSize = 36f;
 
     static Vector3 WorldCenter(GameObject go)
@@ -54,15 +55,15 @@ public static class FXButtonBuilder
 
         Vector3 sideAxis = (WorldCenter(ch1Plato) - WorldCenter(ch2Plato)).normalized;
 
-        FXSelector sel1 = BuildChannel(djManager, 1, ch1Template, ch1Effect, sideAxis, xrManager);
-        FXSelector sel2 = BuildChannel(djManager, 2, ch2Template, ch2Effect, -sideAxis, xrManager);
+        FXSelector sel1 = BuildChannel(djManager, 1, ch1Template, ch1Effect, sideAxis, sideExtraCh1, xrManager);
+        FXSelector sel2 = BuildChannel(djManager, 2, ch2Template, ch2Effect, -sideAxis, sideExtraCh2, xrManager);
 
         WireGestureDetector(sel1, sel2);
 
         Debug.Log("[FXButtonBuilder] Listo: botones FX creados para Canal 1 y Canal 2, y gestos de manos conectados.");
     }
 
-    static FXSelector BuildChannel(DJ_Manager djManager, int channel, GameObject interactableTemplate, GameObject visualTemplate, Vector3 outwardAxis, XRInteractionManager xrManager)
+    static FXSelector BuildChannel(DJ_Manager djManager, int channel, GameObject interactableTemplate, GameObject visualTemplate, Vector3 outwardAxis, float sideExtra, XRInteractionManager xrManager)
     {
         Transform parentConsole = visualTemplate.transform.parent;
 
@@ -147,7 +148,16 @@ public static class FXButtonBuilder
         labelGO.transform.SetParent(root, true);
         labelGO.transform.position = worldPos;
         labelGO.transform.rotation = Quaternion.LookRotation(-outwardAxis, Vector3.up);
-        labelGO.transform.localScale = Vector3.one * labelScale;
+        // El padre (root) puede tener una escala acumulada muy chica (por la
+        // cadena de padres de la consola). labelScale esta pensado como un
+        // tamano absoluto en unidades del mundo, asi que se compensa
+        // dividiendo por la escala del padre para que el tamano final en
+        // el mundo sea siempre el mismo, sin importar donde cuelgue el root.
+        Vector3 parentLossyScale = root.lossyScale;
+        labelGO.transform.localScale = new Vector3(
+            labelScale / Mathf.Max(parentLossyScale.x, 0.0001f),
+            labelScale / Mathf.Max(parentLossyScale.y, 0.0001f),
+            labelScale / Mathf.Max(parentLossyScale.z, 0.0001f));
 
         TextMeshPro tmp = labelGO.AddComponent<TextMeshPro>();
         tmp.text = text;
@@ -157,6 +167,10 @@ public static class FXButtonBuilder
         tmp.enableAutoSizing = false;
         RectTransform rt = tmp.rectTransform;
         rt.sizeDelta = new Vector2(220, 60);
+
+        // La etiqueta siempre mira hacia la camara (billboard), asi no
+        // depende de calcular bien el angulo exacto hacia el jugador.
+        labelGO.AddComponent<FXLabelBillboard>();
     }
 
     static void WireGestureDetector(FXSelector sel1, FXSelector sel2)

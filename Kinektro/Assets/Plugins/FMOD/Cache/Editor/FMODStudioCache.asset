@@ -1,26 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8570220713774405392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: F_Audio/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 639270542132210613
-  FileSizes:
-  - Name: Desktop
-    Value: 14819648
-  Exists: 1
---- !u!114 &-7588292005978883924
+--- !u!114 &-6636717585426386828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,21 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Virtual Insanity/Mid
+  m_Name: parameter:/Virtual Insanity/FX_Select
   m_EditorClassIdentifier: 
-  Name: Mid
+  Name: FX_Select
   StudioPath: 
-  Min: -24
-  Max: 6
+  Min: 0
+  Max: 5
   Default: 0
   ID:
-    data1: 557162823
-    data2: 4268565709
-  Type: 0
+    data1: 839882109
+    data2: 562343589
+  Type: 2
   IsGlobal: 0
-  Labels: []
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
   Exists: 1
---- !u!114 &-7582435640298977180
+--- !u!114 &-6522850778718942931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,38 +49,19 @@ MonoBehaviour:
     Data3: 1810738579
     Data4: 1985075090
   Banks:
-  - {fileID: -8570220713774405392}
+  - {fileID: -1842181748763645604}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 8183906357846104793}
-  - {fileID: -4174337228517000515}
-  - {fileID: 5345582431128358031}
+  - {fileID: -1416205733920725835}
+  - {fileID: 3570243427953243676}
+  - {fileID: 723216034385609551}
+  - {fileID: -4204186972174289497}
   MinDistance: 1
   MaxDistance: 20
   Length: 190615
---- !u!114 &-6912525475929097247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: F_Audio/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 639270542134952148
-  FileSizes:
-  - Name: Desktop
-    Value: 1086
-  Exists: 1
---- !u!114 &-6765284058709320411
+--- !u!114 &-6288855789055816084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,21 +71,58 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Magia/High
+  m_Name: "parameter:/Te gust\xF3/FX_Select"
   m_EditorClassIdentifier: 
-  Name: High
+  Name: FX_Select
   StudioPath: 
-  Min: -24
-  Max: 6
+  Min: 0
+  Max: 5
   Default: 0
   ID:
-    data1: 2605716778
-    data2: 2562315831
-  Type: 0
+    data1: 839882109
+    data2: 562343589
+  Type: 2
   IsGlobal: 0
-  Labels: []
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
   Exists: 1
---- !u!114 &-6118158186212515682
+--- !u!114 &-5037072681697873025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Rock my World
+  m_EditorClassIdentifier: 
+  Path: event:/Rock my World
+  Guid:
+    Data1: 1513430411
+    Data2: 1178797140
+    Data3: 1851730321
+    Data4: -400713271
+  Banks:
+  - {fileID: -1842181748763645604}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -1860613495113990092}
+  - {fileID: -4707692157618751880}
+  - {fileID: -383216960324792600}
+  - {fileID: -3022401438563876198}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 266083
+--- !u!114 &-4707692157618751880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +146,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-4810726776949156205
+--- !u!114 &-4293089723645761513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,55 +156,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: "parameter:/Te gust\xF3/Low"
-  m_EditorClassIdentifier: 
-  Name: Low
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 2822218129
-    data2: 1508581456
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &-4249966695495820306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Virtual Insanity/Low
-  m_EditorClassIdentifier: 
-  Name: Low
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 2822218129
-    data2: 1508581456
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &-4174337228517000515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/The Emptiness Machine/High
+  m_Name: parameter:/Magia/High
   m_EditorClassIdentifier: 
   Name: High
   StudioPath: 
@@ -214,7 +170,37 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-2203396994065052047
+--- !u!114 &-4204186972174289497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/The Emptiness Machine/FX_Select
+  m_EditorClassIdentifier: 
+  Name: FX_Select
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 839882109
+    data2: 562343589
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
+  Exists: 1
+--- !u!114 &-3091114665202699338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,7 +224,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-1588468312984525205
+--- !u!114 &-3022401438563876198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,116 +233,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: "event:/Te gust\xF3"
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Rock my World/FX_Select
   m_EditorClassIdentifier: 
-  Path: "event:/Te gust\xF3"
-  Guid:
-    Data1: 163083458
-    Data2: 1300622825
-    Data3: 1351659401
-    Data4: -474332482
-  Banks:
-  - {fileID: -8570220713774405392}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: 4090367756277731611}
-  - {fileID: -4810726776949156205}
-  - {fileID: 4461192012851938388}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 220656
---- !u!114 &-659068217470543714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Rock my World
-  m_EditorClassIdentifier: 
-  Path: event:/Rock my World
-  Guid:
-    Data1: 1513430411
-    Data2: 1178797140
-    Data3: 1851730321
-    Data4: -400713271
-  Banks:
-  - {fileID: -8570220713774405392}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: 1222151670292027907}
-  - {fileID: -6118158186212515682}
-  - {fileID: 4723572357023568701}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 266083
---- !u!114 &-314365660883696662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Virtual Insanity
-  m_EditorClassIdentifier: 
-  Path: event:/Virtual Insanity
-  Guid:
-    Data1: 2096639737
-    Data2: 1118570016
-    Data3: -1243268430
-    Data4: 268206735
-  Banks:
-  - {fileID: -8570220713774405392}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: -7588292005978883924}
-  - {fileID: 6827295241991246105}
-  - {fileID: -4249966695495820306}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 229407
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: -6912525475929097247}
-  - {fileID: -8570220713774405392}
-  EditorEvents:
-  - {fileID: -7582435640298977180}
-  - {fileID: 4788030955673016729}
-  - {fileID: -659068217470543714}
-  - {fileID: -1588468312984525205}
-  - {fileID: -314365660883696662}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: -8570220713774405392}
-  StringsBanks:
-  - {fileID: -6912525475929097247}
-  cacheTime: 639270542134952148
-  cacheVersion: 131637
---- !u!114 &1222151670292027907
+  Name: FX_Select
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 839882109
+    data2: 562343589
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
+  Exists: 1
+--- !u!114 &-1860613495113990092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,7 +278,27 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &1802966136129934205
+--- !u!114 &-1842181748763645604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: F_Audio/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639270709168260220
+  FileSizes:
+  - Name: Desktop
+    Value: 14832160
+  Exists: 1
+--- !u!114 &-1561903752121663771
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -390,7 +308,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Magia/Low
+  m_Name: "parameter:/Te gust\xF3/Low"
   m_EditorClassIdentifier: 
   Name: Low
   StudioPath: 
@@ -404,157 +322,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &4090367756277731611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: "parameter:/Te gust\xF3/Mid"
-  m_EditorClassIdentifier: 
-  Name: Mid
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 557162823
-    data2: 4268565709
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &4461192012851938388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: "parameter:/Te gust\xF3/High"
-  m_EditorClassIdentifier: 
-  Name: High
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 2605716778
-    data2: 2562315831
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &4723572357023568701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Rock my World/Mid
-  m_EditorClassIdentifier: 
-  Name: Mid
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 557162823
-    data2: 4268565709
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &4788030955673016729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Magia
-  m_EditorClassIdentifier: 
-  Path: event:/Magia
-  Guid:
-    Data1: 1790670213
-    Data2: 1318461036
-    Data3: -79626870
-    Data4: 1046199434
-  Banks:
-  - {fileID: -8570220713774405392}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: 1802966136129934205}
-  - {fileID: -6765284058709320411}
-  - {fileID: -2203396994065052047}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 231444
---- !u!114 &5345582431128358031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/The Emptiness Machine/Mid
-  m_EditorClassIdentifier: 
-  Name: Mid
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 557162823
-    data2: 4268565709
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &6827295241991246105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Virtual Insanity/High
-  m_EditorClassIdentifier: 
-  Name: High
-  StudioPath: 
-  Min: -24
-  Max: 6
-  Default: 0
-  ID:
-    data1: 2605716778
-    data2: 2562315831
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &8183906357846104793
+--- !u!114 &-1416205733920725835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,3 +346,401 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-383216960324792600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Rock my World/Mid
+  m_EditorClassIdentifier: 
+  Name: Mid
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 557162823
+    data2: 4268565709
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-330404838468021357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: "event:/Te gust\xF3"
+  m_EditorClassIdentifier: 
+  Path: "event:/Te gust\xF3"
+  Guid:
+    Data1: 163083458
+    Data2: 1300622825
+    Data3: 1351659401
+    Data4: -474332482
+  Banks:
+  - {fileID: -1842181748763645604}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 7502090172460141123}
+  - {fileID: -1561903752121663771}
+  - {fileID: 4715239183507724810}
+  - {fileID: -6288855789055816084}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 218724
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 125819476962920100}
+  - {fileID: -1842181748763645604}
+  EditorEvents:
+  - {fileID: -6522850778718942931}
+  - {fileID: 7785020584801782618}
+  - {fileID: -5037072681697873025}
+  - {fileID: -330404838468021357}
+  - {fileID: 6773715533293411937}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: -1842181748763645604}
+  StringsBanks:
+  - {fileID: 125819476962920100}
+  cacheVersion: 131861
+  cacheTime: 639270709168290259
+  SerializableEventsDict:
+  - key: event:/The Emptiness Machine
+    index: 0
+  - key: event:/Magia
+    index: 1
+  - key: event:/Rock my World
+    index: 2
+  - key: "event:/Te gust\xF3"
+    index: 3
+  - key: event:/Virtual Insanity
+    index: 4
+--- !u!114 &125819476962920100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: F_Audio/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 639270709168290259
+  FileSizes:
+  - Name: Desktop
+    Value: 1138
+  Exists: 1
+--- !u!114 &723216034385609551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/The Emptiness Machine/Mid
+  m_EditorClassIdentifier: 
+  Name: Mid
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 557162823
+    data2: 4268565709
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &844158671762534742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Virtual Insanity/Mid
+  m_EditorClassIdentifier: 
+  Name: Mid
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 557162823
+    data2: 4268565709
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &2272055893766258626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Magia/Low
+  m_EditorClassIdentifier: 
+  Name: Low
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2822218129
+    data2: 1508581456
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &2813526052814578083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Virtual Insanity/Low
+  m_EditorClassIdentifier: 
+  Name: Low
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2822218129
+    data2: 1508581456
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &3570243427953243676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/The Emptiness Machine/High
+  m_EditorClassIdentifier: 
+  Name: High
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2605716778
+    data2: 2562315831
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &4715239183507724810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: "parameter:/Te gust\xF3/High"
+  m_EditorClassIdentifier: 
+  Name: High
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2605716778
+    data2: 2562315831
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &4761181145605897107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Virtual Insanity/High
+  m_EditorClassIdentifier: 
+  Name: High
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2605716778
+    data2: 2562315831
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &6043294118620053643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Magia/FX_Select
+  m_EditorClassIdentifier: 
+  Name: FX_Select
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 839882109
+    data2: 562343589
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
+  Exists: 1
+--- !u!114 &6773715533293411937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Virtual Insanity
+  m_EditorClassIdentifier: 
+  Path: event:/Virtual Insanity
+  Guid:
+    Data1: 2096639737
+    Data2: 1118570016
+    Data3: -1243268430
+    Data4: 268206735
+  Banks:
+  - {fileID: -1842181748763645604}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 844158671762534742}
+  - {fileID: 4761181145605897107}
+  - {fileID: 2813526052814578083}
+  - {fileID: -6636717585426386828}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 229407
+--- !u!114 &7502090172460141123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: "parameter:/Te gust\xF3/Mid"
+  m_EditorClassIdentifier: 
+  Name: Mid
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 557162823
+    data2: 4268565709
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &7785020584801782618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Magia
+  m_EditorClassIdentifier: 
+  Path: event:/Magia
+  Guid:
+    Data1: 1790670213
+    Data2: 1318461036
+    Data3: -79626870
+    Data4: 1046199434
+  Banks:
+  - {fileID: -1842181748763645604}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 2272055893766258626}
+  - {fileID: -4293089723645761513}
+  - {fileID: -3091114665202699338}
+  - {fileID: 6043294118620053643}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 231444

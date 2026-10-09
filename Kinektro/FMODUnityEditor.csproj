@@ -85,6 +85,7 @@
     <Compile Include="Assets\Plugins\FMOD\src\Editor\SettingsEditor.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Editor\SetupWizard.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Editor\EditorEventRef.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Editor\Localization.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Editor\BoltIntegration.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Editor\FMODEventTrackEditor.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Editor\StudioBankLoaderEditor.cs" />

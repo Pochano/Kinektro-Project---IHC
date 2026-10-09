@@ -34,6 +34,7 @@ public class GestureAudioController : MonoBehaviour
 
     private float currentVolume = 0.5f;
     private float currentReverbWet = -10000.0f;
+    private int debugLogCounter = 0;
 
     void Update()
     {
@@ -91,7 +92,7 @@ public class GestureAudioController : MonoBehaviour
                 RuntimeManager.StudioSystem.setParameterByName(fmodReverbParam, currentReverbWet);
             }
 
-            Debug.Log($"GestureAudio (FMOD) | ManoY: {handRightPos.y:F2}m | Volumen: {currentVolume:F2} ({(currentVolume * 100):F0}%) | Puño: {rightHandState}");
+            // (log de depuracion removido: generaba demasiado ruido en consola)
         }
     }
 }
