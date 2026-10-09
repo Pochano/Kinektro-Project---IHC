@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8139329196754137284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: "parameter:/Te gust\xF3/Reverb_Intensity"
+  m_EditorClassIdentifier: 
+  Name: Reverb_Intensity
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 1869505378
+    data2: 3937501135
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-6636717585426386828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,10 +317,10 @@ MonoBehaviour:
   Path: F_Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639270870111368195
+  lastModified: 639270960888376541
   FileSizes:
   - Name: Desktop
-    Value: 14832160
+    Value: 14832288
   Exists: 1
 --- !u!114 &-1561903752121663771
 MonoBehaviour:
@@ -398,6 +422,7 @@ MonoBehaviour:
   - {fileID: -1561903752121663771}
   - {fileID: 4715239183507724810}
   - {fileID: -6288855789055816084}
+  - {fileID: -8139329196754137284}
   MinDistance: 1
   MaxDistance: 20
   Length: 218724
@@ -428,7 +453,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 125819476962920100}
   cacheVersion: 131861
-  cacheTime: 639270870112064384
+  cacheTime: 639270960888410957
   SerializableEventsDict:
   - key: event:/The Emptiness Machine
     index: 0
@@ -455,10 +480,10 @@ MonoBehaviour:
   Path: F_Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639270870112064384
+  lastModified: 639270960888410957
   FileSizes:
   - Name: Desktop
-    Value: 1138
+    Value: 1186
   Exists: 1
 --- !u!114 &723216034385609551
 MonoBehaviour:

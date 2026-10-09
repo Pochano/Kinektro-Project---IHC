@@ -389,6 +389,41 @@ public class DJ_Manager : MonoBehaviour
         Debug.Log($"[DJ_Manager DEBUG] SetFXSelect(ch={channel}, fx={effectIndex}) -> instance valida, FMOD.setParameterByName resultado: {result}");
     }
 
+    // === TEMPORAL: helpers de prueba para QA manual, quitar despues de verificar ===
+    [ContextMenu("TEST: Play Te gusto en Ch1")]
+    private void DebugPlayTeGustoCh1() => PlaySong(1, 3);
+
+    // --- INTENSIDAD PROGRESIVA DE FX (continua, proporcional a la altura de la mano) ---
+    // Cada efecto tiene su PROPIO parametro continuo dedicado en FMOD (0-100), replicando
+    // el patron de kinectv2: una sola fuente de automatizacion por propiedad, nunca dos
+    // curvas mezcladas sobre el mismo Wet Mix. Por ahora solo "Reverb_Intensity" existe en
+    // el proyecto FMOD (prueba de concepto en la cancion "Te gusto"); los demas se agregan
+    // mas adelante replicando el mismo wiring en FMOD Studio para cada efecto/cancion.
+    // effectIndex: 0 = None, 1 = Reverb, 2 = Delay, 3 = Distortion, 4 = LowPass, 5 = Flanger
+    private static readonly string[] fxIntensityParams =
+        { null, "Reverb_Intensity", "Delay_Intensity", "Distortion_Intensity", "LowPass_Intensity", "Flanger_Intensity" };
+
+    /// <summary>
+    /// Llamado cada frame por el lector de altura de mano (uno por canal). Pone el parametro
+    /// de intensidad del efecto armado en value01*100, y fuerza a 0 el de todos los demas
+    /// efectos de ese canal (mutua exclusion), para que nunca suene mas de un efecto a la vez
+    /// y el efecto no armado quede completamente en seco (sin "fuga").
+    /// </summary>
+    public void SetFXIntensity(int channel, int armedEffectIndex, float value01)
+    {
+        FMOD.Studio.EventInstance instance = (channel == 1) ? songInstanceCh1 : songInstanceCh2;
+        if (!instance.isValid()) return;
+
+        float scaled = Mathf.Clamp01(value01) * 100f;
+
+        for (int i = 1; i < fxIntensityParams.Length; i++)
+        {
+            string paramName = fxIntensityParams[i];
+            if (paramName == null) continue;
+            instance.setParameterByName(paramName, (i == armedEffectIndex) ? scaled : 0f);
+        }
+    }
+
     private void OnDestroy()
     {
         StopSong(1);

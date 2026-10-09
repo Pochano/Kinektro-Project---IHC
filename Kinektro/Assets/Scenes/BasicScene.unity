@@ -4342,6 +4342,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceProvider: {fileID: 2107610387}
+  djManager: {fileID: 0}
+  fxSelectorCh1: {fileID: 0}
+  fxSelectorCh2: {fileID: 0}
+  intensityHeadMargin: 0.3
   raiseMarginMeters: 0.1
   swipeSpeedThreshold: 1.5
   onRightHandRaised:
@@ -11061,6 +11065,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceProvider: {fileID: 2107610387}
+  djManager: {fileID: 751242120}
+  fxSelectorCh1: {fileID: 2089105659}
+  fxSelectorCh2: {fileID: 1240574204}
+  intensityHeadMargin: 0.3
   raiseMarginMeters: 0.1
   swipeSpeedThreshold: 1.5
   onRightHandRaised:
