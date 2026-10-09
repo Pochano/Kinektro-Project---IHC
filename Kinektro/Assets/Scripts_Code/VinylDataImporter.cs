@@ -9,84 +9,92 @@ public class VinylDataImporter : EditorWindow
     [MenuItem("DJ Tools/Auto-Generate Vinyl Metadata Assets")]
     public static void GenerateVinylData()
     {
-        string mp3FolderPath = @"C:\Users\Pochano\Desktop\Kinektro\Kinektro\F_Audio\Assets";
-        string outputPath = "Assets/Data/Vinyls";
+        // Ruta raíz de tus MP3s tageados
+        string mp3RootFolderPath = @"C:\Users\Pochano\Desktop\Kinektro\MP3_Tags";
+        string outputRootPath = "Assets/Data/Vinyls";
 
-        if (!Directory.Exists(mp3FolderPath))
+        string[] categories = new string[] { "Pistas", "Bases", "Efectos" };
+
+        if (!Directory.Exists(mp3RootFolderPath))
         {
-            Debug.LogError($"No se encontró la carpeta de MP3s en: {mp3FolderPath}");
+            Debug.LogError($"[VinylDataImporter] No se encontró la carpeta raíz de MP3s en: {mp3RootFolderPath}");
             return;
         }
 
-        if (!Directory.Exists(outputPath)) 
+        int totalCount = 0;
+
+        foreach (string category in categories)
         {
-            Directory.CreateDirectory(outputPath);
-        }
+            string categoryAudioPath = Path.Combine(mp3RootFolderPath, category);
+            string outputPath = $"{outputRootPath}/{category}";
 
-        string[] filePaths = Directory.GetFiles(mp3FolderPath, "*.mp3");
-
-        if (filePaths.Length == 0)
-        {
-            Debug.LogWarning("No se encontraron archivos .mp3 en: " + mp3FolderPath);
-            return;
-        }
-
-        int count = 0;
-        foreach (string path in filePaths)
-        {
-            string fileName = Path.GetFileNameWithoutExtension(path);
-
-            try
+            if (!Directory.Exists(categoryAudioPath))
             {
-                var file = TagLib.File.Create(path);
-
-                string title = string.IsNullOrEmpty(file.Tag.Title) ? fileName : file.Tag.Title;
-                string artist = string.IsNullOrEmpty(file.Tag.FirstPerformer) ? "Artista Desconocido" : file.Tag.FirstPerformer;
-                float bpm = file.Tag.BeatsPerMinute > 0 ? (float)file.Tag.BeatsPerMinute : 120f;
-
-                string assetPath = $"{outputPath}/{fileName}_Data.asset";
-                
-                // Si el asset ya existe, lo eliminamos primero para forzar la regeneración limpia
-                if (AssetDatabase.LoadAssetAtPath<VinylMetadata>(assetPath) != null)
-                {
-                    AssetDatabase.DeleteAsset(assetPath);
-                }
-
-                VinylMetadata newMetadata = ScriptableObject.CreateInstance<VinylMetadata>();
-                newMetadata.songTitle = title;
-                newMetadata.artistName = artist;
-                newMetadata.baseBPM = bpm;
-                
-                // Asignación directa del evento sin la subcarpeta /Tracks/
-                newMetadata.fmodAudioEvent = EventReference.Find($"event:/{fileName}");
-
-                if (file.Tag.Pictures.Length > 0)
-                {
-                    var picData = file.Tag.Pictures[0].Data.Data;
-                    Texture2D coverTex = new Texture2D(2, 2);
-                    coverTex.LoadImage(picData);
-
-                    string coverPath = $"{outputPath}/{fileName}_Cover.png";
-                    
-                    System.IO.File.WriteAllBytes(coverPath, coverTex.EncodeToPNG());
-                    AssetDatabase.Refresh();
-
-                    Texture2D importedTex = AssetDatabase.LoadAssetAtPath<Texture2D>(coverPath);
-                    newMetadata.coverArt = importedTex;
-                }
-
-                AssetDatabase.CreateAsset(newMetadata, assetPath);
-                count++;
+                Directory.CreateDirectory(categoryAudioPath);
+                continue;
             }
-            catch (System.Exception e)
+
+            if (!Directory.Exists(outputPath)) 
             {
-                Debug.LogError($"Error procesando {fileName}: {e.Message}");
+                Directory.CreateDirectory(outputPath);
+            }
+
+            string[] filePaths = Directory.GetFiles(categoryAudioPath, "*.mp3");
+
+            foreach (string path in filePaths)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(path);
+
+                try
+                {
+                    var file = TagLib.File.Create(path);
+
+                    string title = string.IsNullOrEmpty(file.Tag.Title) ? fileName : file.Tag.Title;
+                    string artist = string.IsNullOrEmpty(file.Tag.FirstPerformer) ? "Artista Desconocido" : file.Tag.FirstPerformer;
+                    float bpm = file.Tag.BeatsPerMinute > 0 ? (float)file.Tag.BeatsPerMinute : 120f;
+
+                    string assetPath = $"{outputPath}/{fileName}_Data.asset";
+                    
+                    if (AssetDatabase.LoadAssetAtPath<VinylMetadata>(assetPath) != null)
+                    {
+                        AssetDatabase.DeleteAsset(assetPath);
+                    }
+
+                    VinylMetadata newMetadata = ScriptableObject.CreateInstance<VinylMetadata>();
+                    newMetadata.songTitle = title;
+                    newMetadata.artistName = artist;
+                    newMetadata.baseBPM = bpm;
+                    newMetadata.category = category; // Asigna "Pistas", "Bases" o "Efectos"
+                    
+                    newMetadata.fmodAudioEvent = EventReference.Find($"event:/{fileName}");
+
+                    if (file.Tag.Pictures.Length > 0)
+                    {
+                        var picData = file.Tag.Pictures[0].Data.Data;
+                        Texture2D coverTex = new Texture2D(2, 2);
+                        coverTex.LoadImage(picData);
+
+                        string coverPath = $"{outputPath}/{fileName}_Cover.png";
+                        File.WriteAllBytes(coverPath, coverTex.EncodeToPNG());
+                        AssetDatabase.Refresh();
+
+                        Texture2D importedTex = AssetDatabase.LoadAssetAtPath<Texture2D>(coverPath);
+                        newMetadata.coverArt = importedTex;
+                    }
+
+                    AssetDatabase.CreateAsset(newMetadata, assetPath);
+                    totalCount++;
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"Error procesando {fileName} en {category}: {e.Message}");
+                }
             }
         }
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
-        Debug.Log($"¡Listo! Se regeneraron {count} assets. Revisa que la ruta ahora diga 'event:/<Nombre>'.");
+        Debug.Log($"[VinylDataImporter] ¡Listo! Se generaron {totalCount} assets de metadatos organizados por subcarpetas.");
     }
 }
 #endif

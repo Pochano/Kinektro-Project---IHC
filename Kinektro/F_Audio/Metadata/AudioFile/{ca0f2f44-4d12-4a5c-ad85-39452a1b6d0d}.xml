@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{ca0f2f44-4d12-4a5c-ad85-39452a1b6d0d}">
+		<property name="assetPath">
+			<value>Cosmic Girl.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>250.14857142857142</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91c72700-99eb-488f-b1e2-0d027f0b2693}</destination>
+		</relationship>
+	</object>
+</objects>

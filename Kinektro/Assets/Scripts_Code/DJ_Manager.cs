@@ -394,4 +394,23 @@ public class DJ_Manager : MonoBehaviour
         StopSong(1);
         StopSong(2);
     }
+
+    /// <summary>
+    /// Pobla automáticamente el array 'songEvents' desde la lista global de metadatos.
+    /// </summary>
+    public void AutoPopulateSongEventsFromMetadata(VinylMetadata[] metadatas)
+    {
+        if (metadatas == null || metadatas.Length == 0) return;
+
+        songEvents = new FMODUnity.EventReference[metadatas.Length];
+        for (int i = 0; i < metadatas.Length; i++)
+        {
+            if (metadatas[i] != null)
+            {
+                songEvents[i] = metadatas[i].fmodAudioEvent;
+            }
+        }
+        Debug.Log($"[DJ_Manager] 'songEvents' poblado automáticamente con {songEvents.Length} eventos FMOD.");
+    }
+
 }

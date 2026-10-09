@@ -11,13 +11,14 @@ public class ShelfManager : MonoBehaviour
     public GameObject vinylPrefab;
     public Transform vinylReferenceTransform;
 
-    [Header("Colección de Metadatos de Vinilos")]
+    [Header("Colección de Metadatos de Vinilos (Auto-poblado en Runtime)")]
     public VinylMetadata[] vinylMetadatas;
 
     private ShelfSocketTrigger[] socketTriggers = new ShelfSocketTrigger[6];
 
-    private void Start()
+    private void Awake()
     {
+        // Inicializar Triggers en las bases
         for (int i = 0; i < baseSockets.Length; i++)
         {
             if (baseSockets[i] != null)
@@ -55,7 +56,7 @@ public class ShelfManager : MonoBehaviour
     {
         int targetSocketIndex = -1;
 
-        // 1. Buscar si hay algún socket completamente vacío
+        // 1. Buscar socket vacío
         for (int i = 0; i < socketTriggers.Length; i++)
         {
             if (socketTriggers[i] != null && socketTriggers[i].currentVinylInSocket == null)
@@ -65,7 +66,7 @@ public class ShelfManager : MonoBehaviour
             }
         }
 
-        // 2. Si todos los sockets están ocupados, buscar el disco MÁS VIEJO (menor lastPlacedTime)
+        // 2. Si está llena la estantería, reciclar el disco más viejo
         if (targetSocketIndex == -1)
         {
             float oldestTime = float.MaxValue;
@@ -82,7 +83,6 @@ public class ShelfManager : MonoBehaviour
                 }
             }
 
-            // Destruir el vinilo más viejo para dejar espacio
             if (targetSocketIndex != -1 && socketTriggers[targetSocketIndex].currentVinylInSocket != null)
             {
                 Debug.Log($"[ShelfManager] Estantería llena. Eliminando el disco más antiguo del Socket {targetSocketIndex + 1}.");
@@ -96,7 +96,7 @@ public class ShelfManager : MonoBehaviour
         Transform targetSocket = baseSockets[targetSocketIndex];
         if (targetSocket == null || vinylPrefab == null) return;
 
-        // 3. Instanciar el nuevo disco
+        // 3. Instanciar vinilo
         GameObject newVinyl = Instantiate(vinylPrefab);
         newVinyl.transform.SetParent(null);
 
@@ -112,10 +112,9 @@ public class ShelfManager : MonoBehaviour
             }
 
             vinylData.ApplyCoverArt();
-
         }
 
-        // 5. Encajar en el socket objetivo
+        // 5. Acoplar al socket
         if (socketTriggers[targetSocketIndex] != null)
         {
             newVinyl.transform.rotation = Quaternion.Euler(180f, 0f, 0f);

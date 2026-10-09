@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5717b15e5a1300b4fa39c87ba96a559c, type: 3}
+  m_Name: The Emptiness Machine_Data
+  m_EditorClassIdentifier: 
+  songTitle: The Emptiness Machine
+  artistName: Linkin Park
+  category: Efectos
+  baseBPM: 92
+  fmodAudioEvent:
+    Guid:
+      Data1: 769363720
+      Data2: 1218750758
+      Data3: 1810738579
+      Data4: 1985075090
+    Path: event:/The Emptiness Machine
+  coverArt: {fileID: 2800000, guid: 501fa2bee2f4bb24cb2012ade3cf16cf, type: 3}

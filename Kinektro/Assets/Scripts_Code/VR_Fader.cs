@@ -85,6 +85,9 @@ public class VR_Fader : MonoBehaviour
             currentValue = calculatedValue;
             OnValueChanged?.Invoke(currentValue);
         }
+
+        if (TutorialManager.Instance != null) TutorialManager.Instance.OnPitchFaderMoved();
+
     }
 
     private float GetCurrentOffset(Vector3 localPos)

@@ -55,7 +55,6 @@
     <UnityVersion>2022.3.62f2</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -89,12 +88,14 @@
     <Compile Include="Assets\Scripts_Code\VR_Knob_Joystick.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Boton.cs" />
     <Compile Include="Assets\Scripts_Code\SongCardUI.cs" />
+    <Compile Include="Assets\Scripts_Code\TutorialManager.cs" />
     <Compile Include="Assets\KinectUDP\KinectSourceProvider.cs" />
     <Compile Include="Assets\Scripts_Code\ShelfManager.cs" />
     <Compile Include="Assets\Scripts_Code\VinylMetadata.cs" />
     <Compile Include="Assets\Scripts_Code\VRFloatingWindow.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\BezierCurve.cs" />
     <Compile Include="Assets\KinectUDP\KinectSkeletonVisualizer.cs" />
+    <Compile Include="Assets\Scripts_Code\MainMenuManager.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\LaunchProjectile.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\StepManager.cs" />
     <Compile Include="Assets\Scripts_Code\FuserBeatbarUI.cs" />

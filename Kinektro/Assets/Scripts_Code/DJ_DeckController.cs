@@ -62,6 +62,9 @@ public class DJ_DeckController : MonoBehaviour
             djManager.TogglePlayPause(channelNumber);
             isPlaying = false;
         }
+
+        // Notificación al Tutorial
+        if (TutorialManager.Instance != null) TutorialManager.Instance.OnPlayToggle(isPlaying);
     }
 
     public void OnCueButtonPressed()
@@ -76,6 +79,9 @@ public class DJ_DeckController : MonoBehaviour
             playButton.ForceUnpress();
         }
 
+        // Notificación al Tutorial
+        if (TutorialManager.Instance != null) TutorialManager.Instance.OnCuePressed();
+
         Debug.Log($"[Deck Ch{channelNumber}] CUE: Canción detenida.");
     }
 
@@ -85,8 +91,14 @@ public class DJ_DeckController : MonoBehaviour
     {
         if (djManager == null) return;
 
-        DJ_Manager.LoopState newState = djManager.HandleLoopButton(channelNumber);
-        UpdateLoopButtonVisual(newState);
+        DJ_Manager.LoopState currentLoopState = djManager.HandleLoopButton(channelNumber);
+        UpdateLoopButtonVisual(currentLoopState);
+
+        // Notificación al Tutorial usando la variable declarada arriba
+        if (TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.OnLoopStateChanged((int)currentLoopState);
+        }
     }
 
     private void UpdateLoopButtonVisual(DJ_Manager.LoopState state)

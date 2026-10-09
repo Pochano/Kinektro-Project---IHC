@@ -144,6 +144,9 @@ public class TurntableDeck : MonoBehaviour
             djManager.SetPitch(deckController.channelNumber, currentFaderValue);
             djManager.UpdateMasterBeatbar();
         }
+
+        if (TutorialManager.Instance != null) TutorialManager.Instance.OnVinylPlacedOnTurntable();
+
     }
 
     private void RemoveVinylFromDeck()

@@ -7,6 +7,7 @@ public class VinylMetadata : ScriptableObject
     [Header("Metadata")]
     public string songTitle;
     public string artistName;
+    public string category = "Pistas"; // "Pistas", "Bases", "Efectos"
 
     [Header("Audio & BPM")]
     public float baseBPM = 120f;

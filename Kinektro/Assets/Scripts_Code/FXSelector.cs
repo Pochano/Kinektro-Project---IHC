@@ -40,6 +40,11 @@ public class FXSelector : MonoBehaviour
 
         armedEffect = buttonSlot;
 
+        if (TutorialManager.Instance != null && armedEffect > 0)
+        {
+            TutorialManager.Instance.OnFXSelected();
+        }
+
         // Si la mano de este canal ya esta levantada, el cambio de efecto se refleja al instante.
         if (isActive)
         {
@@ -58,6 +63,11 @@ public class FXSelector : MonoBehaviour
         isActive = true;
         Debug.Log($"[FXSelector Ch{channelNumber}] ActivateSelected() llamado. armedEffect={armedEffect}, djManager nulo? {djManager == null}");
         ApplyArmedEffect();
+
+        {
+            TutorialManager.Instance.OnFXButtonToggle();
+        }
+
     }
 
     /// <summary>

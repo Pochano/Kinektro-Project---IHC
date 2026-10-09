@@ -119,6 +119,8 @@ public class VinylData : MonoBehaviour
         {
             rb.isKinematic = false;
         }
+
+        if (TutorialManager.Instance != null) TutorialManager.Instance.OnVinylGrabbed();
     }
 
     private void OnReleased(SelectExitEventArgs args)
@@ -135,4 +137,5 @@ public class VinylData : MonoBehaviour
             grabInteractable.selectExited.RemoveListener(OnReleased);
         }
     }
+
 }

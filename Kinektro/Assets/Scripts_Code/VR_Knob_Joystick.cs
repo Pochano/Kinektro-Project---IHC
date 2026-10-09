@@ -102,6 +102,9 @@ public class VR_Knob_Joystick : MonoBehaviour
     {
         RotateMesh(value);
         ApplyValueToDJManager(value);
+
+        if (TutorialManager.Instance != null) TutorialManager.Instance.OnKnobRotated();
+
     }
 
     private void ApplyValueToDJManager(float value)

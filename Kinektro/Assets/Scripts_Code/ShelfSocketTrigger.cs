@@ -92,4 +92,6 @@ public class ShelfSocketTrigger : MonoBehaviour
 
         Debug.Log($"[ShelfSocket] Disco '{vinylObj.name}' acoplado al Socket {socketIndex + 1} en t={lastPlacedTime:F2}s.");
     }
+
+
 }

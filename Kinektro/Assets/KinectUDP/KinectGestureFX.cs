@@ -46,6 +46,12 @@ public class KinectGestureFX : MonoBehaviour
             normalizedHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, handPos.y));
 
             djManager.SetKinectParameter("HandHeight", normalizedHeight);
+
+            if (TutorialManager.Instance != null && Mathf.Abs(normalizedHeight - 0.5f) > 0.2f)
+            {
+                TutorialManager.Instance.OnKinectHandMoved();
+            }
+
         }
 
         string fistState = source.GetHandState("HandRight");

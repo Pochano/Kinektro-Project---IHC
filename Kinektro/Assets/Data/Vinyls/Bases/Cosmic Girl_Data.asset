@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5717b15e5a1300b4fa39c87ba96a559c, type: 3}
+  m_Name: Cosmic Girl_Data
+  m_EditorClassIdentifier: 
+  songTitle: 'Cosmic Girl '
+  artistName: Jamiroquai
+  category: Bases
+  baseBPM: 120
+  fmodAudioEvent:
+    Guid:
+      Data1: -212734794
+      Data2: 1227709793
+      Data3: -2092203882
+      Data4: -208002515
+    Path: event:/Cosmic Girl
+  coverArt: {fileID: 2800000, guid: 2f4e6313d7e5be34d81b895fb89278ee, type: 3}
