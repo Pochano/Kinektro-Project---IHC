@@ -6,10 +6,21 @@ Builds/
 Logs/
 UserSettings/
 
-# IDE / Visual Studio
+# Excepcion: SI queremos versionar los bancos de audio FMOD ya compilados,
+# aunque vivan dentro de una carpeta llamada "Build" (eso es lo que lee Unity/FMOD en runtime)
+!/Kinektro/F_Audio/Build/
+!/Kinektro/F_Audio/Build/**
+!/Kinektro/Assets/FMODBanks/Build/
+!/Kinektro/Assets/FMODBanks/Build/**
+
+# IDE / Visual Studio (cache local de cada maquina, no se versiona)
 .vs/
 *.csproj
 *.sln
 *.user
 .idea/
 *.suo
+
+# Logs que FMOD regenera cada vez que abres el editor
+Kinektro/fmod_editor.log
+*.log
