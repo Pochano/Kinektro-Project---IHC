@@ -18,14 +18,16 @@ public static class FXButtonBuilder
     // --- Constantes de posicionamiento, ajustables para iterar visualmente ---
     // Los botones van APOYADOS sobre la mesa (misma altura, sin apilarse en Y),
     // al costado de la consola, en una fila a lo largo de la profundidad de la mesa (eje Z).
-    static float sideExtraCh1 = 1f;       // cuanto se empuja el bloque del canal 1 (izquierda) hacia el lateral, al costado de la consola
-    static float sideExtraCh2 = 1f;       // lo mismo para el canal 2 (derecha); separado para poder ajustar cada lado de forma independiente
+    static float sideExtraCh1 = 0.1f;       // cuanto se empuja el bloque del canal 1 (izquierda) hacia el lateral, al costado de la consola
+    static float sideExtraCh2 = 0.2f;       // lo mismo para el canal 2 (derecha); separado para poder ajustar cada lado de forma independiente
     static float verticalStart = -0.08f;  // offset vertical (Y) respecto al boton "Effect": deja los botones apoyados sobre la mesa, no flotando
     static float depthSpacing = 0.08f;    // separacion entre botones a lo largo de la profundidad de la mesa (Z)
-    static float depthStart = -0.16f;     // offset de profundidad (Z) del primer boton respecto al boton "Effect"
-    static float labelHeightOffset = 0.05f; // altura de la etiqueta sobre cada boton
-    static float labelScale = 0.03f;
-    static float fontSize = 36f;
+    static float depthStart = 0.1f;     // offset de profundidad (Z) del primer boton respecto al boton "Effect"
+    static float labelDepthStart = -0.05f; // lo mismo pero para el TEXTO, independiente del de los botones
+    static float labelSideExtra = 0.5f;   // que tan lejos del centro esta el TEXTO (independiente de sideExtraCh1/Ch2, que es solo para los botones)
+    static float labelHeightOffset = 0.15f; // altura de la etiqueta sobre cada boton
+    static float labelScale = 0.01f;
+    static float fontSize = 18f;
 
     static Vector3 WorldCenter(GameObject go)
     {
@@ -91,9 +93,15 @@ public static class FXButtonBuilder
         Vector3 depthAxis = Vector3.forward;
         Vector3 rowStart = basePos + depthAxis * depthStart;
 
+        Vector3 labelBasePos = WorldCenter(visualTemplate)
+                                + outwardAxis * labelSideExtra
+                                + Vector3.up * verticalStart;
+        Vector3 labelRowStart = labelBasePos + depthAxis * labelDepthStart;
+
         for (int i = 0; i < 5; i++)
         {
             Vector3 pos = rowStart + depthAxis * (depthSpacing * i);
+            Vector3 labelPos = labelRowStart + depthAxis * (depthSpacing * i) + Vector3.up * labelHeightOffset;
             string name = $"Ch{channel}_FX_{i + 1}_{fxNames[i]}";
 
             GameObject buttonGO = (GameObject)Object.Instantiate(interactableTemplate, root.transform);
@@ -125,7 +133,7 @@ public static class FXButtonBuilder
 
             selector.fxButtons[i] = vrBoton;
 
-            CreateLabel(root.transform, buttonGO.transform, pos + Vector3.up * labelHeightOffset, outwardAxis, fxNames[i]);
+            CreateLabel(root.transform, buttonGO.transform, labelPos, outwardAxis, fxNames[i]);
         }
 
         return selector;
