@@ -58,6 +58,20 @@ public class FXSelector : MonoBehaviour
             fxButtonRenderer.material.color = isActive ? colorActive : colorInactive;
         }
     }
+    /// <summary>Efecto actualmente armado (0 = ninguno). Usado por el lector de altura de mano
+    /// para saber que parametro de intensidad progresiva debe alimentar en este canal.</summary>
+    public int ArmedEffect => armedEffect;
+
+    /// <summary>True mientras la mano de este canal esta levantada (efecto activo de verdad).</summary>
+    public bool IsActive => isActive;
+
+    /// <summary>
+    /// Llamado por el boton fisico presionado (buttonSlot entre 1 y 5).
+    /// Des-presiona visualmente los demas botones del mismo canal (mutua exclusion).
+    /// </summary>
+    // === TEMPORAL: helper de prueba para QA manual, quitar despues de verificar ===
+    [ContextMenu("TEST: Arm Reverb (slot 1)")]
+    private void DebugArmReverb() => SelectEffect(1);
 
     public void SelectEffect(int buttonSlot)
     {
