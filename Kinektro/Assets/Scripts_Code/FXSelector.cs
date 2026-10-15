@@ -1,11 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Controla los 5 botones de seleccion de efecto (FX) de un canal/plato de DJ.
-/// Los botones solo "arman" (seleccionan) un efecto de forma mutuamente excluyente;
-/// el efecto armado se activa/desactiva de verdad cuando se levanta/baja la mano
-/// correspondiente (ver GestureDetector -> ActivateSelected() / Deactivate()).
-/// </summary>
 public class FXSelector : MonoBehaviour
 {
     [Header("Referencias Principales")]
@@ -14,17 +8,57 @@ public class FXSelector : MonoBehaviour
     [Tooltip("1 para el canal/plato izquierdo (Ch1), 2 para el derecho (Ch2)")]
     public int channelNumber = 1;
 
+    [Header("Visuales del Botón Morado FX")]
+    public MeshRenderer fxButtonRenderer;
+    public Color colorActive = new Color(0.6f, 0f, 1f, 1f);      // Morado Encendido
+    public Color colorInactive = new Color(0.25f, 0f, 0.4f, 1f); // Morado Apagado
+
     [Header("Botones de Efecto (orden: Reverb, Delay, Distortion, LowPass, Flanger)")]
     public VR_Boton[] fxButtons = new VR_Boton[5];
 
-    // 0 = None, 1 = Reverb, 2 = Delay, 3 = Distortion, 4 = LowPass, 5 = Flanger
     private int armedEffect = 0;
     private bool isActive = false;
 
-    /// <summary>
-    /// Llamado por el boton fisico presionado (buttonSlot entre 1 y 5).
-    /// Des-presiona visualmente los demas botones del mismo canal (mutua exclusion).
-    /// </summary>
+    private void Start()
+    {
+        UpdateVisualColor();
+    }
+
+    public void ToggleFXChannel()
+    {
+        isActive = !isActive;
+
+        if (isActive)
+        {
+            ApplyArmedEffect();
+            Debug.Log($"[FXSelector Ch{channelNumber}] Módulo FX ACTIVADO.");
+        }
+        else
+        {
+            if (djManager != null)
+            {
+                djManager.SetFXSelect(channelNumber, 0);
+            }
+            Debug.Log($"[FXSelector Ch{channelNumber}] Módulo FX DESACTIVADO.");
+        }
+
+        UpdateVisualColor();
+
+        // Notificación al Tutorial
+        if (TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.OnFXButtonToggle();
+        }
+    }
+
+    private void UpdateVisualColor()
+    {
+        if (fxButtonRenderer != null)
+        {
+            fxButtonRenderer.material.color = isActive ? colorActive : colorInactive;
+        }
+    }
+
     public void SelectEffect(int buttonSlot)
     {
         if (fxButtons != null)
@@ -40,12 +74,19 @@ public class FXSelector : MonoBehaviour
 
         armedEffect = buttonSlot;
 
+        // --- SOLUCIÓN PARA EL TUTORIAL ---
         if (TutorialManager.Instance != null && armedEffect > 0)
         {
+            // Si el tutorial está atascado en activar el botón morado (Paso 11),
+            // lo avanzamos primero a la selección de efecto y luego completamos la selección.
+            if (TutorialManager.Instance.currentStep == TutorialStep.FXButton)
+            {
+                TutorialManager.Instance.OnFXButtonToggle();
+            }
+
             TutorialManager.Instance.OnFXSelected();
         }
 
-        // Si la mano de este canal ya esta levantada, el cambio de efecto se refleja al instante.
         if (isActive)
         {
             ApplyArmedEffect();
@@ -54,26 +95,18 @@ public class FXSelector : MonoBehaviour
         Debug.Log($"[FXSelector Ch{channelNumber}] Efecto armado: {armedEffect}");
     }
 
-    /// <summary>
-    /// Activa en FMOD el efecto actualmente armado. Pensado para engancharse a
-    /// GestureDetector.onLeftHandRaised / onRightHandRaised.
-    /// </summary>
     public void ActivateSelected()
     {
         isActive = true;
-        Debug.Log($"[FXSelector Ch{channelNumber}] ActivateSelected() llamado. armedEffect={armedEffect}, djManager nulo? {djManager == null}");
         ApplyArmedEffect();
+        UpdateVisualColor();
 
+        if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.OnFXButtonToggle();
         }
-
     }
 
-    /// <summary>
-    /// Desactiva el efecto (vuelve a None) sin perder cual quedo armado.
-    /// Pensado para GestureDetector.onLeftHandLowered / onRightHandLowered.
-    /// </summary>
     public void Deactivate()
     {
         isActive = false;
@@ -82,6 +115,7 @@ public class FXSelector : MonoBehaviour
         {
             djManager.SetFXSelect(channelNumber, 0);
         }
+        UpdateVisualColor();
     }
 
     private void ApplyArmedEffect()

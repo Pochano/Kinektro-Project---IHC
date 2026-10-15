@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
     [Header("UI del Tutorial")]
     public GameObject tutorialCanvas;
     public TextMeshProUGUI instructionText;
-    public Button nextButton; // Útil para pasos puramente explicativos (Pasos 1 y 2)
+    public Button nextButton; // Útil para pasos puramente explicativos y como botón de salto
 
     [Header("Estado Actual")]
     public TutorialStep currentStep = TutorialStep.Welcome;
@@ -64,12 +64,20 @@ public class TutorialManager : MonoBehaviour
         {
             case TutorialStep.Welcome:
                 UpdateInstruction("¡Bienvenido a Kinektro VR!\n\nEste tutorial te enseñará las herramientas básicas de la mesa de DJ.");
-                if (nextButton != null) nextButton.gameObject.SetActive(true);
+                if (nextButton != null)
+                {
+                    nextButton.gameObject.SetActive(true);
+                    SetNextButtonText("Siguiente");
+                }
                 break;
 
             case TutorialStep.ShelfExplanation:
                 UpdateInstruction("Mira la estantería a tu lado.\nPosee 6 bases magnéticas para sostener los vinilos que generes desde la librería.");
-                if (nextButton != null) nextButton.gameObject.SetActive(true);
+                if (nextButton != null)
+                {
+                    nextButton.gameObject.SetActive(true);
+                    SetNextButtonText("Siguiente");
+                }
                 break;
 
             case TutorialStep.SelectTrack:
@@ -118,6 +126,13 @@ public class TutorialManager : MonoBehaviour
 
             case TutorialStep.KinectHandMove:
                 UpdateInstruction("PASO 11:\nMueve tu mano verticalmente hacia arriba y hacia abajo para controlar la modulación (Kinect/Hand Tracking).");
+
+                // Activar el botón automáticamente para poder saltar este paso si se desea
+                if (nextButton != null)
+                {
+                    nextButton.gameObject.SetActive(true);
+                    SetNextButtonText("Saltar");
+                }
                 break;
 
             case TutorialStep.Completed:
@@ -125,7 +140,7 @@ public class TutorialManager : MonoBehaviour
                 if (nextButton != null)
                 {
                     nextButton.gameObject.SetActive(true);
-                    nextButton.GetComponentInChildren<TextMeshProUGUI>().text = "Finalizar";
+                    SetNextButtonText("Finalizar");
                 }
                 break;
         }
@@ -136,7 +151,19 @@ public class TutorialManager : MonoBehaviour
         if (instructionText != null) instructionText.text = text;
     }
 
-    private void OnNextButtonClicked()
+    private void SetNextButtonText(string label)
+    {
+        if (nextButton != null)
+        {
+            TextMeshProUGUI tmpText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (tmpText != null) tmpText.text = label;
+        }
+    }
+
+    /// <summary>
+    /// MÉTODO PÚBLICO: Permite avanzar de paso desde el evento VR (XR Simple Interactable)
+    /// </summary>
+    public void OnNextButtonClicked()
     {
         if (currentStep == TutorialStep.Welcome)
         {
@@ -146,13 +173,17 @@ public class TutorialManager : MonoBehaviour
         {
             SetStep(TutorialStep.SelectTrack);
         }
+        else if (currentStep == TutorialStep.KinectHandMove)
+        {
+            SetStep(TutorialStep.Completed);
+        }
         else if (currentStep == TutorialStep.Completed)
         {
             if (tutorialCanvas != null) tutorialCanvas.SetActive(false);
         }
     }
 
-    // --- MÉTODOS DE VERIFICACIÓN (Llamados por tus scripts del sistema) ---
+    // --- MÉTODOS DE VERIFICACIÓN (Llamados por los scripts del sistema) ---
 
     public void OnTrackSelectedFromLibrary()
     {

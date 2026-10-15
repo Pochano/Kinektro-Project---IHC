@@ -32,28 +32,40 @@ public class KinectGestureFX : MonoBehaviour
         IJointDataSource source = sourceProvider.GetActiveSource();
         if (source == null) return;
 
+        // Obtener las articulaciones del Kinect real
         bool gotHand = source.TryGetJointPosition("HandRight", out Vector3 handPos);
         bool gotLow = source.TryGetJointPosition("SpineBase", out Vector3 lowPos);
         bool gotHigh = source.TryGetJointPosition("Head", out Vector3 headPos);
 
-        float normalizedHeight = 0f;
-
-        if (gotHand && gotLow && gotHigh)
+        if (gotHand)
         {
-            // Altura relativa al propio cuerpo: SpineBase = "mano abajo", Head + margen = "mano arriba".
-            float lowY = lowPos.y;
-            float highY = headPos.y + headMargin;
-            normalizedHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, handPos.y));
+            float normalizedHeight = 0.5f;
 
+            // Si el Kinect envía la estructura completa del cuerpo
+            if (gotLow && gotHigh)
+            {
+                float lowY = lowPos.y;
+                float highY = headPos.y + headMargin;
+                normalizedHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, handPos.y));
+            }
+            else
+            {
+                // Fallback en caso de que solo reciba la posición Y absoluta de la mano
+                normalizedHeight = Mathf.Clamp01(Mathf.InverseLerp(0.5f, 2.0f, handPos.y));
+            }
+
+            // 1. Modificar el parámetro de sonido en FMOD
             djManager.SetKinectParameter("HandHeight", normalizedHeight);
 
-            if (TutorialManager.Instance != null && Mathf.Abs(normalizedHeight - 0.5f) > 0.2f)
+            // 2. Si el tutorial está en el paso de mover la mano (Paso 11 / KinectHandMove),
+            // avanza en cuanto detecta que la mano está arriba o en movimiento real.
+            if (TutorialManager.Instance != null && TutorialManager.Instance.currentStep == TutorialStep.KinectHandMove)
             {
                 TutorialManager.Instance.OnKinectHandMoved();
             }
-
         }
 
+        // Procesar puño cerrado
         string fistState = source.GetHandState("HandRight");
         float targetFistValue = (fistState == "Closed") ? 1f : 0f;
 
@@ -64,17 +76,5 @@ public class KinectGestureFX : MonoBehaviour
         );
 
         djManager.SetKinectParameter("FistClosed", currentFistValue);
-
-        frameCounter++;
-        if (logDebugInfo && frameCounter >= logEveryNFrames)
-        {
-            frameCounter = 0;
-            Debug.Log(
-                "KinectGestureFX | HandY: " + (gotHand ? handPos.y.ToString("F2") : "N/A") +
-                " | Altura 0-1: " + normalizedHeight.ToString("F2") +
-                " | Puno: " + fistState +
-                " | FistValue: " + currentFistValue.ToString("F2")
-            );
-        }
     }
 }
