@@ -20901,7 +20901,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originOffset: {x: 0, y: 0, z: 1.2}
-  raisedHandY: 1.9
+  raisedHandY: 4.9
   idleHandY: 0.9
   raiseSpeed: 0.8
 --- !u!114 &2107610387
@@ -20981,12 +20981,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceProvider: {fileID: 2107610387}
+  djManager: {fileID: 751242120}
+  fxSelectorCh1: {fileID: 845548422}
+  fxSelectorCh2: {fileID: 50972606}
+  intensityHeadMargin: 0.9
+  intensityLowMargin: -0.3
   raiseMarginMeters: 0.1
   swipeSpeedThreshold: 1.5
   onRightHandRaised:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 50972606}
         m_TargetAssemblyTypeName: FXSelector, Assembly-CSharp
         m_MethodName: ActivateSelected
         m_Mode: 1
@@ -21001,7 +21006,7 @@ MonoBehaviour:
   onRightHandLowered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 50972606}
         m_TargetAssemblyTypeName: FXSelector, Assembly-CSharp
         m_MethodName: Deactivate
         m_Mode: 1
