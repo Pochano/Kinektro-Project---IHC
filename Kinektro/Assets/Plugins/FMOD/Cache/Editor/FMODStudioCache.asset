@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8277900774763839729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Cosmic Girl
+  m_EditorClassIdentifier: 
+  Path: event:/Cosmic Girl
+  Guid:
+    Data1: -212734794
+    Data2: 1227709793
+    Data3: -2092203882
+    Data4: -208002515
+  Banks:
+  - {fileID: -1842181748763645604}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -3274108731987370112}
+  - {fileID: 5782061226715167304}
+  - {fileID: 8183783905492420212}
+  - {fileID: 3631559637439127362}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 250148
+--- !u!114 &-7169485236297400838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Te gusto/High
+  m_EditorClassIdentifier: 
+  Name: High
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2605716778
+    data2: 2562315831
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-6866344985173516504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29,6 +84,30 @@ MonoBehaviour:
   - Distortion
   - LowPass
   - Flanger
+  Exists: 1
+--- !u!114 &-6661829111870357274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Te gusto/Low
+  m_EditorClassIdentifier: 
+  Name: Low
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2822218129
+    data2: 1508581456
+  Type: 0
+  IsGlobal: 0
+  Labels: []
   Exists: 1
 --- !u!114 &-6636717585426386828
 MonoBehaviour:
@@ -91,6 +170,67 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 190615
+--- !u!114 &-5870163657928750633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Te gusto
+  m_EditorClassIdentifier: 
+  Path: event:/Te gusto
+  Guid:
+    Data1: 163083458
+    Data2: 1300622825
+    Data3: 1351659401
+    Data4: -474332482
+  Banks:
+  - {fileID: -1842181748763645604}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -5709814414573607592}
+  - {fileID: 7520629097864761513}
+  - {fileID: -6661829111870357274}
+  - {fileID: -7169485236297400838}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 218724
+--- !u!114 &-5709814414573607592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Te gusto/FX_Select
+  m_EditorClassIdentifier: 
+  Name: FX_Select
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 839882109
+    data2: 562343589
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
+  Exists: 1
 --- !u!114 &-5382059721057847089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +365,30 @@ MonoBehaviour:
   - Flanger
   Exists: 1
 --- !u!114 &-3612753849870260964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Cosmic Girl/High
+  m_EditorClassIdentifier: 
+  Name: High
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2605716778
+    data2: 2562315831
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-3274108731987370112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -389,7 +553,7 @@ MonoBehaviour:
   Path: F_Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639271207727816178
+  lastModified: 639277580273559392
   FileSizes:
   - Name: Desktop
     Value: 18165760
@@ -486,15 +650,15 @@ MonoBehaviour:
   - {fileID: 7785020584801782618}
   - {fileID: -5037072681697873025}
   - {fileID: 6773715533293411937}
-  - {fileID: 6099978921091798027}
-  - {fileID: 608760145453328559}
+  - {fileID: -8277900774763839729}
+  - {fileID: -5870163657928750633}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1842181748763645604}
   StringsBanks:
   - {fileID: 125819476962920100}
   cacheVersion: 131861
-  cacheTime: 639271207727841286
+  cacheTime: 639277580273579476
   SerializableEventsDict:
   - key: event:/The Emptiness Machine
     index: 0
@@ -504,9 +668,9 @@ MonoBehaviour:
     index: 2
   - key: event:/Virtual Insanity
     index: 3
-  - key: event:/Te gusto
-    index: 4
   - key: event:/Cosmic Girl
+    index: 4
+  - key: event:/Te gusto
     index: 5
 --- !u!114 &125819476962920100
 MonoBehaviour:
@@ -523,7 +687,7 @@ MonoBehaviour:
   Path: F_Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639271207727841286
+  lastModified: 639277580273579476
   FileSizes:
   - Name: Desktop
     Value: 1180
@@ -709,6 +873,36 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &3631559637439127362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Cosmic Girl/FX_Select
+  m_EditorClassIdentifier: 
+  Name: FX_Select
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 839882109
+    data2: 562343589
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - None
+  - Reverb
+  - Delay
+  - Distortion
+  - LowPass
+  - Flanger
+  Exists: 1
 --- !u!114 &4129013188020232691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +947,30 @@ MonoBehaviour:
   ID:
     data1: 2605716778
     data2: 2562315831
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &5782061226715167304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Cosmic Girl/Low
+  m_EditorClassIdentifier: 
+  Name: Low
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 2822218129
+    data2: 1508581456
   Type: 0
   IsGlobal: 0
   Labels: []
@@ -849,6 +1067,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 229407
+--- !u!114 &7520629097864761513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Te gusto/Mid
+  m_EditorClassIdentifier: 
+  Name: Mid
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 557162823
+    data2: 4268565709
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &7785020584801782618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,3 +1122,27 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 231444
+--- !u!114 &8183783905492420212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Cosmic Girl/Mid
+  m_EditorClassIdentifier: 
+  Name: Mid
+  StudioPath: 
+  Min: -24
+  Max: 6
+  Default: 0
+  ID:
+    data1: 557162823
+    data2: 4268565709
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
