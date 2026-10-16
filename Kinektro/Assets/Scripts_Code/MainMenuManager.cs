@@ -1,57 +1,45 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Paneles de UI")]
-    public GameObject mainMenuCanvas;       // Menu
-    public GameObject librarySphere;        // Minimized_Biblioteca
-    public GameObject libraryPanel;         // Canvas_Biblioteca
+    public GameObject mainMenuCanvas;       // Objeto Menu
 
     [Header("Botones del Menú (UI Estándar)")]
     public Button playButton;
     public Button tutorialButton;
 
-    [Header("Botones 3D / XR")]
-    public GameObject playButton3D;
-    public GameObject tutorialButton3D;
-
-    [Header("Referencias de Managers")]
-    public TutorialManager tutorialManager;
+    // Propiedad estática para saber en la Escena 3 si venimos en Modo Tutorial o Juego Libre
+    public static bool IsTutorialActive { get; private set; } = false;
 
     private void Start()
     {
-        // Al arrancar, mostramos el menú principal y ocultamos la biblioteca
+        // Al arrancar en la Escena 1, nos aseguramos de que el menú flotante esté visible
         if (mainMenuCanvas != null) mainMenuCanvas.SetActive(true);
-        if (librarySphere != null) librarySphere.SetActive(false);
-        if (libraryPanel != null) libraryPanel.SetActive(false);
 
         if (playButton != null) playButton.onClick.AddListener(OnPlayPressed);
         if (tutorialButton != null) tutorialButton.onClick.AddListener(OnTutorialPressed);
     }
 
+    /// <summary>
+    /// Evento del botón PLAY: Va directo a la Consola Completa en Modo Libre (Escena_3).
+    /// </summary>
     public void OnPlayPressed()
     {
-        if (mainMenuCanvas != null) mainMenuCanvas.SetActive(false);
-
-        // Habilitar la esfera minimizada para arrancar (el script VRFloatingWindow se encarga de manejar el panel)
-        if (librarySphere != null) librarySphere.SetActive(true);
-
-        Debug.Log("[MainMenu] Modo Juego Libre iniciado.");
+        IsTutorialActive = false;
+        Debug.Log("[MainMenu] Cargando Escena_3 en Modo Juego Libre...");
+        SceneManager.LoadScene("Escena_3");
     }
 
+    /// <summary>
+    /// Evento del botón TUTORIAL: Va a la Escena_Tutorial (Componentes Individuales).
+    /// </summary>
     public void OnTutorialPressed()
     {
-        if (mainMenuCanvas != null) mainMenuCanvas.SetActive(false);
-
-        // Al iniciar el tutorial, mostramos la esfera para que el usuario la toque o abra
-        if (librarySphere != null) librarySphere.SetActive(true);
-
-        if (tutorialManager != null)
-        {
-            tutorialManager.StartTutorial();
-        }
-
-        Debug.Log("[MainMenu] Modo Tutorial iniciado.");
+        IsTutorialActive = true;
+        Debug.Log("[MainMenu] Cargando Escena_2...");
+        SceneManager.LoadScene("Escena_2"); // <--- Aquí cambias a Escena_2
     }
 }

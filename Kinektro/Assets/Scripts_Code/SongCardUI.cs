@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -70,17 +71,35 @@ public class SongCardUI : MonoBehaviour
             cardButton.onClick.AddListener(OnCardClicked);
         }
 
-        // Auto-ajustar el tamaño del Collider al tamaño del RectTransform de la tarjeta
-        AdjustColliderSize();
+        // Espera a que el Grid Layout Group le asigne las dimensiones reales (200x225)
+        StartCoroutine(AdjustColliderSizeDelayed());
     }
 
-    private void AdjustColliderSize()
+    private IEnumerator AdjustColliderSizeDelayed()
     {
+        // Fuerza el cálculo inmediato del Layout
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+
+        // Espera al final del frame para leer las dimensiones reales acomodadas por el Grid
+        yield return new WaitForEndOfFrame();
+
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (rectTransform != null && boxCollider != null)
         {
-            boxCollider.size = new Vector3(rectTransform.rect.width, rectTransform.rect.height, 5f);
-            boxCollider.center = new Vector3(0, 0, 0);
+            float width = rectTransform.rect.width;
+            float height = rectTransform.rect.height;
+
+            // Fallback por si sigue dando un valor muy pequeño debido al Grid
+            if (width < 10f) width = 200f;
+            if (height < 10f) height = 225f;
+
+            boxCollider.size = new Vector3(width, height, 10f);
+
+            Vector2 pivot = rectTransform.pivot;
+            float centerX = (0.5f - pivot.x) * width;
+            float centerY = (0.5f - pivot.y) * height;
+
+            boxCollider.center = new Vector3(centerX, centerY, 0f);
         }
     }
 
@@ -97,7 +116,6 @@ public class SongCardUI : MonoBehaviour
         }
     }
 
-    // Método listo para desactivar/activar el collider durante el Scroll (Paso futuro)
     public void SetColliderActive(bool active)
     {
         if (boxCollider != null)

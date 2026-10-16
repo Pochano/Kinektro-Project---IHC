@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts_Code\MusicLibraryManager.cs" />
+    <Compile Include="Assets\Scripts_Code\BasicTutorialManager.cs" />
     <Compile Include="Assets\KinectUDP\KinectGestureFX.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\DestroyObject.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\VideoTimeScrubControl.cs" />

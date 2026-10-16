@@ -18,17 +18,14 @@ public class TurntableDeck : MonoBehaviour
     public float maxSnapDistance = 0.35f;
 
     [Header("Ajustes de Postura y Posición del Disco")]
-    [Tooltip("Rotación para acostar el vinilo plano.")]
     public Vector3 flatRotationEuler = new Vector3(0f, 90f, 0f);
-
-    [Tooltip("Altura REAL en el eje Y vertical sobre el plato")]
     public float heightOffset = 0.05f;
 
     [Header("Estado Actual del Plato")]
     public VinylData currentVinyl;
 
     private bool isOccupied = false;
-    private float currentFaderValue = 0.5f; // Neutral (1.0x pitch)
+    private float currentFaderValue = 0.5f;
 
     private void Update()
     {
@@ -45,9 +42,6 @@ public class TurntableDeck : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Evento invocado desde el VR_Fader de pitch/tempo
-    /// </summary>
     public void OnTempoFaderChanged(float faderValue)
     {
         currentFaderValue = faderValue;
@@ -84,10 +78,12 @@ public class TurntableDeck : MonoBehaviour
 
         XRGrabInteractable grab = vinyl.GetComponent<XRGrabInteractable>();
 
-        float distanceToDeck = Vector3.Distance(vinyl.transform.position, transform.position);
-        bool isReleased = (grab != null && !grab.isSelected);
+        // BLOQUEO DE IMÁN: Si el jugador sostiene el disco en la mano, NO lo absorbe el plato
+        if (grab != null && grab.isSelected) return;
 
-        if (isReleased || distanceToDeck <= (maxSnapDistance * 0.5f))
+        // Solo se encaja cuando el jugador ha SOLTADO el disco sobre/cerca del plato
+        float distanceToDeck = Vector3.Distance(vinyl.transform.position, transform.position);
+        if (distanceToDeck <= maxSnapDistance)
         {
             PlaceVinylOnDeck(vinyl);
         }
@@ -146,7 +142,6 @@ public class TurntableDeck : MonoBehaviour
         }
 
         if (TutorialManager.Instance != null) TutorialManager.Instance.OnVinylPlacedOnTurntable();
-
     }
 
     private void RemoveVinylFromDeck()

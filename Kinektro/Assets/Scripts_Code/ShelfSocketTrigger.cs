@@ -14,7 +14,6 @@ public class ShelfSocketTrigger : MonoBehaviour
     [Header("Estado del Socket")]
     public GameObject currentVinylInSocket = null;
 
-    // Guarda el momento exacto en el que ingresó el disco a este socket
     [HideInInspector] public float lastPlacedTime = 0f;
 
     private void Awake()
@@ -33,10 +32,11 @@ public class ShelfSocketTrigger : MonoBehaviour
         if (vinylData == null) return;
 
         XRGrabInteractable grabInteractable = vinylData.GetComponent<XRGrabInteractable>();
-        if (grabInteractable != null && !grabInteractable.isSelected)
-        {
-            SnapVinylToSocket(vinylData.gameObject, vinylData);
-        }
+
+        // BLOQUEO DE IMÁN: Ignora el imán de la repisa si el vinilo está en la mano del jugador
+        if (grabInteractable != null && grabInteractable.isSelected) return;
+
+        SnapVinylToSocket(vinylData.gameObject, vinylData);
     }
 
     private void OnTriggerExit(Collider other)
@@ -45,15 +45,13 @@ public class ShelfSocketTrigger : MonoBehaviour
         if (vinylData != null && vinylData.gameObject == currentVinylInSocket)
         {
             currentVinylInSocket = null;
-            lastPlacedTime = 0f; // Reseteamos el tiempo al liberarse
+            lastPlacedTime = 0f;
         }
     }
 
     public void SnapVinylToSocket(GameObject vinylObj, VinylData vinylData)
     {
         currentVinylInSocket = vinylObj;
-
-        // REGISTRO DE TIEMPO: Se actualiza/reinicia el tiempo cada vez que se coloca en el imán
         lastPlacedTime = Time.time;
 
         if (vinylData != null)
@@ -78,7 +76,6 @@ public class ShelfSocketTrigger : MonoBehaviour
 
         vinylObj.transform.position = targetPos;
 
-        // ROTACIÓN BASE Y AJUSTE A 180 EN X
         Quaternion baseRotation = (shelfManager != null && shelfManager.vinylReferenceTransform != null)
             ? shelfManager.vinylReferenceTransform.rotation
             : transform.rotation;
@@ -92,6 +89,4 @@ public class ShelfSocketTrigger : MonoBehaviour
 
         Debug.Log($"[ShelfSocket] Disco '{vinylObj.name}' acoplado al Socket {socketIndex + 1} en t={lastPlacedTime:F2}s.");
     }
-
-
 }
