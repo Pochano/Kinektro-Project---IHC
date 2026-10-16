@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{032e0985-7e20-4c14-81e5-3a475942cc9b}">
+		<property name="name">
+			<value>Distortion_Intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{afe9dbc4-17bb-491d-a78e-6e0cd65eb573}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{82798368-b4ff-4d9d-9a81-c69912fae0ec}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{82798368-b4ff-4d9d-9a81-c69912fae0ec}">
+		<property name="maximum">
+			<value>100</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

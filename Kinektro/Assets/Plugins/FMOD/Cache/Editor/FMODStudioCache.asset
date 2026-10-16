@@ -317,7 +317,7 @@ MonoBehaviour:
   Path: F_Audio/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639271409999032934
+  lastModified: 639276827671618461
   FileSizes:
   - Name: Desktop
     Value: 14832288
@@ -453,7 +453,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 125819476962920100}
   cacheVersion: 131861
-  cacheTime: 639271409999069343
+  cacheTime: 639276827674093806
   SerializableEventsDict:
   - key: event:/The Emptiness Machine
     index: 0
@@ -480,7 +480,7 @@ MonoBehaviour:
   Path: F_Audio/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639271409999069343
+  lastModified: 639276827674093806
   FileSizes:
   - Name: Desktop
     Value: 1186

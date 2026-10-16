@@ -15,6 +15,12 @@ public class GestureDetector : MonoBehaviour
     public FXSelector fxSelectorCh2;
     [Tooltip("Margen extra sobre la cabeza para 'mano totalmente arriba' (metros), igual que en kinectv2.")]
     public float intensityHeadMargin = 0.3f;
+    [Tooltip("Cuanto mas abajo de la base de la columna se considera la mano en reposo (0%). Valores mas negativos bajan el piso para eliminar la zona muerta al empezar a levantar la mano.")]
+    public float intensityLowMargin = -0.3f;
+    [Tooltip("Barra visual de intensidad del canal 1 (mano izquierda), opcional.")]
+    public FXIntensityMeter meterCh1;
+    [Tooltip("Barra visual de intensidad del canal 2 (mano derecha), opcional.")]
+    public FXIntensityMeter meterCh2;
     private int debugLogFrameCounter = 0;
 
     [Header("Umbrales (ajustables)")]
@@ -97,14 +103,15 @@ public class GestureDetector : MonoBehaviour
         if (djManager == null) return;
         if (!dataSource.TryGetJointPosition("SpineBase", out Vector3 spinePos)) return;
 
-        float lowY = spinePos.y;
+        float lowY = spinePos.y + intensityLowMargin;
         float highY = headPos.y + intensityHeadMargin;
 
         if (fxSelectorCh1 != null && dataSource.TryGetJointPosition("HandLeft", out Vector3 leftHandPos))
         {
             float leftHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, leftHandPos.y));
-            int ch1Effect = fxSelectorCh1.IsActive ? fxSelectorCh1.ArmedEffect : 0;
+            int ch1Effect = fxSelectorCh1.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
             djManager.SetFXIntensity(1, ch1Effect, leftHeight);
+            if (meterCh1 != null) meterCh1.SetValue01(leftHeight);
 
             // === TEMPORAL: log de QA, quitar despues de verificar ===
             debugLogFrameCounter++;
@@ -118,8 +125,9 @@ public class GestureDetector : MonoBehaviour
         if (fxSelectorCh2 != null && dataSource.TryGetJointPosition("HandRight", out Vector3 rightHandPos))
         {
             float rightHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, rightHandPos.y));
-            int ch2Effect = fxSelectorCh2.IsActive ? fxSelectorCh2.ArmedEffect : 0;
+            int ch2Effect = fxSelectorCh2.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
             djManager.SetFXIntensity(2, ch2Effect, rightHeight);
+            if (meterCh2 != null) meterCh2.SetValue01(rightHeight);
         }
     }
 
