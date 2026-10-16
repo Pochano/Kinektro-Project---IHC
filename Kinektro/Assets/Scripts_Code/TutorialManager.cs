@@ -1,23 +1,22 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public enum TutorialStep
 {
-    Welcome,            // 1. Bienvenida
-    ShelfExplanation,   // 2. Explicación de estantería
-    SelectTrack,        // 3. Seleccionar pista de la librería
-    GrabVinyl,          // 4. Coger el disco
-    PlaceOnTurntable,   // 5. Colocar en el plato
-    PlayPause,          // 6. Probar Play/Pause
-    CueButton,          // 7. Probar Cue
-    LoopButton,         // 8. Probar Loop (3 etapas)
-    PitchFader,         // 9. Mover Fader de Pitch
-    KnobsEQ,            // 10. Probar Knobs de EQ
-    FXButton,           // 11. Presionar botón morado FX
-    SelectFX,           // 12. Seleccionar efecto favorito
-    KinectHandMove,     // 13. Mover la mano (Kinect)
-    Completed           // Tutorial Finalizado
+    Welcome,            // 1. Saludo y bienvenida
+    SelectTrack,        // Compatibilidad con VRFloatingWindow
+    OpenLibrary,        // 2. Girar a la derecha, explorar biblioteca flotante y seleccionar pista
+    GrabAndPlaceVinyl,  // 3. Explicación de estantería izquierda, coger vinilo y colocarlo en el plato
+    FreeMixExplanation, // 4. Libertad para usar los controles vistos en Escena 2
+    KinectFXButtons,    // 5. Presionar botón morado FX (Ch1 o Ch2) -> Activa modo Kinect
+    FXButton,           // Compatibilidad
+    SelectFXEffect,     // 6. Seleccionar un efecto en la interfaz
+    SelectFX,           // Compatibilidad
+    KinectHandRaise,    // 7. Mirar al frente y levantar la mano según canal
+    KinectHandMove,     // Compatibilidad con KinectGestureFX
+    Completed           // 8. Eso es todo el tutorial, ¡disfruta y experimenta!
 }
 
 public class TutorialManager : MonoBehaviour
@@ -25,18 +24,19 @@ public class TutorialManager : MonoBehaviour
     [Header("UI del Tutorial")]
     public GameObject tutorialCanvas;
     public TextMeshProUGUI instructionText;
-    public Button nextButton; // Útil para pasos puramente explicativos y como botón de salto
+    public Button nextButton;
+
+    [Header("Referencias a Botones Morados de FX (Kinect)")]
+    public VR_Boton fxButtonCh1;
+    public VR_Boton fxButtonCh2;
+
+    [Header("Colores de Estado FX / Kinect")]
+    public Color kinectActiveColor = new Color(0.6f, 0f, 1f); // Morado brillante
 
     [Header("Estado Actual")]
     public TutorialStep currentStep = TutorialStep.Welcome;
 
-    // Sub-estados para verificaciones compuestas
-    private bool playPressed = false;
-    private bool pausePressed = false;
-    private bool cuePressed = false;
-    private int loopStateTracker = 0; // 0=Off, 1=Recording, 2=Active
-
-    public static TutorialManager Instance;
+    public static TutorialManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -45,8 +45,24 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        if (tutorialCanvas != null) tutorialCanvas.SetActive(false);
-        if (nextButton != null) nextButton.onClick.AddListener(OnNextButtonClicked);
+        if (nextButton != null)
+        {
+            // Evento UI Tradicional / Clic
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(OnNextButtonClicked);
+
+            // Vinculación con XR Simple Interactable si está presente
+            XRSimpleInteractable interactable = nextButton.GetComponent<XRSimpleInteractable>();
+            if (interactable != null)
+            {
+                interactable.selectEntered.RemoveAllListeners();
+                interactable.selectEntered.AddListener((args) => OnNextButtonClicked());
+                interactable.activated.RemoveAllListeners();
+                interactable.activated.AddListener((args) => OnNextButtonClicked());
+            }
+        }
+
+        StartTutorial();
     }
 
     public void StartTutorial()
@@ -58,90 +74,51 @@ public class TutorialManager : MonoBehaviour
     public void SetStep(TutorialStep step)
     {
         currentStep = step;
-        if (nextButton != null) nextButton.gameObject.SetActive(false);
 
         switch (currentStep)
         {
             case TutorialStep.Welcome:
-                UpdateInstruction("¡Bienvenido a Kinektro VR!\n\nEste tutorial te enseñará las herramientas básicas de la mesa de DJ.");
-                if (nextButton != null)
-                {
-                    nextButton.gameObject.SetActive(true);
-                    SetNextButtonText("Siguiente");
-                }
+                UpdateInstruction("¡Hola! Te damos la bienvenida a la discoteca de Kinektro VR.");
+                ShowNextButton("Next");
                 break;
 
-            case TutorialStep.ShelfExplanation:
-                UpdateInstruction("Mira la estantería a tu lado.\nPosee 6 bases magnéticas para sostener los vinilos que generes desde la librería.");
-                if (nextButton != null)
-                {
-                    nextButton.gameObject.SetActive(true);
-                    SetNextButtonText("Siguiente");
-                }
-                break;
-
+            case TutorialStep.OpenLibrary:
             case TutorialStep.SelectTrack:
-                UpdateInstruction("PASO 1:\nAbre la librería flotante (tecla '.' o tocando la esfera) y selecciona una pista.");
+                UpdateInstruction("PASO 1:\nGira a tu derecha. Encontrarás la biblioteca flotante.\nNavega entre las pestañas y selecciona una pista.");
+                HideNextButton();
                 break;
 
-            case TutorialStep.GrabVinyl:
-                UpdateInstruction("PASO 2:\nToma el disco recién generado de la estantería usando el gatillo (Grip).");
+            case TutorialStep.GrabAndPlaceVinyl:
+                UpdateInstruction("PASO 2:\nA tu costado izquierdo se generará el vinilo en la estantería.\nExtiende tu mano, tómalo y colócalo sobre la mesa de DJ (Plato).");
+                HideNextButton();
                 break;
 
-            case TutorialStep.PlaceOnTurntable:
-                UpdateInstruction("PASO 3:\nLleva el disco hacia uno de los platos (Turntables) para cargarlo.");
+            case TutorialStep.FreeMixExplanation:
+                UpdateInstruction("PASO 3:\n¡Excelente! Ahora puedes experimentar libremente usando todo lo aprendido en la escena previa (Play, Cue, Loop, Pitch, EQ).");
+                ShowNextButton("Next");
                 break;
 
-            case TutorialStep.PlayPause:
-                UpdateInstruction("PASO 4:\nPresiona el botón de PLAY en el plato para reproducir, vuelve a presionarlo para pausar, y una vez más para reanudar.");
-                playPressed = false;
-                pausePressed = false;
-                break;
-
-            case TutorialStep.CueButton:
-                UpdateInstruction("PASO 5:\nPresiona el botón CUE para reiniciar la pista al inicio y luego dale a PLAY.");
-                cuePressed = false;
-                break;
-
-            case TutorialStep.LoopButton:
-                UpdateInstruction("PASO 6:\nPrueba el botón de LOOP en 3 etapas:\n1. Marca Entrada\n2. Marca Salida (Activar)\n3. Presiona de nuevo para Apagar.");
-                loopStateTracker = 0;
-                break;
-
-            case TutorialStep.PitchFader:
-                UpdateInstruction("PASO 7:\nMantiene presionado el Grip sobre la palanca de PITCH/Tempo y muévela hacia arriba o abajo.");
-                break;
-
-            case TutorialStep.KnobsEQ:
-                UpdateInstruction("PASO 8:\nToma una perilla de Ecualización (Low, Mid, High) y gírala a la izquierda o derecha.");
-                break;
-
+            case TutorialStep.KinectFXButtons:
             case TutorialStep.FXButton:
-                UpdateInstruction("PASO 9:\nPresiona el botón morado de FX para activar el módulo de efectos en el canal.");
+                UpdateInstruction("PASO 4: MODO KINECT\nPresiona cualquiera de los botones morados de FX ubicados a los costados del panel de mezcla para activar el modo Kinect.");
+                HideNextButton();
                 break;
 
+            case TutorialStep.SelectFXEffect:
             case TutorialStep.SelectFX:
-                UpdateInstruction("PASO 10:\nSelecciona en la interfaz el efecto que más te guste (Reverb, Delay, Flanger...).");
+                UpdateInstruction("PASO 5: SELECCIÓN DE EFECTO\nElige en la pantalla el efecto de tu preferencia (Reverb, Delay, Flanger, etc.).");
+                HideNextButton();
                 break;
 
+            case TutorialStep.KinectHandRaise:
             case TutorialStep.KinectHandMove:
-                UpdateInstruction("PASO 11:\nMueve tu mano verticalmente hacia arriba y hacia abajo para controlar la modulación (Kinect/Hand Tracking).");
-
-                // Activar el botón automáticamente para poder saltar este paso si se desea
-                if (nextButton != null)
-                {
-                    nextButton.gameObject.SetActive(true);
-                    SetNextButtonText("Saltar");
-                }
+                UpdateInstruction("PASO 6: CONTROL POR GESTOS\nMira hacia al frente y levanta la mano del canal correspondiente para modular el efecto en tiempo real.");
+                ShowNextButton("Next");
                 break;
 
             case TutorialStep.Completed:
-                UpdateInstruction("¡Felicidades! Has completado el tutorial de Kinektro.\n\n¡Ya estás listo para mezclar!");
-                if (nextButton != null)
-                {
-                    nextButton.gameObject.SetActive(true);
-                    SetNextButtonText("Finalizar");
-                }
+                UpdateInstruction("PASO 7:\n¡Eso es todo el tutorial!\n\nDisfruta y experimenta con la consola.");
+                ShowNextButton("Finish");
                 break;
         }
     }
@@ -151,115 +128,110 @@ public class TutorialManager : MonoBehaviour
         if (instructionText != null) instructionText.text = text;
     }
 
-    private void SetNextButtonText(string label)
+    private void ShowNextButton(string label)
     {
         if (nextButton != null)
         {
+            nextButton.gameObject.SetActive(true);
+
             TextMeshProUGUI tmpText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
-            if (tmpText != null) tmpText.text = label;
+            if (tmpText != null)
+            {
+                tmpText.text = label;
+            }
+            else
+            {
+                Text legacyText = nextButton.GetComponentInChildren<Text>();
+                if (legacyText != null) legacyText.text = label;
+            }
         }
     }
 
-    /// <summary>
-    /// MÉTODO PÚBLICO: Permite avanzar de paso desde el evento VR (XR Simple Interactable)
-    /// </summary>
+    private void HideNextButton()
+    {
+        if (nextButton != null)
+        {
+            nextButton.gameObject.SetActive(false);
+        }
+    }
+
     public void OnNextButtonClicked()
     {
-        if (currentStep == TutorialStep.Welcome)
+        Debug.Log($"[TutorialManager] Next presionado en: {currentStep}");
+
+        switch (currentStep)
         {
-            SetStep(TutorialStep.ShelfExplanation);
-        }
-        else if (currentStep == TutorialStep.ShelfExplanation)
-        {
-            SetStep(TutorialStep.SelectTrack);
-        }
-        else if (currentStep == TutorialStep.KinectHandMove)
-        {
-            SetStep(TutorialStep.Completed);
-        }
-        else if (currentStep == TutorialStep.Completed)
-        {
-            if (tutorialCanvas != null) tutorialCanvas.SetActive(false);
+            case TutorialStep.Welcome:
+                SetStep(TutorialStep.OpenLibrary);
+                break;
+
+            case TutorialStep.FreeMixExplanation:
+                SetStep(TutorialStep.KinectFXButtons);
+                break;
+
+            case TutorialStep.KinectHandRaise:
+            case TutorialStep.KinectHandMove:
+                SetStep(TutorialStep.Completed);
+                break;
+
+            case TutorialStep.Completed:
+                if (tutorialCanvas != null) tutorialCanvas.SetActive(false);
+                break;
         }
     }
 
-    // --- MÉTODOS DE VERIFICACIÓN (Llamados por los scripts del sistema) ---
+    // --- MANEJO DE EVENTOS DE ACCIÓN REAL ---
 
     public void OnTrackSelectedFromLibrary()
     {
-        if (currentStep == TutorialStep.SelectTrack) SetStep(TutorialStep.GrabVinyl);
-    }
-
-    public void OnVinylGrabbed()
-    {
-        if (currentStep == TutorialStep.GrabVinyl) SetStep(TutorialStep.PlaceOnTurntable);
+        if (currentStep == TutorialStep.OpenLibrary || currentStep == TutorialStep.SelectTrack)
+        {
+            SetStep(TutorialStep.GrabAndPlaceVinyl);
+        }
     }
 
     public void OnVinylPlacedOnTurntable()
     {
-        if (currentStep == TutorialStep.PlaceOnTurntable) SetStep(TutorialStep.PlayPause);
-    }
-
-    public void OnPlayToggle(bool isPlayingNow)
-    {
-        if (currentStep == TutorialStep.PlayPause)
+        if (currentStep == TutorialStep.GrabAndPlaceVinyl)
         {
-            if (isPlayingNow && !playPressed) playPressed = true;
-            else if (!isPlayingNow && playPressed) pausePressed = true;
-            else if (isPlayingNow && playPressed && pausePressed)
-            {
-                SetStep(TutorialStep.CueButton);
-            }
-        }
-        else if (currentStep == TutorialStep.CueButton && cuePressed && isPlayingNow)
-        {
-            SetStep(TutorialStep.LoopButton);
+            SetStep(TutorialStep.FreeMixExplanation);
         }
     }
 
-    public void OnCuePressed()
+    public void OnFXButtonToggle(int channel)
     {
-        if (currentStep == TutorialStep.CueButton)
+        if (currentStep == TutorialStep.KinectFXButtons || currentStep == TutorialStep.FXButton)
         {
-            cuePressed = true;
+            if (channel == 1 && fxButtonCh1 != null) fxButtonCh1.SetButtonColor(kinectActiveColor);
+            if (channel == 2 && fxButtonCh2 != null) fxButtonCh2.SetButtonColor(kinectActiveColor);
+
+            SetStep(TutorialStep.SelectFXEffect);
         }
-    }
-
-    public void OnLoopStateChanged(int stateIndex)
-    {
-        if (currentStep == TutorialStep.LoopButton)
-        {
-            if (stateIndex == 1 && loopStateTracker == 0) loopStateTracker = 1;      // Recording
-            else if (stateIndex == 2 && loopStateTracker == 1) loopStateTracker = 2; // Active
-            else if (stateIndex == 0 && loopStateTracker == 2)                       // Off
-            {
-                SetStep(TutorialStep.PitchFader);
-            }
-        }
-    }
-
-    public void OnPitchFaderMoved()
-    {
-        if (currentStep == TutorialStep.PitchFader) SetStep(TutorialStep.KnobsEQ);
-    }
-
-    public void OnKnobRotated()
-    {
-        if (currentStep == TutorialStep.KnobsEQ) SetStep(TutorialStep.FXButton);
-    }
-
-    public void OnFXButtonToggle()
-    {
-        if (currentStep == TutorialStep.FXButton) SetStep(TutorialStep.SelectFX);
     }
 
     public void OnFXSelected()
     {
-        if (currentStep == TutorialStep.SelectFX) SetStep(TutorialStep.KinectHandMove);
+        if (currentStep == TutorialStep.SelectFXEffect || currentStep == TutorialStep.SelectFX)
+        {
+            SetStep(TutorialStep.KinectHandRaise);
+        }
     }
 
     public void OnKinectHandMoved()
     {
-        if (currentStep == TutorialStep.KinectHandMove) SetStep(TutorialStep.Completed);
+        if (currentStep == TutorialStep.KinectHandRaise || currentStep == TutorialStep.KinectHandMove)
+        {
+            SetStep(TutorialStep.Completed);
+        }
     }
+
+    // --- MÉTODOS DE COMPATIBILIDAD ---
+
+    public void OnFXButtonToggle() => OnFXButtonToggle(1);
+    public void OnVinylGrabbed() { }
+    public void OnPlayToggle(bool isPlayingNow) { }
+    public void OnCuePressed() { }
+    public void OnLoopStateChanged(int stateIndex) { }
+    public void OnPitchFaderMoved() { }
+    public void OnKnobRotated() { }
 }

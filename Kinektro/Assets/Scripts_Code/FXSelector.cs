@@ -44,10 +44,10 @@ public class FXSelector : MonoBehaviour
 
         UpdateVisualColor();
 
-        // Notificación al Tutorial
-        if (TutorialManager.Instance != null)
+        // Notificación al Tutorial (pasa el número de canal)
+        if (TutorialManager.Instance != null && isActive)
         {
-            TutorialManager.Instance.OnFXButtonToggle();
+            TutorialManager.Instance.OnFXButtonToggle(channelNumber);
         }
     }
 
@@ -74,14 +74,12 @@ public class FXSelector : MonoBehaviour
 
         armedEffect = buttonSlot;
 
-        // --- SOLUCIÓN PARA EL TUTORIAL ---
+        // Notificación al Tutorial
         if (TutorialManager.Instance != null && armedEffect > 0)
         {
-            // Si el tutorial está atascado en activar el botón morado (Paso 11),
-            // lo avanzamos primero a la selección de efecto y luego completamos la selección.
-            if (TutorialManager.Instance.currentStep == TutorialStep.FXButton)
+            if (TutorialManager.Instance.currentStep == TutorialStep.KinectFXButtons)
             {
-                TutorialManager.Instance.OnFXButtonToggle();
+                TutorialManager.Instance.OnFXButtonToggle(channelNumber);
             }
 
             TutorialManager.Instance.OnFXSelected();
@@ -103,7 +101,7 @@ public class FXSelector : MonoBehaviour
 
         if (TutorialManager.Instance != null)
         {
-            TutorialManager.Instance.OnFXButtonToggle();
+            TutorialManager.Instance.OnFXButtonToggle(channelNumber);
         }
     }
 

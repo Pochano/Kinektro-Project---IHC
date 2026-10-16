@@ -16,13 +16,10 @@ public class VinylData : MonoBehaviour
     public VinylMetadata metadata;
 
     [Header("Referencias de UI (Sticker Canvas)")]
-    [Tooltip("Asigna el objeto FrontCover (componente Image)")]
     public Image frontCoverImage;
-    [Tooltip("Asigna el objeto BackCover (componente Image)")]
     public Image backCoverImage;
 
     [Header("Configuración de Autodestrucción")]
-    [Tooltip("Tiempo en segundos antes de destruirse si el disco no está en una repisa o tornamesa")]
     public float floatingLifetime = 15f;
 
     public int trackID;
@@ -46,10 +43,8 @@ public class VinylData : MonoBehaviour
 
     private void Update()
     {
-        // Si el disco NO está en la repisa ni en la tornamesa
         if (currentState != VinylState.OnShelf && currentState != VinylState.OnTurntable)
         {
-            // Solo contamos el tiempo si NO lo está sosteniendo el jugador
             if (grabInteractable != null && !grabInteractable.isSelected)
             {
                 unplacedTimer += Time.deltaTime;
@@ -62,13 +57,11 @@ public class VinylData : MonoBehaviour
             }
             else
             {
-                // Si el jugador lo agarra en la mano, reiniciamos el contador de autodestrucción
                 unplacedTimer = 0f;
             }
         }
         else
         {
-            // Si está bien colocado en repisa o tornamesa, reseteamos el contador
             unplacedTimer = 0f;
         }
     }
@@ -76,17 +69,13 @@ public class VinylData : MonoBehaviour
     public void SetState(VinylState newState)
     {
         currentState = newState;
-        unplacedTimer = 0f; // Reseteamos el temporizador al cambiar de estado
+        unplacedTimer = 0f;
     }
 
-    /// <summary>
-    /// Convierte la Texture2D del metadata en Sprite y la aplica a las carátulas del Canvas
-    /// </summary>
     public void ApplyCoverArt()
     {
         if (metadata == null || metadata.coverArt == null) return;
 
-        // 1. Convertir la Texture2D del ScriptableObject a Sprite
         Texture2D texture = metadata.coverArt;
         Sprite coverSprite = Sprite.Create(
             texture,
@@ -94,21 +83,17 @@ public class VinylData : MonoBehaviour
             new Vector2(0.5f, 0.5f)
         );
 
-        // 2. Asignar el sprite a la cara frontal
         if (frontCoverImage != null)
         {
             frontCoverImage.sprite = coverSprite;
             frontCoverImage.color = Color.white;
         }
 
-        // 3. Asignar el sprite a la cara trasera
         if (backCoverImage != null)
         {
             backCoverImage.sprite = coverSprite;
             backCoverImage.color = Color.white;
         }
-
-        Debug.Log($"[VinylData] Sticker UI de '{metadata.songTitle}' aplicado con éxito en ambas caras.");
     }
 
     private void OnGrabbed(SelectEnterEventArgs args)
@@ -118,6 +103,24 @@ public class VinylData : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = false;
+            rb.useGravity = false;
+        }
+
+        // TELETRANSPORTE DIRECTO A LA MANO
+        if (args.interactorObject != null)
+        {
+            Transform targetAttach = args.interactorObject.GetAttachTransform(grabInteractable);
+
+            if (targetAttach == null && args.interactorObject.transform != null)
+            {
+                targetAttach = args.interactorObject.transform;
+            }
+
+            if (targetAttach != null)
+            {
+                transform.position = targetAttach.position;
+                transform.rotation = targetAttach.rotation;
+            }
         }
 
         if (TutorialManager.Instance != null) TutorialManager.Instance.OnVinylGrabbed();
@@ -125,8 +128,12 @@ public class VinylData : MonoBehaviour
 
     private void OnReleased(SelectExitEventArgs args)
     {
-        // Al soltarlo en el aire, se mantiene como Grabbed/Unplaced hasta entrar a un socket
         unplacedTimer = 0f;
+
+        if (rb != null && currentState == VinylState.Grabbed)
+        {
+            rb.useGravity = true;
+        }
     }
 
     private void OnDestroy()
@@ -137,5 +144,4 @@ public class VinylData : MonoBehaviour
             grabInteractable.selectExited.RemoveListener(OnReleased);
         }
     }
-
 }
