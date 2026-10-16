@@ -10,7 +10,7 @@ public class MockKinectSource : MonoBehaviour, IJointDataSource
     public Vector3 originOffset = new Vector3(0f, 0f, 1.2f);
 
     [Header("Posicion Y de la mano cuando esta 'levantada' (prueba), relativa al origen")]
-    public float raisedHandY = 1.9f;
+    public float raisedHandY = 4.9f;
 
     [Header("Posicion Y de la mano en reposo (abajo), relativa al origen")]
     public float idleHandY = 0.9f;

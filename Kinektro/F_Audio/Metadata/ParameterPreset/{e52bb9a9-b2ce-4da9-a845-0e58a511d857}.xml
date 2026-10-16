@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{e52bb9a9-b2ce-4da9-a845-0e58a511d857}">
+		<property name="name">
+			<value>Flanger_Intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{afe9dbc4-17bb-491d-a78e-6e0cd65eb573}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{03092873-f1d8-4858-b4e1-e3e87aba6d18}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{03092873-f1d8-4858-b4e1-e3e87aba6d18}">
+		<property name="maximum">
+			<value>100</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

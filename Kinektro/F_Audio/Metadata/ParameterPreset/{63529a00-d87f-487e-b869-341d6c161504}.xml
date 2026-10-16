@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{63529a00-d87f-487e-b869-341d6c161504}">
+		<property name="name">
+			<value>Delay_Intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{afe9dbc4-17bb-491d-a78e-6e0cd65eb573}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{db4ac69a-74b3-484a-b0cc-4b11e5beb2db}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{db4ac69a-74b3-484a-b0cc-4b11e5beb2db}">
+		<property name="maximum">
+			<value>100</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

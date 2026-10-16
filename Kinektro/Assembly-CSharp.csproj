@@ -79,6 +79,7 @@
     <Compile Include="Assets\KinectUDP\KinectUdpReceiver.cs" />
     <Compile Include="Assets\FXLabelBillboard.cs" />
     <Compile Include="Assets\Scripts_Code\FXSelector.cs" />
+    <Compile Include="Assets\Scripts_Code\FXButtonClick.cs" />
     <Compile Include="Assets\Scripts_Code\TurntableDeck.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRPokeFollowAffordanceFill.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\VRTemplateAssets\Scripts\LaunchProjectile.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\StepManager.cs" />
     <Compile Include="Assets\Scripts_Code\FuserBeatbarUI.cs" />
+    <Compile Include="Assets\Scripts_Code\FXIntensityMeter.cs" />
     <Compile Include="Assets\Scripts_Code\DJ_DeckController.cs" />
     <Compile Include="Assets\Scripts_Code\VinylDataImporter.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\AnchorVisuals.cs" />
