@@ -23,6 +23,12 @@ public class GestureDetector : MonoBehaviour
     public FXIntensityMeter meterCh2;
     private int debugLogFrameCounter = 0;
 
+    [Header("Red - notificacion de altura continua (opcional)")]
+    [Tooltip("Se invoca cada frame con la altura normalizada (0-1) de la mano izquierda, incluso si djManager/fxSelectorCh1 no estan asignados en esta escena. Pensado para que un puente UDP entre PCs (PC del Kinect) reenvie este valor sin duplicar la logica de calculo de altura.")]
+    public UnityEngine.Events.UnityEvent<float> onLeftHandHeightChanged;
+    [Tooltip("Igual que onLeftHandHeightChanged pero para la mano derecha / canal 2.")]
+    public UnityEngine.Events.UnityEvent<float> onRightHandHeightChanged;
+
     [Header("Umbrales (ajustables)")]
     public float raiseMarginMeters = 0.1f;
     public float swipeSpeedThreshold = 1.5f;
@@ -100,34 +106,43 @@ public class GestureDetector : MonoBehaviour
     // Mutua exclusion (los demas efectos del canal quedan en 0) la resuelve DJ_Manager.SetFXIntensity.
     private void UpdateFXIntensity(Vector3 headPos)
     {
-        if (djManager == null) return;
         if (!dataSource.TryGetJointPosition("SpineBase", out Vector3 spinePos)) return;
 
         float lowY = spinePos.y + intensityLowMargin;
         float highY = headPos.y + intensityHeadMargin;
 
-        if (fxSelectorCh1 != null && dataSource.TryGetJointPosition("HandLeft", out Vector3 leftHandPos))
+        if (dataSource.TryGetJointPosition("HandLeft", out Vector3 leftHandPos))
         {
             float leftHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, leftHandPos.y));
-            int ch1Effect = fxSelectorCh1.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
-            djManager.SetFXIntensity(1, ch1Effect, leftHeight);
-            if (meterCh1 != null) meterCh1.SetValue01(leftHeight);
+            onLeftHandHeightChanged.Invoke(leftHeight);
 
-            // === TEMPORAL: log de QA, quitar despues de verificar ===
-            debugLogFrameCounter++;
-            if (debugLogFrameCounter >= 20)
+            if (djManager != null && fxSelectorCh1 != null)
             {
-                debugLogFrameCounter = 0;
-                Debug.Log($"[FXIntensity DEBUG] Ch1 armedEffect={ch1Effect} leftHeight={leftHeight:F2} -> escala 0-100: {leftHeight * 100f:F1}");
+                int ch1Effect = fxSelectorCh1.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
+                djManager.SetFXIntensity(1, ch1Effect, leftHeight);
+                if (meterCh1 != null) meterCh1.SetValue01(leftHeight);
+
+                // === TEMPORAL: log de QA, quitar despues de verificar ===
+                debugLogFrameCounter++;
+                if (debugLogFrameCounter >= 20)
+                {
+                    debugLogFrameCounter = 0;
+                    Debug.Log($"[FXIntensity DEBUG] Ch1 armedEffect={ch1Effect} leftHeight={leftHeight:F2} -> escala 0-100: {leftHeight * 100f:F1}");
+                }
             }
         }
 
-        if (fxSelectorCh2 != null && dataSource.TryGetJointPosition("HandRight", out Vector3 rightHandPos))
+        if (dataSource.TryGetJointPosition("HandRight", out Vector3 rightHandPos))
         {
             float rightHeight = Mathf.Clamp01(Mathf.InverseLerp(lowY, highY, rightHandPos.y));
-            int ch2Effect = fxSelectorCh2.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
-            djManager.SetFXIntensity(2, ch2Effect, rightHeight);
-            if (meterCh2 != null) meterCh2.SetValue01(rightHeight);
+            onRightHandHeightChanged.Invoke(rightHeight);
+
+            if (djManager != null && fxSelectorCh2 != null)
+            {
+                int ch2Effect = fxSelectorCh2.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
+                djManager.SetFXIntensity(2, ch2Effect, rightHeight);
+                if (meterCh2 != null) meterCh2.SetValue01(rightHeight);
+            }
         }
     }
 
