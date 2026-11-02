@@ -9,6 +9,9 @@ public class KinectUdpReceiver : MonoBehaviour, IJointDataSource
 {
     public int port = 5005;
 
+    [Tooltip("Tilda esto si el Kinect reporta las manos 'en espejo' (levantas la derecha y el juego reacciona como si fuera la izquierda, o viceversa). Invierte Left/Right de todos los joints y del estado de las manos antes de usarlos.")]
+    public bool swapLeftRight = false;
+
     private UdpClient udpClient;
     private Thread receiveThread;
     private volatile bool running = false;
@@ -88,15 +91,23 @@ public class KinectUdpReceiver : MonoBehaviour, IJointDataSource
             {
                 if (parts.Length >= 3)
                 {
-                    handStateLeft = parts[1];
-                    handStateRight = parts[2];
+                    if (swapLeftRight)
+                    {
+                        handStateLeft = parts[2];
+                        handStateRight = parts[1];
+                    }
+                    else
+                    {
+                        handStateLeft = parts[1];
+                        handStateRight = parts[2];
+                    }
                 }
                 continue;
             }
 
             if (parts.Length != 4) continue;
 
-            string jointName = parts[0];
+            string jointName = MapJointName(parts[0]);
             float x = float.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
             float y = float.Parse(parts[2], System.Globalization.CultureInfo.InvariantCulture);
             float z = float.Parse(parts[3], System.Globalization.CultureInfo.InvariantCulture);
@@ -108,6 +119,19 @@ public class KinectUdpReceiver : MonoBehaviour, IJointDataSource
         {
             Debug.Log("Mano derecha: " + jointPositions["HandRight"]);
         }
+
+        // === TEMPORAL: diagnostico de joints disponibles, quitar despues de verificar ===
+        Debug.Log("[DIAG] Joints disponibles ahora mismo: " + string.Join(", ", jointPositions.Keys));
+    }
+
+    // Invierte el sufijo Left/Right de un nombre de joint (ej. HandLeft <-> HandRight) cuando
+    // swapLeftRight esta tildado, para corregir Kinects que reportan las manos "en espejo".
+    private string MapJointName(string rawName)
+    {
+        if (!swapLeftRight) return rawName;
+        if (rawName.EndsWith("Left")) return rawName.Substring(0, rawName.Length - 4) + "Right";
+        if (rawName.EndsWith("Right")) return rawName.Substring(0, rawName.Length - 5) + "Left";
+        return rawName;
     }
 
     public Vector3 GetJointPosition(string jointName)

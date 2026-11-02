@@ -6861,6 +6861,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sourceProvider: {fileID: 2107610387}
+  djManager: {fileID: 0}
+  fxSelectorCh1: {fileID: 0}
+  fxSelectorCh2: {fileID: 0}
+  intensityHeadMargin: 0.3
+  intensityLowMargin: -0.3
+  meterCh1: {fileID: 0}
+  meterCh2: {fileID: 0}
+  onLeftHandHeightChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onRightHandHeightChanged:
+    m_PersistentCalls:
+      m_Calls: []
   raiseMarginMeters: 0.1
   swipeSpeedThreshold: 1.5
   onRightHandRaised:
@@ -7521,6 +7534,55 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: -80}
   m_SizeDelta: {x: 600, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &804768352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 804768354}
+  - component: {fileID: 804768353}
+  m_Layer: 0
+  m_Name: CrossPC_Bridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &804768353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804768352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d019a48bb52205e47a84b533bb664596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listenPort: 6006
+  remoteIP: 10.188.5.133
+  remotePort: 6005
+  redundantSends: 3
+  requireWindowOpenForVoiceSelection: 0
+--- !u!4 &804768354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804768352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.54439324, y: 0.5216768, z: -0.0025864188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &813974908
 GameObject:
   m_ObjectHideFlags: 0
@@ -20918,7 +20980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   realSource: {fileID: 2107610388}
   mockSource: {fileID: 2107610386}
-  useMock: 1
+  useMock: 0
 --- !u!114 &2107610388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20932,6 +20994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   port: 5005
+  swapLeftRight: 1
 --- !u!4 &2107610389
 Transform:
   m_ObjectHideFlags: 0
@@ -20986,6 +21049,14 @@ MonoBehaviour:
   fxSelectorCh2: {fileID: 50972606}
   intensityHeadMargin: 0.9
   intensityLowMargin: -0.3
+  meterCh1: {fileID: 0}
+  meterCh2: {fileID: 0}
+  onLeftHandHeightChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onRightHandHeightChanged:
+    m_PersistentCalls:
+      m_Calls: []
   raiseMarginMeters: 0.1
   swipeSpeedThreshold: 1.5
   onRightHandRaised:
@@ -21003,6 +21074,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 804768353}
+        m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
+        m_MethodName: OnRightHandRaised
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onRightHandLowered:
     m_PersistentCalls:
       m_Calls:
@@ -21013,6 +21096,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 804768353}
+        m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
+        m_MethodName: OnRightHandLowered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -21036,6 +21131,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 804768353}
+        m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
+        m_MethodName: OnLeftHandRaised
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onLeftHandLowered:
     m_PersistentCalls:
       m_Calls:
@@ -21046,6 +21153,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 804768353}
+        m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
+        m_MethodName: OnLeftHandLowered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -28055,3 +28174,4 @@ SceneRoots:
   - {fileID: 1140361799}
   - {fileID: 229954627}
   - {fileID: 1486482721}
+  - {fileID: 804768354}
