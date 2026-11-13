@@ -26,6 +26,11 @@ using UnityEngine;
 ///     WINDOW_OPEN|<canal>|<slot1,slot2,...>
 ///     WINDOW_CLOSE|<canal>
 ///     FADER|<canal>|<valor0a1>
+///
+///   PC A -> PC B, pipeline de DJPipelineEvaluator (prueba del flujo "A interactua, B gestualiza"):
+///     PIPELINE_WINDOW_OPEN            (arranca la ventana de evaluacion, justo despues del "GO" de la cuenta regresiva)
+///     PIPELINE_HIT|<control>|<combo>  (el jugador A acerto una interaccion del chart - este es el momento en que B deberia hacer un gesto)
+///     PIPELINE_WINDOW_CLOSE|<score>   (se termino el chart, ya no quedan nodos por evaluar)
 /// </summary>
 public class CrossPC_OculusBridge : MonoBehaviour
 {
@@ -195,6 +200,27 @@ public class CrossPC_OculusBridge : MonoBehaviour
     public void SendFader(int channel, float value01)
     {
         SendOnce($"FADER|{channel}|{Mathf.Clamp01(value01).ToString(System.Globalization.CultureInfo.InvariantCulture)}");
+    }
+
+    // --- Pipeline de DJPipelineEvaluator: llamar desde ahi, no desde otro lado ---
+
+    /// <summary>Avisa a la PC B que arranco la ventana de evaluacion del pipeline (justo tras el "GO" de la cuenta regresiva).</summary>
+    public void SendPipelineWindowOpen()
+    {
+        SendReliable("PIPELINE_WINDOW_OPEN");
+    }
+
+    /// <summary>Avisa a la PC B que el jugador A acerto una interaccion del pipeline (fader/perilla/boton correcto, a tiempo).
+    /// Este es el momento en el que el jugador B deberia hacer un gesto.</summary>
+    public void SendPipelineHit(string control, int combo)
+    {
+        SendReliable($"PIPELINE_HIT|{control}|{combo}");
+    }
+
+    /// <summary>Avisa a la PC B que se termino el chart del pipeline (ya no quedan nodos por evaluar).</summary>
+    public void SendPipelineWindowClose(int finalScore)
+    {
+        SendReliable($"PIPELINE_WINDOW_CLOSE|{finalScore}");
     }
 
     private void SendReliable(string message)

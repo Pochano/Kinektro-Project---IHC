@@ -100,7 +100,7 @@ public class BasicTutorialManager : MonoBehaviour
         switch (currentStep)
         {
             case BasicTutorialStep.Welcome:
-                UpdateInstruction("¡Bienvenido al Tutorial Básico de Kinektro!\n\nAprenderás a usar los botones de transporte, ecualización, volumen y tempo antes de pasar a la consola completa.");
+                UpdateInstruction("¡Bienvenido al Tutorial Básico de Kinektro!\n\nAprenderás a usar los botones de transporte, ecualización, volumen y tempo antes de pasar a la consola completa.\n\n\nUsa el Gripp del mando para cualquier interacción (Gatillo Lateral)");
                 ShowNextButton("Next");
                 break;
 

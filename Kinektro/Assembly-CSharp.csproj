@@ -79,6 +79,7 @@
     <Compile Include="Assets\KinectUDP\GestureAudioController.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\RayAttachModifier.cs" />
     <Compile Include="Assets\Scripts_Code\DJ_Manager.cs" />
+    <Compile Include="Assets\Scripts_Code\DJPipelineEvaluator.cs" />
     <Compile Include="Assets\KinectUDP\IJointDataSource.cs" />
     <Compile Include="Assets\KinectUDP\KinectUdpReceiver.cs" />
     <Compile Include="Assets\FXLabelBillboard.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Assets\VRTemplateAssets\Scripts\CalloutGazeController.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Fader.cs" />
     <Compile Include="Assets\KinectUDP\JointAngleCalculator.cs" />
+    <Compile Include="Assets\Scripts_Code\DJPipelineChart.cs" />
     <Compile Include="Assets\KinectUDP\MockKinectSource.cs" />
     <Compile Include="Assets\Scripts_Code\VinylData.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Knob_Joystick.cs" />

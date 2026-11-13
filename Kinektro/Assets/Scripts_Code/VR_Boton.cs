@@ -69,6 +69,20 @@ public class VR_Boton : MonoBehaviour
             buttonMesh.localPosition = isToggled ? pressedPos : unpressedPos;
         }
 
+        if (gameObject.name.Contains("StartPipeline"))
+        {
+            if (DJPipelineEvaluator.Instance != null)
+            {
+                DJPipelineEvaluator.Instance.StartCountdown();
+            }
+        }
+
+        if (DJPipelineEvaluator.Instance != null)
+        {
+            float val = (type == ButtonType.Toggle) ? (isToggled ? 1f : 0f) : 1f;
+            DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.PlayButton_Ch1, val);
+        }
+
         // --- CONEXIÓN CON EL TUTORIAL BÁSICO ---
         if (BasicTutorialManager.Instance != null)
         {

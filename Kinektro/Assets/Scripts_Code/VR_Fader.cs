@@ -81,6 +81,13 @@ public class VR_Fader : MonoBehaviour
         {
             currentValue = calculatedValue;
             OnValueChanged?.Invoke(currentValue);
+
+            if (DJPipelineEvaluator.Instance != null)
+            {
+                // Puedes pasarle el enum identificador correspondiente al fader
+                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.VolFader_Ch1, currentValue);
+            }
+
         }
 
         if (TutorialManager.Instance != null)

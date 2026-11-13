@@ -130,6 +130,18 @@ public class CrossPC_KinectBridge : MonoBehaviour
                 if (parts.Length >= 3) HandleFader(parts[1], parts[2]);
                 break;
 
+            case "PIPELINE_WINDOW_OPEN":
+                HandlePipelineWindowOpen();
+                break;
+
+            case "PIPELINE_HIT":
+                if (parts.Length >= 3) HandlePipelineHit(parts[1], parts[2]);
+                break;
+
+            case "PIPELINE_WINDOW_CLOSE":
+                if (parts.Length >= 2) HandlePipelineWindowClose(parts[1]);
+                break;
+
             default:
                 Debug.LogWarning($"[CrossPC_KinectBridge] Mensaje no reconocido: {message}");
                 break;
@@ -166,6 +178,24 @@ public class CrossPC_KinectBridge : MonoBehaviour
         if (!float.TryParse(valueStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float value01)) return;
 
         lastFaderByChannel[channel] = Mathf.Clamp01(value01);
+    }
+
+    // --- Pipeline de DJPipelineEvaluator (PC A): por ahora solo logueamos, es la prueba
+    // chica para confirmar que el dato llega bien antes de conectarlo con gestos reales. ---
+
+    private void HandlePipelineWindowOpen()
+    {
+        Debug.Log("<color=yellow>[CrossPC_KinectBridge] PIPELINE: arranco la ventana de evaluacion en PC A.</color>");
+    }
+
+    private void HandlePipelineHit(string control, string comboStr)
+    {
+        Debug.Log($"<color=green>[CrossPC_KinectBridge] PIPELINE HIT recibido: control={control} combo={comboStr} -> ACA el jugador B deberia hacer un gesto.</color>");
+    }
+
+    private void HandlePipelineWindowClose(string scoreStr)
+    {
+        Debug.Log($"<color=magenta>[CrossPC_KinectBridge] PIPELINE: se cerro la ventana. Score final recibido: {scoreStr}.</color>");
     }
 
     /// <summary>Util para que la UI/voz de esta PC sepa si puede ofrecer seleccion de efecto ahora mismo.</summary>

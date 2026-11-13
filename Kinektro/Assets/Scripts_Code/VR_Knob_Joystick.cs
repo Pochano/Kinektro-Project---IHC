@@ -103,6 +103,16 @@ public class VR_Knob_Joystick : MonoBehaviour
         RotateMesh(value);
         ApplyValueToDJManager(value);
 
+        if (DJPipelineEvaluator.Instance != null && channelNumber == 1)
+        {
+            if (knobType == KnobType.EQLow)
+                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.EqLow_Ch1, value);
+            else if (knobType == KnobType.EQMid)
+                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.EqMid_Ch1, value);
+            else if (knobType == KnobType.EQHigh)
+                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.EqHigh_Ch1, value);
+        }
+
         // --- NOTIFICACIÓN A ESCENA 2 (TUTORIAL BÁSICO) ---
         if (BasicTutorialManager.Instance != null)
         {
