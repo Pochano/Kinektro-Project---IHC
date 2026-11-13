@@ -55,11 +55,11 @@
     <UnityVersion>2022.3.62f2</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.62f2\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\KinectUDP\CrossPC_KinectBridge.cs" />
     <Compile Include="Assets\Scripts_Code\MusicLibraryManager.cs" />
     <Compile Include="Assets\Scripts_Code\BasicTutorialManager.cs" />
     <Compile Include="Assets\KinectUDP\KinectGestureFX.cs" />
@@ -75,23 +75,27 @@
     <Compile Include="Assets\KinectUDP\GestureAudioController.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\RayAttachModifier.cs" />
     <Compile Include="Assets\Scripts_Code\DJ_Manager.cs" />
+    <Compile Include="Assets\Scripts_Code\DJPipelineEvaluator.cs" />
     <Compile Include="Assets\KinectUDP\IJointDataSource.cs" />
     <Compile Include="Assets\KinectUDP\KinectUdpReceiver.cs" />
     <Compile Include="Assets\FXLabelBillboard.cs" />
     <Compile Include="Assets\Scripts_Code\FXSelector.cs" />
     <Compile Include="Assets\Scripts_Code\FXButtonClick.cs" />
+    <Compile Include="Assets\Scripts_Code\CrossPC_OculusBridge.cs" />
     <Compile Include="Assets\Scripts_Code\TurntableDeck.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRPokeFollowAffordanceFill.cs" />
     <Compile Include="Assets\Scripts_Code\ShelfSocketTrigger.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\CalloutGazeController.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Fader.cs" />
+    <Compile Include="Assets\Scripts_Code\DJPipelineChart.cs" />
     <Compile Include="Assets\KinectUDP\MockKinectSource.cs" />
     <Compile Include="Assets\Scripts_Code\VinylData.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Knob_Joystick.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Boton.cs" />
     <Compile Include="Assets\Scripts_Code\SongCardUI.cs" />
     <Compile Include="Assets\Scripts_Code\TutorialManager.cs" />
+    <Compile Include="Assets\Scripts_Code\VoiceEffectSelector.cs" />
     <Compile Include="Assets\KinectUDP\KinectSourceProvider.cs" />
     <Compile Include="Assets\Scripts_Code\ShelfManager.cs" />
     <Compile Include="Assets\Scripts_Code\VinylMetadata.cs" />
