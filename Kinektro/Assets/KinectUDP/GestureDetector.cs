@@ -121,14 +121,6 @@ public class GestureDetector : MonoBehaviour
                 int ch1Effect = fxSelectorCh1.ArmedEffect; // progresivo puro: sin gate de IsActive, responde en todo el recorrido de la mano
                 djManager.SetFXIntensity(1, ch1Effect, leftHeight);
                 if (meterCh1 != null) meterCh1.SetValue01(leftHeight);
-
-                // === TEMPORAL: log de QA, quitar despues de verificar ===
-                debugLogFrameCounter++;
-                if (debugLogFrameCounter >= 20)
-                {
-                    debugLogFrameCounter = 0;
-                    Debug.Log($"[FXIntensity DEBUG] Ch1 armedEffect={ch1Effect} leftHeight={leftHeight:F2} -> escala 0-100: {leftHeight * 100f:F1}");
-                }
             }
         }
 

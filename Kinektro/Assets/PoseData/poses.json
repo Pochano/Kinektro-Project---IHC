@@ -1,0 +1,308 @@
+{
+    "poses": [
+        {
+            "nombrePose": "neutro",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 161.1442108154297
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 128.70896911621095
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 101.94355773925781
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 129.9617156982422
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 176.16055297851563
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 175.89077758789063
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 81.71089172363281
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 117.45578002929688
+                }
+            ],
+            "repeticionesUsadas": 4
+        },
+        {
+            "nombrePose": "BrazosArriba",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 123.20735168457031
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 125.33431243896485
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 122.08161926269531
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 124.76937103271485
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 176.05001831054688
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 176.2254180908203
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 90.91451263427735
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 97.22489929199219
+                }
+            ],
+            "repeticionesUsadas": 5
+        },
+        {
+            "nombrePose": "DerechaArriba",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 134.69903564453126
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 154.27252197265626
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 129.82571411132813
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 131.71229553222657
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 176.03475952148438
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 176.08914184570313
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 94.13533782958985
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 101.31117248535156
+                }
+            ],
+            "repeticionesUsadas": 5
+        },
+        {
+            "nombrePose": "IzquierdaArriba",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 134.53990173339845
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 135.12950134277345
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 136.40188598632813
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 126.94149017333985
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 172.6051025390625
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 172.6436767578125
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 101.71361541748047
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 103.528076171875
+                }
+            ],
+            "repeticionesUsadas": 5
+        },
+        {
+            "nombrePose": "IzquierdaAbajo",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 86.7525863647461
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 159.01266479492188
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 142.27247619628907
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 143.22244262695313
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 175.61697387695313
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 175.715576171875
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 96.37765502929688
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 100.8941879272461
+                }
+            ],
+            "repeticionesUsadas": 5
+        },
+        {
+            "nombrePose": "DerechaAbajo",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 155.6512908935547
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 36.16827392578125
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 145.4336395263672
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 119.66267395019531
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 175.98658752441407
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 175.8846435546875
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 96.02044677734375
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 100.40283203125
+                }
+            ],
+            "repeticionesUsadas": 5
+        },
+        {
+            "nombrePose": "RodillaDerArriba",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 113.4685287475586
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 101.4647445678711
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 136.51968383789063
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 138.9917449951172
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 87.44252014160156
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 175.75460815429688
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 135.31024169921876
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 93.58868408203125
+                }
+            ],
+            "repeticionesUsadas": 5
+        },
+        {
+            "nombrePose": "RodillaIzArriba",
+            "angulos": [
+                {
+                    "nombre": "CodoIzquierdo",
+                    "valor": 88.9998779296875
+                },
+                {
+                    "nombre": "CodoDerecho",
+                    "valor": 135.77163696289063
+                },
+                {
+                    "nombre": "HombroIzquierdo",
+                    "valor": 135.54676818847657
+                },
+                {
+                    "nombre": "HombroDerecho",
+                    "valor": 136.18289184570313
+                },
+                {
+                    "nombre": "RodillaIzquierda",
+                    "valor": 175.93466186523438
+                },
+                {
+                    "nombre": "RodillaDerecha",
+                    "valor": 91.37989807128906
+                },
+                {
+                    "nombre": "CaderaIzquierda",
+                    "valor": 104.25762939453125
+                },
+                {
+                    "nombre": "CaderaDerecha",
+                    "valor": 139.29959106445313
+                }
+            ],
+            "repeticionesUsadas": 5
+        }
+    ]
+}

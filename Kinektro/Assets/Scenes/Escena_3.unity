@@ -7543,7 +7543,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 804768354}
-  - component: {fileID: 804768353}
+  - component: {fileID: 804768355}
   m_Layer: 0
   m_Name: CrossPC_Bridge
   m_TagString: Untagged
@@ -7551,23 +7551,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &804768353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804768352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d019a48bb52205e47a84b533bb664596, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listenPort: 6006
-  remoteIP: 10.188.5.133
-  remotePort: 6005
-  redundantSends: 3
-  requireWindowOpenForVoiceSelection: 0
 --- !u!4 &804768354
 Transform:
   m_ObjectHideFlags: 0
@@ -7583,6 +7566,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &804768355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804768352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59887f77505f769418b51f2f4142bcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listenPort: 6005
+  remoteIP: 192.168.100.11
+  remotePort: 6006
+  redundantSends: 3
+  fxSelectorCh1: {fileID: 845548422}
+  fxSelectorCh2: {fileID: 50972606}
+  djManager: {fileID: 751242120}
 --- !u!1 &813974908
 GameObject:
   m_ObjectHideFlags: 0
@@ -12533,6 +12535,55 @@ Transform:
   - {fileID: 33566455}
   - {fileID: 1086021789}
   m_Father: {fileID: 1177094305}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1278285103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1278285105}
+  - component: {fileID: 1278285104}
+  m_Layer: 0
+  m_Name: PoseMapperUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1278285104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278285103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1793ce2ae98552b45ad0f58e0ad53398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceProvider: {fileID: 2107610387}
+  cuentaRegresivaSegundos: 3
+  ventanaCapturaSegundos: 0.5
+  toleranciaGrados: 40
+  intervaloIdentificacionSegundos: 0.3
+--- !u!4 &1278285105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278285103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.54439324, y: 0.5216768, z: -0.0025864188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1293679730
 GameObject:
@@ -21074,7 +21125,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 804768353}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
         m_MethodName: OnRightHandRaised
         m_Mode: 1
@@ -21101,7 +21152,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 804768353}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
         m_MethodName: OnRightHandLowered
         m_Mode: 1
@@ -21131,7 +21182,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 804768353}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
         m_MethodName: OnLeftHandRaised
         m_Mode: 1
@@ -21158,7 +21209,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 804768353}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CrossPC_KinectBridge, Assembly-CSharp
         m_MethodName: OnLeftHandLowered
         m_Mode: 1
@@ -28175,3 +28226,4 @@ SceneRoots:
   - {fileID: 229954627}
   - {fileID: 1486482721}
   - {fileID: 804768354}
+  - {fileID: 1278285105}

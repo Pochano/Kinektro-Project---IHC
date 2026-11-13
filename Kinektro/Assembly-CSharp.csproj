@@ -65,11 +65,14 @@
     <Compile Include="Assets\Scripts_Code\BasicTutorialManager.cs" />
     <Compile Include="Assets\KinectUDP\KinectGestureFX.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\DestroyObject.cs" />
+    <Compile Include="Assets\KinectUDP\PoseIdentifier.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\VideoTimeScrubControl.cs" />
+    <Compile Include="Assets\KinectUDP\SkeletonOverlay2D.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\VideoPlayerRenderTexture.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Rotator.cs" />
     <Compile Include="Assets\Scripts_Code\BPMDisplayUI.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRKnob.cs" />
+    <Compile Include="Assets\KinectUDP\PoseData.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\BooleanToggleVisualsController.cs" />
     <Compile Include="Assets\Scripts_Code\BotonColorSwap.cs" />
     <Compile Include="Assets\KinectUDP\GestureDetector.cs" />
@@ -82,12 +85,14 @@
     <Compile Include="Assets\Scripts_Code\FXSelector.cs" />
     <Compile Include="Assets\Scripts_Code\FXButtonClick.cs" />
     <Compile Include="Assets\Scripts_Code\CrossPC_OculusBridge.cs" />
+    <Compile Include="Assets\KinectUDP\PoseMatching.cs" />
     <Compile Include="Assets\Scripts_Code\TurntableDeck.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRPokeFollowAffordanceFill.cs" />
     <Compile Include="Assets\Scripts_Code\ShelfSocketTrigger.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\CalloutGazeController.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Fader.cs" />
+    <Compile Include="Assets\KinectUDP\JointAngleCalculator.cs" />
     <Compile Include="Assets\KinectUDP\MockKinectSource.cs" />
     <Compile Include="Assets\Scripts_Code\VinylData.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Knob_Joystick.cs" />
@@ -107,8 +112,10 @@
     <Compile Include="Assets\Scripts_Code\FuserBeatbarUI.cs" />
     <Compile Include="Assets\Scripts_Code\FXIntensityMeter.cs" />
     <Compile Include="Assets\Scripts_Code\DJ_DeckController.cs" />
+    <Compile Include="Assets\KinectUDP\PoseMapperUI.cs" />
     <Compile Include="Assets\Scripts_Code\VinylDataImporter.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\AnchorVisuals.cs" />
+    <Compile Include="Assets\KinectUDP\PoseRecorder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

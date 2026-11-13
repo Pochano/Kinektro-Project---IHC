@@ -43,6 +43,22 @@ public class MockKinectSource : MonoBehaviour, IJointDataSource
         localJointPositions["ElbowRight"] = new Vector3(-0.35f, 1.1f, 0f);
         localJointPositions["HandRight"] = new Vector3(-0.4f, idleHandY, 0f);
 
+        // Munecas: se recalculan cada frame en Update() como un punto entre el codo
+        // y la mano, para que el angulo del codo reaccione al movimiento simulado.
+        localJointPositions["WristLeft"] = Vector3.Lerp(localJointPositions["ElbowLeft"], localJointPositions["HandLeft"], 0.7f);
+        localJointPositions["WristRight"] = Vector3.Lerp(localJointPositions["ElbowRight"], localJointPositions["HandRight"], 0.7f);
+
+        // Piernas: posicion estatica de pie (el mock no simula movimiento de piernas,
+        // F1-F4 solo controlan las manos). Estan aca para que los angulos de cadera y
+        // rodilla de JointAngleCalculator tengan datos para calcular, aunque no varien.
+        localJointPositions["HipLeft"] = new Vector3(0.12f, 0.7f, 0f);
+        localJointPositions["KneeLeft"] = new Vector3(0.13f, 0.35f, 0f);
+        localJointPositions["AnkleLeft"] = new Vector3(0.13f, 0.05f, 0f);
+
+        localJointPositions["HipRight"] = new Vector3(-0.12f, 0.7f, 0f);
+        localJointPositions["KneeRight"] = new Vector3(-0.13f, 0.35f, 0f);
+        localJointPositions["AnkleRight"] = new Vector3(-0.13f, 0.05f, 0f);
+
         RecomputeWorldPositions();
     }
 
@@ -85,6 +101,11 @@ public class MockKinectSource : MonoBehaviour, IJointDataSource
         leftHandLocal.y = Mathf.MoveTowards(leftHandLocal.y, targetLeftY, raiseSpeed * Time.deltaTime);
         localJointPositions["HandLeft"] = leftHandLocal;
         mockHandStateLeft = fistLeft ? "Closed" : "Open";
+
+        // Munecas aproximadas: un punto entre el codo y la mano (que SI se mueve con
+        // F1-F4), para que el angulo del codo cambie de forma creible al simular.
+        localJointPositions["WristRight"] = Vector3.Lerp(localJointPositions["ElbowRight"], rightHandLocal, 0.7f);
+        localJointPositions["WristLeft"] = Vector3.Lerp(localJointPositions["ElbowLeft"], leftHandLocal, 0.7f);
 
         // Se recalcula TODOS los frames para que mover originOffset en el Inspector
         // (incluso en Play Mode) desplace el muneco entero al instante.
