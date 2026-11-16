@@ -26,8 +26,15 @@ public class PoseMapperUI : MonoBehaviour
     public float ventanaCapturaSegundos = 0.5f;
 
     [Header("Reconocimiento en vivo (para debuguear)")]
-    public float toleranciaGrados = 20f;
+    [Tooltip("Tolerancia en DESVIOS ESTANDAR (no en grados). Ver PoseIdentifier.toleranciaDesviaciones para la explicacion completa. Valor tipico: 2.0 a 2.5.")]
+    public float toleranciaDesviaciones = 2.5f;
     public float intervaloIdentificacionSegundos = 0.3f;
+
+    [Header("Calibracion por jugador")]
+    [Tooltip("Nombre de la pose guardada a usar como referencia 'neutral' al calibrar a cada jugador nuevo.")]
+    public string nombrePoseCalibNeutral = "neutro";
+    [Tooltip("Nombre de la pose guardada a usar como referencia 'extrema' (bien distinta de la neutral) al calibrar a cada jugador nuevo.")]
+    public string nombrePoseCalibExtrema = "BrazosArriba";
 
     // --- UI (armada en Awake) ---
     private InputField campoNombre;
@@ -35,9 +42,12 @@ public class PoseMapperUI : MonoBehaviour
     private Text textoEstado;
     private Text textoEstadoGrande;
     private Text textoPoseActual;
+    private Text textoDebugDetallado;
     private Text textoListaPoses;
     private Button botonGrabar;
     private Button botonEliminar;
+    private Button botonAgregarVariante;
+    private Button botonCalibrar;
     private Dropdown comboPoses;
     private SkeletonOverlay2D esqueleto;
 
@@ -71,17 +81,40 @@ public class PoseMapperUI : MonoBehaviour
 
         var angulosActuales = JointAngleCalculator.CalcularAngulos(dataSource);
         if (angulosActuales.Count == 0) return;
+        angulosActuales = CalibracionJugador.Aplicar(angulosActuales);
 
-        PoseMatching.EncontrarMasCercana(angulosActuales, libreria, out string mejorNombre, out float menorDiferencia);
-        bool reconocida = mejorNombre != null && menorDiferencia <= toleranciaGrados;
+        // Calculo detallado contra TODAS las poses (no solo la ganadora), para poder ver
+        // en pantalla cual angulo en particular sacó a cada pose fuera de tolerancia.
+        var perfiles = PoseMatching.ConstruirPerfiles(libreria);
+        string mejorNombre = null;
+        float menorZScore = float.MaxValue;
+        var sbDebug = new StringBuilder();
+        foreach (var perfil in perfiles)
+        {
+            float z = PoseMatching.DistanciaNormalizadaMaximaDetallada(angulosActuales, perfil, out string peorAngulo);
+            sbDebug.AppendLine($"{perfil.nombre}: {z:F2} desv.est.  (peor angulo: {peorAngulo})");
+            if (z < menorZScore)
+            {
+                menorZScore = z;
+                mejorNombre = perfil.nombre;
+            }
+        }
+        if (textoDebugDetallado != null) textoDebugDetallado.text = sbDebug.ToString();
+
+        // Mismo detalle pero a la Console - asi no haces falta sacar captura de pantalla
+        // mientras estas parado haciendo la pose con las manos ocupadas. Despues de probar,
+        // pausa el Play y buscá en la Console las lineas que empiezan con [PoseMapperUI][DEBUG].
+        Debug.Log($"[PoseMapperUI][DEBUG] t={Time.time:F1}\n{sbDebug}");
+
+        bool reconocida = mejorNombre != null && menorZScore <= toleranciaDesviaciones;
         string resultado = reconocida ? mejorNombre : null;
 
         if (resultado != ultimaPoseMostrada)
         {
             ultimaPoseMostrada = resultado;
             textoPoseActual.text = reconocida
-                ? $"Pose detectada: {mejorNombre}  (dif. {menorDiferencia:F1} grados)"
-                : (mejorNombre != null ? $"Pose detectada: ninguna  (mas cercana: {mejorNombre}, dif. {menorDiferencia:F1})" : "Pose detectada: ninguna");
+                ? $"Pose detectada: {mejorNombre}  ({menorZScore:F2} desv.est.)"
+                : (mejorNombre != null ? $"Pose detectada: ninguna  (mas cercana: {mejorNombre}, {menorZScore:F2} desv.est.)" : "Pose detectada: ninguna");
         }
     }
 
@@ -160,7 +193,27 @@ public class PoseMapperUI : MonoBehaviour
             SetEstado("No hay fuente de datos (Source Provider) asignada.", new Color(1f, 0.3f, 0.3f));
             return;
         }
-        StartCoroutine(GrabarPoseRoutine(nombre, reps));
+        StartCoroutine(GrabarPoseRoutine(nombre, reps, agregarComoVariante: false));
+    }
+
+    // Igual que GRABAR POSE, pero no borra las muestras anteriores con el mismo nombre:
+    // las suma como una variante mas. Usa esto cuando quieras que la misma pose la
+    // reconozca mas de una persona (cada una grabando su propia version de "Brazos
+    // arriba", por ejemplo) en vez de pisar la unica muestra que ya existia.
+    private void OnClickAgregarVariante()
+    {
+        string nombre = campoNombre.text.Trim();
+        if (string.IsNullOrEmpty(nombre) || !int.TryParse(campoRepeticiones.text, out int reps) || reps <= 0)
+        {
+            SetEstado("Nombre invalido o cantidad de repeticiones invalida.", new Color(1f, 0.3f, 0.3f));
+            return;
+        }
+        if (dataSource == null)
+        {
+            SetEstado("No hay fuente de datos (Source Provider) asignada.", new Color(1f, 0.3f, 0.3f));
+            return;
+        }
+        StartCoroutine(GrabarPoseRoutine(nombre, reps, agregarComoVariante: true));
     }
 
     // Borra la pose cuyo nombre esta escrito en el mismo campo de texto que se usa
@@ -192,10 +245,11 @@ public class PoseMapperUI : MonoBehaviour
         }
     }
 
-    private IEnumerator GrabarPoseRoutine(string nombrePose, int repeticiones)
+    private IEnumerator GrabarPoseRoutine(string nombrePose, int repeticiones, bool agregarComoVariante)
     {
         grabando = true;
         botonGrabar.interactable = false;
+        botonAgregarVariante.interactable = false;
 
         var acumulado = new Dictionary<string, float>();
         var conteoPorAngulo = new Dictionary<string, int>();
@@ -251,13 +305,119 @@ public class PoseMapperUI : MonoBehaviour
         else
         {
             var template = PoseTemplate.DesdeDiccionario(nombrePose, promedioFinal, repeticiones);
-            PoseLibrary.GuardarPose(template);
-            SetEstado($"¡Pose '{nombrePose}' GUARDADA!", new Color(0.3f, 1f, 0.45f));
+            if (agregarComoVariante)
+            {
+                PoseLibrary.AgregarMuestra(template);
+                SetEstado($"¡Variante NUEVA de '{nombrePose}' agregada! (las anteriores se mantienen)", new Color(0.3f, 1f, 0.45f));
+            }
+            else
+            {
+                PoseLibrary.GuardarPose(template);
+                SetEstado($"¡Pose '{nombrePose}' GUARDADA!", new Color(0.3f, 1f, 0.45f));
+            }
             RecargarLibreria();
         }
 
         botonGrabar.interactable = true;
+        botonAgregarVariante.interactable = true;
         grabando = false;
+    }
+
+    // Calibra a la persona que esta parada frente al sensor AHORA MISMO: le pide
+    // mantener la pose neutral y despues la extrema (configurables arriba, por defecto
+    // "neutro" y "BrazosArriba") y con esos dos puntos ajusta sus lecturas en vivo para
+    // que se parezcan mas a las plantillas ya grabadas - sin que haga falta que ESTA
+    // persona en particular haya grabado sus propias variantes antes de jugar.
+    private void OnClickCalibrar()
+    {
+        if (grabando)
+        {
+            SetEstado("Espera a que termine la operacion actual antes de calibrar.", new Color(1f, 0.3f, 0.3f));
+            return;
+        }
+        StartCoroutine(CalibrarJugadorRoutine());
+    }
+
+    private IEnumerator CalibrarJugadorRoutine()
+    {
+        if (dataSource == null)
+        {
+            SetEstado("No hay fuente de datos (Source Provider) asignada.", new Color(1f, 0.3f, 0.3f));
+            yield break;
+        }
+
+        var perfiles = PoseMatching.ConstruirPerfiles(libreria);
+        PoseMatching.PerfilPose perfilNeutral = null;
+        PoseMatching.PerfilPose perfilExtremo = null;
+        foreach (var p in perfiles)
+        {
+            if (p.nombre == nombrePoseCalibNeutral) perfilNeutral = p;
+            if (p.nombre == nombrePoseCalibExtrema) perfilExtremo = p;
+        }
+
+        if (perfilNeutral == null || perfilExtremo == null)
+        {
+            SetEstado($"Para calibrar necesito que existan las poses '{nombrePoseCalibNeutral}' y '{nombrePoseCalibExtrema}' ya grabadas.", new Color(1f, 0.3f, 0.3f));
+            yield break;
+        }
+
+        grabando = true;
+        botonGrabar.interactable = false;
+        botonAgregarVariante.interactable = false;
+        botonCalibrar.interactable = false;
+
+        var personaNeutral = new Dictionary<string, float>();
+        var personaExtremo = new Dictionary<string, float>();
+
+        yield return StartCoroutine(CapturarAngulosPromedio(personaNeutral, nombrePoseCalibNeutral));
+        yield return new WaitForSeconds(0.6f);
+        yield return StartCoroutine(CapturarAngulosPromedio(personaExtremo, nombrePoseCalibExtrema));
+
+        CalibracionJugador.Calibrar(personaNeutral, personaExtremo, perfilNeutral.promedios, perfilExtremo.promedios);
+        SetEstado("¡Calibracion lista para este jugador! Las lecturas en vivo ya se estan ajustando.", new Color(0.3f, 1f, 0.45f));
+
+        botonGrabar.interactable = true;
+        botonAgregarVariante.interactable = true;
+        botonCalibrar.interactable = true;
+        grabando = false;
+    }
+
+    // Cuenta regresiva + ventana de captura, igual que GrabarPoseRoutine pero para UNA
+    // sola muestra (sin repeticiones) y sin guardar nada en la biblioteca - solo llena
+    // "destino" con el promedio de angulos capturado, para usarlo como referencia de
+    // calibracion.
+    private IEnumerator CapturarAngulosPromedio(Dictionary<string, float> destino, string etiquetaPose)
+    {
+        destino.Clear();
+
+        float restante = cuentaRegresivaSegundos;
+        while (restante > 0f)
+        {
+            SetEstado($"Calibracion: haz la pose '{etiquetaPose}'\n{Mathf.CeilToInt(restante)}", new Color(1f, 0.82f, 0.15f));
+            restante -= Time.deltaTime;
+            yield return null;
+        }
+
+        SetEstado($"Calibracion: CAPTURANDO '{etiquetaPose}' - NO TE MUEVAS", new Color(1f, 0.25f, 0.2f));
+        var suma = new Dictionary<string, float>();
+        var cuenta = new Dictionary<string, int>();
+        float tiempoVentana = 0f;
+
+        while (tiempoVentana < ventanaCapturaSegundos)
+        {
+            var angulos = JointAngleCalculator.CalcularAngulos(dataSource);
+            foreach (var kv in angulos)
+            {
+                if (!suma.ContainsKey(kv.Key)) { suma[kv.Key] = 0f; cuenta[kv.Key] = 0; }
+                suma[kv.Key] += kv.Value;
+                cuenta[kv.Key]++;
+            }
+            tiempoVentana += Time.deltaTime;
+            yield return null;
+        }
+
+        foreach (var kv in suma)
+            destino[kv.Key] = kv.Value / cuenta[kv.Key];
     }
 
     // ---------------------------------------------------------------
@@ -301,6 +461,12 @@ public class PoseMapperUI : MonoBehaviour
         textoPoseActual = CrearTexto(canvasRT, "PoseActual", "Pose detectada: ninguna", 24, FontStyle.Bold, TextAnchor.MiddleLeft,
             AnclaTopLeft(40, -910, 760, 40), new Color(0.4f, 1f, 0.6f));
 
+        // Debug temporal: muestra la distancia (en desvios estandar) contra TODAS las
+        // poses a la vez, y cual angulo en particular es el que mas se aleja en cada una -
+        // para diagnosticar a mano por que una pose no matchea aunque "deberia".
+        textoDebugDetallado = CrearTexto(canvasRT, "DebugDetallado", "", 15, FontStyle.Normal, TextAnchor.UpperLeft,
+            AnclaTopLeft(40, -960, 1840, 110), new Color(1f, 0.85f, 0.3f));
+
         // --- Panel de controles (derecha) ---
         var panelControles = CrearPanel(canvasRT, "PanelControles", new Color(0.1f, 0.11f, 0.14f, 1f), AnclaTopLeft(840, -300, 1040, 440));
 
@@ -332,6 +498,25 @@ public class PoseMapperUI : MonoBehaviour
 
         textoListaPoses = CrearTexto(panelControles, "ListaPoses", "Poses guardadas: (ninguna todavia)", 17, FontStyle.Normal, TextAnchor.UpperLeft,
             AnclaTopLeft(24, -328, 992, 100), new Color(0.75f, 0.8f, 0.9f));
+
+        // Boton extra: agrega esta grabacion como UNA MUESTRA MAS de la misma pose, sin
+        // borrar las que ya existian con ese nombre (a diferencia de GRABAR POSE, que
+        // reemplaza). Grabar la misma pose varias veces con personas de distinto tamano
+        // y contextura mejora el reconocimiento para todos, sin tocar el algoritmo.
+        botonAgregarVariante = CrearBoton(panelControles, "BotonAgregarVariante", "AGREGAR COMO VARIANTE (no reemplaza)", AnclaTopLeft(24, -442, 992, 52), new Color(0.2f, 0.65f, 0.55f));
+        botonAgregarVariante.onClick.AddListener(OnClickAgregarVariante);
+
+        CrearTexto(panelControles, "NotaVariante", "Tip: graba la misma pose con distintas personas usando este boton para que el reconocimiento funcione para todos, no solo para quien grabo primero.",
+            14, FontStyle.Italic, TextAnchor.UpperLeft, AnclaTopLeft(24, -500, 992, 60), new Color(0.6f, 0.75f, 0.7f));
+
+        // Boton de calibracion rapida por jugador: antes de que una persona nueva juegue,
+        // le hace mantener la pose neutral y despues la extrema, y ajusta sus lecturas en
+        // vivo para que se parezcan mas a las plantillas ya grabadas (ver CalibracionJugador.cs).
+        botonCalibrar = CrearBoton(panelControles, "BotonCalibrar", "CALIBRAR JUGADOR NUEVO", AnclaTopLeft(24, -580, 992, 52), new Color(0.6f, 0.35f, 0.85f));
+        botonCalibrar.onClick.AddListener(OnClickCalibrar);
+
+        CrearTexto(panelControles, "NotaCalibrar", "Antes de que juegue una persona nueva: apreta esto, mantene la pose neutral cuando se te indique, y despues la pose de brazos arriba. Ajusta sus lecturas para que calcen mejor con las plantillas ya grabadas por otra persona.",
+            14, FontStyle.Italic, TextAnchor.UpperLeft, AnclaTopLeft(24, -638, 992, 60), new Color(0.75f, 0.65f, 0.85f));
 
         // --- Nota inferior ---
         CrearTexto(canvasRT, "Nota", "F1 = mano derecha arriba | F2 = puno derecho | F3 = mano izquierda arriba | F4 = puno izquierdo (solo con Use Mock activado)",

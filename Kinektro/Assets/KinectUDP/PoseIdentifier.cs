@@ -14,8 +14,8 @@ public class PoseIdentifier : MonoBehaviour
     private IJointDataSource dataSource;
 
     [Header("Deteccion")]
-    [Tooltip("Diferencia promedio maxima (en grados) para aceptar una pose como reconocida. Mas bajo = mas estricto.")]
-    public float toleranciaGrados = 20f;
+    [Tooltip("Tolerancia en DESVIOS ESTANDAR (no en grados). Se calcula automaticamente cuanto varia cada angulo entre las variantes grabadas de esa pose (PoseMapperUI > AGREGAR COMO VARIANTE) y se compara en esa unidad. Valor tipico: 2.0 a 2.5. Mas bajo = mas estricto.")]
+    public float toleranciaDesviaciones = 2.5f;
     [Tooltip("Cada cuanto se intenta identificar la pose. No hace falta que sea cada frame.")]
     public float intervaloSegundos = 0.3f;
 
@@ -26,6 +26,11 @@ public class PoseIdentifier : MonoBehaviour
     private PoseLibraryData libreria;
     private float temporizador;
     private string ultimaPoseReconocida = null;
+
+    // Para que otros scripts (ej. CrossPC_KinectBridge, al mostrar un prompt de pose
+    // pedido por el pipeline) puedan consultar "que pose esta reconociendo ahora mismo
+    // el jugador" sin tener que suscribirse a los UnityEvents.
+    public string PoseActualReconocida => ultimaPoseReconocida;
 
     void Start()
     {
@@ -51,10 +56,11 @@ public class PoseIdentifier : MonoBehaviour
 
         var angulosActuales = JointAngleCalculator.CalcularAngulos(dataSource);
         if (angulosActuales.Count == 0) return;
+        angulosActuales = CalibracionJugador.Aplicar(angulosActuales);
 
-        PoseMatching.EncontrarMasCercana(angulosActuales, libreria, out string mejorNombre, out float menorDiferencia);
+        PoseMatching.EncontrarMasCercanaNormalizada(angulosActuales, libreria, out string mejorNombre, out float menorZScore);
 
-        bool reconocida = mejorNombre != null && menorDiferencia <= toleranciaGrados;
+        bool reconocida = mejorNombre != null && menorZScore <= toleranciaDesviaciones;
         string resultado = reconocida ? mejorNombre : null;
 
         if (resultado != ultimaPoseReconocida)
@@ -62,12 +68,12 @@ public class PoseIdentifier : MonoBehaviour
             ultimaPoseReconocida = resultado;
             if (reconocida)
             {
-                Debug.Log($"[PoseIdentifier] Pose reconocida: {resultado} (diferencia {menorDiferencia:F1} grados)");
+                Debug.Log($"[PoseIdentifier] Pose reconocida: {resultado} ({menorZScore:F2} desvios estandar)");
                 onPoseReconocida.Invoke(resultado);
             }
             else
             {
-                Debug.Log($"[PoseIdentifier] Ninguna pose reconocida (mejor candidata: {mejorNombre}, diferencia {menorDiferencia:F1} grados)");
+                Debug.Log($"[PoseIdentifier] Ninguna pose reconocida (mejor candidata: {mejorNombre}, {menorZScore:F2} desvios estandar)");
                 onNingunaPoseReconocida.Invoke();
             }
         }

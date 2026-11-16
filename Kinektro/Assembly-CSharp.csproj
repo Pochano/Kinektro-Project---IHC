@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\KinectUDP\CrossPC_KinectBridge.cs" />
     <Compile Include="Assets\Scripts_Code\MusicLibraryManager.cs" />
+    <Compile Include="Assets\KinectUDP\CalibracionJugador.cs" />
     <Compile Include="Assets\Scripts_Code\BasicTutorialManager.cs" />
     <Compile Include="Assets\KinectUDP\KinectGestureFX.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\DestroyObject.cs" />

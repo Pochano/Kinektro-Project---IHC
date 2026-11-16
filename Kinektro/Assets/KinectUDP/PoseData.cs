@@ -93,4 +93,18 @@ public static class PoseLibrary
         if (removidas > 0) Guardar(datos);
         return removidas > 0;
     }
+
+    // Agrega una muestra MAS para esta pose sin borrar las anteriores (a diferencia de
+    // GuardarPose, que reemplaza todas las muestras con ese nombre). Sirve para guardar
+    // varias repeticiones de la misma pose grabadas por personas distintas, para que el
+    // reconocimiento (PoseMatching.EncontrarMasCercana) tenga mas de un ejemplo contra el
+    // cual comparar - en la practica esto convierte el sistema en un vecino-mas-cercano
+    // con varios ejemplos por clase en vez de uno solo, mejorando la generalizacion entre
+    // personas de distinto tamano/proporciones sin tener que tocar el algoritmo de matching.
+    public static void AgregarMuestra(PoseTemplate pose)
+    {
+        var datos = Cargar();
+        datos.poses.Add(pose);
+        Guardar(datos);
+    }
 }

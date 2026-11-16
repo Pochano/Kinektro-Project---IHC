@@ -37,6 +37,15 @@ public static class JointAngleCalculator
         new AngleDef("RodillaDerecha",  "HipRight",      "KneeRight", "AnkleRight"),
         new AngleDef("CaderaIzquierda", "SpineBase",     "HipLeft",   "KneeLeft"),
         new AngleDef("CaderaDerecha",   "SpineBase",     "HipRight",  "KneeRight"),
+
+        // Estos dos NO miden el doblez local del brazo (eso ya lo hacen Codo/Hombro) -
+        // miden hacia donde apunta la muneca respecto de la CABEZA, tomando el pecho
+        // como vertice. Sirven para distinguir "mano cerca de la cabeza" (angulo chico)
+        // de "mano cerca del estomago/cintura" (angulo grande, cercano a 180), algo que
+        // Codo+Hombro solos no pueden diferenciar si el doblez del codo resulta parecido
+        // en ambos casos aunque el antebrazo apunte en direcciones opuestas.
+        new AngleDef("AlturaManoIzquierda", "Head", "SpineShoulder", "WristLeft"),
+        new AngleDef("AlturaManoDerecha",   "Head", "SpineShoulder", "WristRight"),
     };
 
     // Calcula todos los angulos definidos arriba usando la fuente de datos activa

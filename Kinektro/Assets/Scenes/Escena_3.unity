@@ -7640,57 +7640,6 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: -80}
   m_SizeDelta: {x: 600, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &804768352
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 804768354}
-  - component: {fileID: 804768355}
-  m_Layer: 0
-  m_Name: CrossPC_Bridge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &804768354
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804768352}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.54439324, y: 0.5216768, z: -0.0025864188}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &804768355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804768352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59887f77505f769418b51f2f4142bcf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listenPort: 6005
-  remoteIP: 192.168.100.11
-  remotePort: 6006
-  redundantSends: 3
-  fxSelectorCh1: {fileID: 845548422}
-  fxSelectorCh2: {fileID: 50972606}
-  djManager: {fileID: 751242120}
 --- !u!1 &813974908
 GameObject:
   m_ObjectHideFlags: 0
@@ -10135,6 +10084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   djManager: {fileID: 751242120}
   activeChart: {fileID: 11400000, guid: 1b908b953f250984d9c1233e2462c3a6, type: 2}
+  bridge: {fileID: 1863385651}
   countdownText: {fileID: 0}
   currentScore: 0
   currentCombo: 0
@@ -12780,7 +12730,7 @@ MonoBehaviour:
   sourceProvider: {fileID: 2107610387}
   cuentaRegresivaSegundos: 3
   ventanaCapturaSegundos: 0.5
-  toleranciaGrados: 40
+  toleranciaGrados: 75
   intervaloIdentificacionSegundos: 0.3
 --- !u!4 &1278285105
 Transform:
@@ -13884,6 +13834,55 @@ Transform:
   - {fileID: 1595802916}
   - {fileID: 293303983}
   m_Father: {fileID: 1254499489}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1387308041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1387308043}
+  - component: {fileID: 1387308042}
+  m_Layer: 0
+  m_Name: CrossPC_Bridge_PCB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1387308042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387308041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d019a48bb52205e47a84b533bb664596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listenPort: 6006
+  remoteIP: 127.0.0.1
+  remotePort: 6005
+  redundantSends: 3
+  requireWindowOpenForVoiceSelection: 0
+--- !u!4 &1387308043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387308041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.54439324, y: 0.5216768, z: -0.0025864188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1406883599
 GameObject:
@@ -19802,7 +19801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listenPort: 6005
-  remoteIP: 10.188.5.173
+  remoteIP: 127.0.0.1
   remotePort: 6006
   redundantSends: 3
   fxSelectorCh1: {fileID: 845548422}
@@ -28844,9 +28843,8 @@ SceneRoots:
   - {fileID: 1097919099}
   - {fileID: 1140361799}
   - {fileID: 229954627}
-  - {fileID: 1486482721}
-  - {fileID: 804768354}
   - {fileID: 1278285105}
   - {fileID: 1068681988}
   - {fileID: 1491314046}
   - {fileID: 869037318}
+  - {fileID: 1387308043}
