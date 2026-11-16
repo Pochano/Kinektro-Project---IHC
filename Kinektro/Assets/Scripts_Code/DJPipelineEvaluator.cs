@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 
 public class DJPipelineEvaluator : MonoBehaviour
@@ -13,6 +14,19 @@ public class DJPipelineEvaluator : MonoBehaviour
     public DJPipelineChart activeChart;
     [Tooltip("Puente UDP de esta PC (A) hacia la PC B. Se usa para avisarle cuando arranca/termina la ventana del pipeline y cada vez que el jugador A acierta una interaccion (para que B sepa cuando hacer un gesto).")]
     public CrossPC_OculusBridge bridge;
+
+    [System.Serializable]
+    public struct MapeoControlObjeto
+    {
+        public DJControlTarget control;
+        [Tooltip("Arrastra aca el VR_Boton, VR_Fader o VR_Knob_Joystick correspondiente a este control.")]
+        public MonoBehaviour objetoControl;
+    }
+    [Header("Resaltado de controles fisicos (Jugador A)")]
+    [Tooltip("Por cada control del chart, el objeto fisico (boton/fader/knob) que hay que iluminar cuando se acerca su turno.")]
+    public List<MapeoControlObjeto> mapeoControlAObjeto = new List<MapeoControlObjeto>();
+    [Tooltip("Cuantos segundos antes de targetTime se enciende el resaltado del control.")]
+    public float anticipacionResaltado = 1.5f;
 
     [Header("UI de Cuenta Regresiva (Opcional)")]
     public TextMeshProUGUI countdownText;
@@ -139,6 +153,18 @@ public class DJPipelineEvaluator : MonoBehaviour
         if (countdownText != null) countdownText.gameObject.SetActive(false);
     }
 
+    // Busca, entre los objetos mapeados en el Inspector, el que corresponde a un
+    // DJControlTarget dado, y lo devuelve como IResaltable (sea VR_Boton, VR_Fader o
+    // VR_Knob_Joystick - no nos importa cual, solo que sepa prenderse/apagarse).
+    private IResaltable BuscarResaltable(DJControlTarget control)
+    {
+        foreach (var mapeo in mapeoControlAObjeto)
+        {
+            if (mapeo.control == control) return mapeo.objetoControl as IResaltable;
+        }
+        return null;
+    }
+
     public void StartPipeline()
     {
         songTimer = 0f;
@@ -150,6 +176,8 @@ public class DJPipelineEvaluator : MonoBehaviour
             foreach (var node in activeChart.nodes)
             {
                 node.isEvaluated = false;
+                node.resaltadoActivado = false;
+                BuscarResaltable(node.targetControl)?.SetResaltado(false);
             }
         }
 
@@ -186,6 +214,12 @@ public class DJPipelineEvaluator : MonoBehaviour
         for (int i = 0; i < activeChart.nodes.Count; i++)
         {
             PipelineNode node = activeChart.nodes[i];
+
+            if (!node.isEvaluated && !node.resaltadoActivado && songTimer >= (node.targetTime - anticipacionResaltado))
+            {
+                node.resaltadoActivado = true;
+                BuscarResaltable(node.targetControl)?.SetResaltado(true);
+            }
 
             if (!node.isEvaluated && songTimer > (node.targetTime + node.timeWindow))
             {
@@ -263,6 +297,7 @@ public class DJPipelineEvaluator : MonoBehaviour
         currentScore += 100 * currentCombo;
         Debug.Log($"<color=green>[HIT!]</color> Control: {node.targetControl} | Nivel Objetivo: {node.targetLevel} | Alcanzado: {levelReached} | Combo: {currentCombo}");
         bridge?.SendPipelineHit(node.targetControl.ToString(), currentCombo);
+        BuscarResaltable(node.targetControl)?.SetResaltado(false);
         ActualizarScoreComboUI();
     }
 
@@ -270,6 +305,7 @@ public class DJPipelineEvaluator : MonoBehaviour
     {
         currentCombo = 0;
         Debug.Log($"<color=red>[MISS!]</color> Tiempo agotado para {node.targetControl} (Nivel pedido: {node.targetLevel})");
+        BuscarResaltable(node.targetControl)?.SetResaltado(false);
         ActualizarScoreComboUI();
     }
 }

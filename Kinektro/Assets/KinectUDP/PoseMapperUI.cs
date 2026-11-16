@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
 // Pantalla completa de mapeo de gestos para el Jugador B (tipo "Just Dance"): muestra
@@ -51,6 +52,8 @@ public class PoseMapperUI : MonoBehaviour
     private Dropdown comboPoses;
     private SkeletonOverlay2D esqueleto;
 
+    private GameObject canvasMapeoGO;
+
     private PoseLibraryData libreria;
     private bool grabando = false;
     private bool actualizandoCombo = false;
@@ -73,6 +76,14 @@ public class PoseMapperUI : MonoBehaviour
 
     void Update()
     {
+        // Tecla M: muestra/oculta esta pantalla de mapeo/calibracion a mano, por si
+        // necesitas volver a calibrar a otra persona sin reiniciar el juego. Se puede
+        // usar aunque este oculta (no depende del resto del metodo).
+        if (Keyboard.current != null && Keyboard.current.mKey.wasPressedThisFrame && canvasMapeoGO != null)
+        {
+            canvasMapeoGO.SetActive(!canvasMapeoGO.activeSelf);
+        }
+
         if (grabando || dataSource == null) return;
 
         temporizadorIdentificacion += Time.deltaTime;
@@ -374,12 +385,18 @@ public class PoseMapperUI : MonoBehaviour
         yield return StartCoroutine(CapturarAngulosPromedio(personaExtremo, nombrePoseCalibExtrema));
 
         CalibracionJugador.Calibrar(personaNeutral, personaExtremo, perfilNeutral.promedios, perfilExtremo.promedios);
-        SetEstado("¡Calibracion lista para este jugador! Las lecturas en vivo ya se estan ajustando.", new Color(0.3f, 1f, 0.45f));
+        SetEstado("¡Calibracion lista! Pasando a la pantalla de juego...", new Color(0.3f, 1f, 0.45f));
 
         botonGrabar.interactable = true;
         botonAgregarVariante.interactable = true;
         botonCalibrar.interactable = true;
         grabando = false;
+
+        // Terminada la calibracion, esta pantalla de mapeo/debug ya cumplio su proposito -
+        // se oculta para dejar ver limpio el prompt de poses del pipeline (el Canvas que
+        // arma CrossPC_KinectBridge). Se puede volver a traer con la tecla M.
+        yield return new WaitForSeconds(1.5f);
+        if (canvasMapeoGO != null) canvasMapeoGO.SetActive(false);
     }
 
     // Cuenta regresiva + ventana de captura, igual que GrabarPoseRoutine pero para UNA
@@ -433,6 +450,7 @@ public class PoseMapperUI : MonoBehaviour
 
         var canvasGO = new GameObject("PoseMapperCanvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
         canvasGO.transform.SetParent(transform, false);
+        canvasMapeoGO = canvasGO;
         var canvas = canvasGO.GetComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         var scaler = canvasGO.GetComponent<CanvasScaler>();

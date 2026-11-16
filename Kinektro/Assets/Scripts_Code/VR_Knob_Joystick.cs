@@ -9,7 +9,7 @@ public enum KnobType
     EQHigh
 }
 
-public class VR_Knob_Joystick : MonoBehaviour
+public class VR_Knob_Joystick : MonoBehaviour, IResaltable
 {
     [Header("Referencias")]
     public KnobType knobType = KnobType.Gain;
@@ -33,6 +33,13 @@ public class VR_Knob_Joystick : MonoBehaviour
     [Range(10f, 200f)]
     public float smoothness = 100.0f;
 
+    [Header("Resaltado del Pipeline (Jugador A)")]
+    [Tooltip("Renderer con el material a teñir para resaltar este knob. Si se deja vacio, se busca automaticamente en los hijos.")]
+    public Renderer targetRenderer;
+    public Color offColor = Color.white;
+    [Tooltip("Color con el que se ilumina este knob cuando el pipeline le pide al jugador que lo use.")]
+    public Color resaltadoColor = Color.yellow;
+
     private Quaternion initialLocalRotation;
     private float targetNormalizedValue = 0.5f;
     private float currentNormalizedValue = 0.5f;
@@ -45,6 +52,8 @@ public class VR_Knob_Joystick : MonoBehaviour
     {
         if (knobModel == null) knobModel = transform;
         initialLocalRotation = knobModel.localRotation;
+
+        if (targetRenderer == null) targetRenderer = GetComponentInChildren<Renderer>();
     }
 
     private void Start()
@@ -166,5 +175,39 @@ public class VR_Knob_Joystick : MonoBehaviour
     {
         isGrabbed = false;
         interactorTransform = null;
+    }
+
+    // Implementacion de IResaltable: encendido/apagado pedido por DJPipelineEvaluator
+    // cuando se acerca (o termina) el nodo del chart que corresponde a este knob.
+    public void SetResaltado(bool activo)
+    {
+        SetKnobColor(activo ? resaltadoColor : offColor);
+    }
+
+    private void SetKnobColor(Color newColor)
+    {
+        if (targetRenderer == null) return;
+
+        Material[] mats = targetRenderer.materials;
+        bool colorApplied = false;
+
+        for (int i = 0; i < mats.Length; i++)
+        {
+            if (mats[i].name.Contains("Color_Sync") || mats[i].name.Contains("Sync"))
+            {
+                mats[i].color = newColor;
+                if (mats[i].HasProperty("_EmissionColor")) mats[i].SetColor("_EmissionColor", newColor);
+                colorApplied = true;
+                break;
+            }
+        }
+
+        if (!colorApplied && mats.Length > 0)
+        {
+            mats[0].color = newColor;
+            if (mats[0].HasProperty("_EmissionColor")) mats[0].SetColor("_EmissionColor", newColor);
+        }
+
+        targetRenderer.materials = mats;
     }
 }

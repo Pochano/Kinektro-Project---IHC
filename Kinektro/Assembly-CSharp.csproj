@@ -111,6 +111,7 @@
     <Compile Include="Assets\KinectUDP\KinectSkeletonVisualizer.cs" />
     <Compile Include="Assets\Scripts_Code\MainMenuManager.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\LaunchProjectile.cs" />
+    <Compile Include="Assets\Scripts_Code\IResaltable.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\StepManager.cs" />
     <Compile Include="Assets\Scripts_Code\FuserBeatbarUI.cs" />
     <Compile Include="Assets\Scripts_Code\FXIntensityMeter.cs" />

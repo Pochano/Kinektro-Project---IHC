@@ -36,6 +36,10 @@ public class PipelineNode
     public float timeWindow = 0.5f;
 
     [HideInInspector] public bool isEvaluated = false;
+
+    // Estado en tiempo de ejecucion (no se guarda en el asset): si ya se prendio el
+    // resaltado del control fisico para este nodo, para no reencenderlo en cada frame.
+    [System.NonSerialized] public bool resaltadoActivado = false;
 }
 
 // CORRECCIÓN AQUÍ: 'fileName' y 'menuName' con 'n' minúscula

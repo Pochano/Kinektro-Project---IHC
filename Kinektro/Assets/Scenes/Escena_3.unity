@@ -608,6 +608,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &46412786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2278,6 +2279,7 @@ MonoBehaviour:
   offColor: {r: 0.06666667, g: 0.19215688, b: 0.91372555, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0.10980393, g: 0.882353, b: 0.07450981, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &258303616
 GameObject:
   m_ObjectHideFlags: 0
@@ -3133,6 +3135,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &332164464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4131,6 +4134,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &495990240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5365,6 +5369,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &579347388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5783,6 +5788,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &627378575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6464,6 +6470,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &705770451
 GameObject:
   m_ObjectHideFlags: 0
@@ -6502,6 +6509,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &705770453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6704,6 +6712,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &744078496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8882,6 +8891,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &894467002
 GameObject:
   m_ObjectHideFlags: 0
@@ -9085,6 +9095,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &944427182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10085,6 +10096,28 @@ MonoBehaviour:
   djManager: {fileID: 751242120}
   activeChart: {fileID: 11400000, guid: 1b908b953f250984d9c1233e2462c3a6, type: 2}
   bridge: {fileID: 1863385651}
+  mapeoControlAObjeto:
+  - control: 0
+    objetoControl: {fileID: 6663213866967774200}
+  - control: 1
+    objetoControl: {fileID: 9179073996795854087}
+  - control: 2
+    objetoControl: {fileID: 6994458581951215841}
+  - control: 3
+    objetoControl: {fileID: 8821492295894533892}
+  - control: 4
+    objetoControl: {fileID: 8673940632565818214}
+  - control: 5
+    objetoControl: {fileID: 6320224366878667169}
+  - control: 6
+    objetoControl: {fileID: 8277052046720047382}
+  - control: 7
+    objetoControl: {fileID: 579347387}
+  - control: 8
+    objetoControl: {fileID: 1519188004}
+  - control: 9
+    objetoControl: {fileID: 245165080}
+  anticipacionResaltado: 1.5
   countdownText: {fileID: 0}
   currentScore: 0
   currentCombo: 0
@@ -10838,6 +10871,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &1136888886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12205,6 +12239,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1245578756
 GameObject:
   m_ObjectHideFlags: 0
@@ -12730,8 +12765,10 @@ MonoBehaviour:
   sourceProvider: {fileID: 2107610387}
   cuentaRegresivaSegundos: 3
   ventanaCapturaSegundos: 0.5
-  toleranciaGrados: 75
+  toleranciaDesviaciones: 2.5
   intervaloIdentificacionSegundos: 0.3
+  nombrePoseCalibNeutral: neutro
+  nombrePoseCalibExtrema: BrazosArriba
 --- !u!4 &1278285105
 Transform:
   m_ObjectHideFlags: 0
@@ -13462,6 +13499,7 @@ MonoBehaviour:
   offColor: {r: 0.09019608, g: 0.20392159, b: 0.9215687, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0.10980393, g: 0.7686275, b: 0.1254902, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &1377296553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13851,7 +13889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1387308042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13865,10 +13903,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listenPort: 6006
-  remoteIP: 127.0.0.1
+  remoteIP: 192.168.100.11
   remotePort: 6005
   redundantSends: 3
   requireWindowOpenForVoiceSelection: 0
+  poseIdentifier: {fileID: 0}
+  segundosParaHacerGesto: 3
+  mapeoControlAPose:
+  - control: 0
+    nombrePose: BrazosArriba
+  - control: 3
+    nombrePose: DerechaArriba
+  - control: 7
+    nombrePose: IzquierdaArriba
+  - control: 8
+    nombrePose: DerechaArriba
+  - control: 9
+    nombrePose: IzquierdaArriba
+  - control: 1
+    nombrePose: DerechaArriba
+  - control: 2
+    nombrePose: IzquierdaArriba
+  - control: 4
+    nombrePose: DerechaArriba
+  - control: 5
+    nombrePose: IzquierdaArriba
+  - control: 6
+    nombrePose: BrazosArriba
 --- !u!4 &1387308043
 Transform:
   m_ObjectHideFlags: 0
@@ -14735,18 +14796,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 13964372}
-        m_TargetAssemblyTypeName: DJ_DeckController, Assembly-CSharp
-        m_MethodName: OnPlayButtonPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   m_LastSelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -14797,6 +14846,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!4 &1491314046
 Transform:
   m_ObjectHideFlags: 0
@@ -15197,6 +15247,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1524404025
 GameObject:
   m_ObjectHideFlags: 0
@@ -18053,6 +18104,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &1687873779
 GameObject:
   m_ObjectHideFlags: 0
@@ -19787,7 +19839,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1863385651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19801,7 +19853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listenPort: 6005
-  remoteIP: 127.0.0.1
+  remoteIP: 192.168.100.11
   remotePort: 6006
   redundantSends: 3
   fxSelectorCh1: {fileID: 845548422}
@@ -19878,6 +19930,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &1867632910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21454,6 +21507,7 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &2094523340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24759,6 +24813,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 2
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!23 &5781500919849844207
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -25072,6 +25129,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 1
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!54 &6320224366878667171
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25527,6 +25587,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &6699340996097354328
 GameObject:
   m_ObjectHideFlags: 0
@@ -25629,6 +25692,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &6994458581951215841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26733,6 +26799,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!65 &8123867185968600504
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27061,6 +27130,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 2
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!33 &8277052046720047378
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27278,6 +27350,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!65 &8277052046720047383
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27487,6 +27562,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 2
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!33 &8389772285060019817
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27546,6 +27624,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 2
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!114 &8559851521977772827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27779,6 +27860,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 1
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!54 &8673940632565818216
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28066,6 +28150,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 1
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!54 &8821492295894533894
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28405,6 +28492,9 @@ MonoBehaviour:
   sensitivity: 20
   channelNumber: 1
   smoothness: 100
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!54 &9126908054748786303
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28782,6 +28872,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  targetRenderer: {fileID: 0}
+  offColor: {r: 1, g: 1, b: 1, a: 1}
+  resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!65 &9179073996795854088
 BoxCollider:
   m_ObjectHideFlags: 0

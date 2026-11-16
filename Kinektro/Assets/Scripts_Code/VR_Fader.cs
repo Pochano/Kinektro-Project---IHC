@@ -4,7 +4,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class FaderValueChangedEvent : UnityEvent<float> { }
 
-public class VR_Fader : MonoBehaviour
+public class VR_Fader : MonoBehaviour, IResaltable
 {
     public enum FaderAxis { X_Axis, Y_Axis, Z_Axis }
 
@@ -31,6 +31,13 @@ public class VR_Fader : MonoBehaviour
     [Header("Eventos")]
     public FaderValueChangedEvent OnValueChanged;
 
+    [Header("Resaltado del Pipeline (Jugador A)")]
+    [Tooltip("Renderer con el material a teñir para resaltar este fader. Si se deja vacio, se busca automaticamente en los hijos.")]
+    public Renderer targetRenderer;
+    public Color offColor = Color.white;
+    [Tooltip("Color con el que se ilumina este fader cuando el pipeline le pide al jugador que lo use.")]
+    public Color resaltadoColor = Color.yellow;
+
     private Vector3 initialLocalPos;
     private Transform originalParent;
     private float currentOffset;
@@ -44,6 +51,8 @@ public class VR_Fader : MonoBehaviour
 
         // En el inicio, el offset relativo es 0 (posición neutral/central)
         currentOffset = 0f;
+
+        if (targetRenderer == null) targetRenderer = GetComponentInChildren<Renderer>();
     }
 
     void LateUpdate()
@@ -135,5 +144,39 @@ public class VR_Fader : MonoBehaviour
         OnValueChanged?.Invoke(currentValue);
 
         Debug.Log($"[VR_Fader] Reseteado al centro exacto original ({currentValue}).");
+    }
+
+    // Implementacion de IResaltable: encendido/apagado pedido por DJPipelineEvaluator
+    // cuando se acerca (o termina) el nodo del chart que corresponde a este fader.
+    public void SetResaltado(bool activo)
+    {
+        SetFaderColor(activo ? resaltadoColor : offColor);
+    }
+
+    private void SetFaderColor(Color newColor)
+    {
+        if (targetRenderer == null) return;
+
+        Material[] mats = targetRenderer.materials;
+        bool colorApplied = false;
+
+        for (int i = 0; i < mats.Length; i++)
+        {
+            if (mats[i].name.Contains("Color_Sync") || mats[i].name.Contains("Sync"))
+            {
+                mats[i].color = newColor;
+                if (mats[i].HasProperty("_EmissionColor")) mats[i].SetColor("_EmissionColor", newColor);
+                colorApplied = true;
+                break;
+            }
+        }
+
+        if (!colorApplied && mats.Length > 0)
+        {
+            mats[0].color = newColor;
+            if (mats[0].HasProperty("_EmissionColor")) mats[0].SetColor("_EmissionColor", newColor);
+        }
+
+        targetRenderer.materials = mats;
     }
 }

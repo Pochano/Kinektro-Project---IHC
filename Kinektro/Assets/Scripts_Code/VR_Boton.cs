@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class VR_Boton : MonoBehaviour
+public class VR_Boton : MonoBehaviour, IResaltable
 {
     public enum ButtonType { Toggle, Momentary }
     public enum MovementAxis { Y_Axis, X_Axis, Z_Axis }
@@ -17,6 +17,10 @@ public class VR_Boton : MonoBehaviour
     public Color offColor = Color.white;
     public Color inColor = Color.yellow;   // Punto A marcado
     public Color activeColor = Color.green; // Loop Activo (Punto B)
+
+    [Header("Resaltado del Pipeline (Jugador A)")]
+    [Tooltip("Color con el que se ilumina este boton cuando el pipeline le pide al jugador que lo use.")]
+    public Color resaltadoColor = Color.yellow;
 
     private Vector3 unpressedPos;
     private Vector3 pressedPos;
@@ -150,6 +154,13 @@ public class VR_Boton : MonoBehaviour
             // Reasignamos los materiales actualizados al Mesh Renderer
             targetRenderer.materials = mats;
         }
+    }
+
+    // Implementacion de IResaltable: encendido/apagado pedido por DJPipelineEvaluator
+    // cuando se acerca (o termina) el nodo del chart que corresponde a este boton.
+    public void SetResaltado(bool activo)
+    {
+        SetButtonColor(activo ? resaltadoColor : offColor);
     }
 
     public bool IsToggled => isToggled;
