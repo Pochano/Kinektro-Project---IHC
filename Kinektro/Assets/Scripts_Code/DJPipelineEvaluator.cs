@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using TMPro;
 
@@ -17,8 +18,15 @@ public class DJPipelineEvaluator : MonoBehaviour
     public int currentScore = 0;
     public int currentCombo = 0;
 
+    public event Action OnPipelineStarted;
+    public event Action<PipelineNode, int> OnNodeHitEvent;
+    public event Action<PipelineNode> OnNodeMissedEvent;
+
+    public float CurrentSongTime => songTimer;
+    public bool IsRunning => isRunning;
+
     private float songTimer = 0f;
-    private int lastPrintedSecond = -1; // <--- VARIABLE NUEVA PARA RASTREAR EL SEGUNDO
+    private int lastPrintedSecond = -1;
     private bool isRunning = false;
     private bool isCountingDown = false;
 
@@ -64,16 +72,21 @@ public class DJPipelineEvaluator : MonoBehaviour
     public void StartPipeline()
     {
         songTimer = 0f;
-        lastPrintedSecond = -1; // Reiniciar contador de segundos
+        lastPrintedSecond = -1;
+        currentScore = 0;
+        currentCombo = 0;
         isRunning = true;
 
         if (activeChart != null)
         {
             foreach (var node in activeChart.nodes)
             {
+                node.isSpawned = false;
                 node.isEvaluated = false;
             }
         }
+
+        OnPipelineStarted?.Invoke();
     }
 
     private void Update()
@@ -82,7 +95,6 @@ public class DJPipelineEvaluator : MonoBehaviour
 
         songTimer += Time.deltaTime;
 
-        // --- IMPRIMIR CADA SEGUNDO EN LA CONSOLA ---
         int currentSecond = Mathf.FloorToInt(songTimer);
         if (currentSecond > lastPrintedSecond)
         {
@@ -90,11 +102,11 @@ public class DJPipelineEvaluator : MonoBehaviour
             Debug.Log($"<color=cyan>[TIEMPO] {lastPrintedSecond}s</color>");
         }
 
-        // Evaluar nodos expirados (MISS)
         for (int i = 0; i < activeChart.nodes.Count; i++)
         {
             PipelineNode node = activeChart.nodes[i];
 
+            // Miss ocurre exactamente cuando la nota termina de cruzar el borde izquierdo (targetTime + timeWindow)
             if (!node.isEvaluated && songTimer > (node.targetTime + node.timeWindow))
             {
                 node.isEvaluated = true;
@@ -105,7 +117,7 @@ public class DJPipelineEvaluator : MonoBehaviour
 
     public void SubmitInput(DJControlTarget control, float rawNormalizedValue)
     {
-        if (!isRunning || activeChart == null) return;
+        if (!isRunning || activeChart == null || control == DJControlTarget.None) return;
 
         int playerLevel = Mathf.RoundToInt(Mathf.Clamp01(rawNormalizedValue) * 9f) + 1;
 
@@ -117,7 +129,8 @@ public class DJPipelineEvaluator : MonoBehaviour
 
             if (node.targetControl == control)
             {
-                bool timeValid = Mathf.Abs(songTimer - node.targetTime) <= node.timeWindow;
+                // Ventana activa mientras la nota está cruzando LaneHitZone (desde borde derecho hasta borde izquierdo)
+                bool timeValid = songTimer >= (node.targetTime - 0.15f) && songTimer <= (node.targetTime + node.timeWindow);
                 bool levelValid = Mathf.Abs(playerLevel - node.targetLevel) <= node.levelTolerance;
 
                 if (timeValid && levelValid)
@@ -135,11 +148,13 @@ public class DJPipelineEvaluator : MonoBehaviour
         currentCombo++;
         currentScore += 100 * currentCombo;
         Debug.Log($"<color=green>[HIT!]</color> Control: {node.targetControl} | Nivel Objetivo: {node.targetLevel} | Alcanzado: {levelReached} | Combo: {currentCombo}");
+        OnNodeHitEvent?.Invoke(node, levelReached);
     }
 
     private void OnNodeMissed(PipelineNode node)
     {
         currentCombo = 0;
         Debug.Log($"<color=red>[MISS!]</color> Tiempo agotado para {node.targetControl} (Nivel pedido: {node.targetLevel})");
+        OnNodeMissedEvent?.Invoke(node);
     }
 }

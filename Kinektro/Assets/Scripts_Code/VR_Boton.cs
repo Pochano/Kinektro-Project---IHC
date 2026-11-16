@@ -23,6 +23,9 @@ public class VR_Boton : MonoBehaviour
     private bool isToggled = false;
     private Material buttonMaterial;
 
+    [Header("Pipeline Target")]
+    public DJControlTarget pipelineTarget = DJControlTarget.None;
+
     void Awake()
     {
         if (buttonMesh == null) buttonMesh = transform;
@@ -77,10 +80,14 @@ public class VR_Boton : MonoBehaviour
             }
         }
 
-        if (DJPipelineEvaluator.Instance != null)
+        if (DJPipelineEvaluator.Instance != null && pipelineTarget != DJControlTarget.None)
         {
+            // Para botones Momentary o Toggle envía 1.0 (Nivel 10) al presionar
             float val = (type == ButtonType.Toggle) ? (isToggled ? 1f : 0f) : 1f;
-            DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.PlayButton_Ch1, val);
+            // Si es un botón tipo Toggle (como Loop), reportamos 1f siempre que se acciona para validar el toque
+            if (type == ButtonType.Toggle) val = 1f;
+
+            DJPipelineEvaluator.Instance.SubmitInput(pipelineTarget, val);
         }
 
         // --- CONEXIÓN CON EL TUTORIAL BÁSICO ---
