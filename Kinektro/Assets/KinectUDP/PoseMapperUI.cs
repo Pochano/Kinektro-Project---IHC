@@ -81,7 +81,15 @@ public class PoseMapperUI : MonoBehaviour
         // usar aunque este oculta (no depende del resto del metodo).
         if (Keyboard.current != null && Keyboard.current.mKey.wasPressedThisFrame && canvasMapeoGO != null)
         {
-            canvasMapeoGO.SetActive(!canvasMapeoGO.activeSelf);
+            bool mostrarMapeo = !canvasMapeoGO.activeSelf;
+            canvasMapeoGO.SetActive(mostrarMapeo);
+
+            var kinectBridgeToggle = FindObjectOfType<CrossPC_KinectBridge>();
+            if (kinectBridgeToggle != null)
+            {
+                if (mostrarMapeo) kinectBridgeToggle.OcultarPantallaJuego();
+                else kinectBridgeToggle.MostrarPantallaJuego();
+            }
         }
 
         if (grabando || dataSource == null) return;
@@ -397,6 +405,9 @@ public class PoseMapperUI : MonoBehaviour
         // arma CrossPC_KinectBridge). Se puede volver a traer con la tecla M.
         yield return new WaitForSeconds(1.5f);
         if (canvasMapeoGO != null) canvasMapeoGO.SetActive(false);
+
+        var kinectBridge = FindObjectOfType<CrossPC_KinectBridge>();
+        if (kinectBridge != null) kinectBridge.MostrarPantallaJuego();
     }
 
     // Cuenta regresiva + ventana de captura, igual que GrabarPoseRoutine pero para UNA

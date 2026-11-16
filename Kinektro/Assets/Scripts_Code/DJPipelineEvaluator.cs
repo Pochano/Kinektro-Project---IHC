@@ -184,6 +184,28 @@ public class DJPipelineEvaluator : MonoBehaviour
         ActualizarScoreComboUI();
     }
 
+    // Llamado desde CrossPC_OculusBridge cuando detecta que la PC B se desconecto a mitad
+    // de una corrida: no tiene sentido seguir evaluando nodos si no hay nadie del otro lado
+    // haciendo gestos. La musica/consola de esta PC A NO se ve afectada - esto solo corta
+    // el minijuego de puntaje. No resetea currentScore/currentCombo (igual que StartPipeline
+    // no los resetea), y cuando la PC B vuelva hay que presionar Play de nuevo a mano.
+    public void AbortarPipeline()
+    {
+        if (!isRunning) return;
+
+        isRunning = false;
+
+        if (activeChart != null)
+        {
+            foreach (var node in activeChart.nodes)
+            {
+                BuscarResaltable(node.targetControl)?.SetResaltado(false);
+            }
+        }
+
+        Debug.LogWarning("<color=orange>[PIPELINE] Abortado: se detecto que la PC B se desconecto a mitad de la corrida.</color>");
+    }
+
     private void Update()
     {
         // Atajos de teclado para poder probar el pipeline sin VR/Kinect a mano - pensados

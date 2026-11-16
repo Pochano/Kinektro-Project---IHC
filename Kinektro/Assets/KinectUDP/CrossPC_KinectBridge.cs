@@ -81,9 +81,30 @@ public class CrossPC_KinectBridge : MonoBehaviour
         new MapeoControlPose { control = DJControlTarget.TempoFader_Ch1,  nombrePose = "BrazosArriba" },
     };
 
+    private GameObject canvasPromptGO;
+    private Text textoEstado;
     private Text promptPoseText;
     private Text promptResultadoText;
     private Coroutine promptCoroutineActual;
+
+    // Estado de conexion (para el indicador de la esquina superior derecha, siempre visible)
+    private Text textoConexion;
+    private bool huboRecibido = false;
+    private float ultimoRecibidoTiempo = 0f;
+    private string ultimoRecibidoMsg = "";
+    private bool huboEnviado = false;
+    private float ultimoEnviadoTiempo = 0f;
+    private string ultimoEnviadoMsg = "";
+
+    // Deteccion de desconexion: mandamos un PING propio cada INTERVALO_PING segundos (haya
+    // o no otra actividad) para tener siempre trafico con que medir si la otra PC sigue ahi.
+    // Si pasan mas de UMBRAL_DESCONEXION segundos sin recibir NADA (ni PING ni ningun otro
+    // mensaje), asumimos que la otra PC se desconecto.
+    private const float INTERVALO_PING = 1f;
+    private const float UMBRAL_DESCONEXION = 4f;
+    private float proximoPingTiempo = 0f;
+    private Text textoAlertaDesconexion;
+    private bool conectadoPrevio = true;
 
     private UdpClient udpClient;
     private Thread receiveThread;
@@ -106,8 +127,118 @@ public class CrossPC_KinectBridge : MonoBehaviour
         receiveThread.Start();
 
         ConstruirUIPrompt();
+        ConstruirUIConexion();
 
         Debug.Log($"[CrossPC_KinectBridge] Escuchando a la PC del Oculus en el puerto UDP {listenPort}. Enviando a {remoteIP}:{remotePort}.");
+    }
+
+    // En Unity 2022 "Arial.ttf" como recurso incorporado ya no existe (fue reemplazado
+    // por "LegacyRuntime.ttf") y devuelve null en silencio, dejando el Text sin fuente
+    // (por eso no se veia NINGUN texto de este script, aunque los GameObjects estuvieran
+    // activos). Probamos primero el nombre nuevo y si no esta, caemos al viejo.
+    private Font ObtenerFuenteUI()
+    {
+        Font f = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        if (f == null) f = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        return f;
+    }
+
+    // Canvas aparte, SIEMPRE activo (no depende de canvasMapeoGO ni canvasPromptGO), con
+    // sorting order alto para quedar por encima de todo: un indicador chico en la esquina
+    // superior derecha para confirmar a simple vista que los datos realmente estan viajando
+    // entre las dos PCs en ambos sentidos (y hace cuanto fue el ultimo mensaje de cada lado).
+    private void ConstruirUIConexion()
+    {
+        var canvasGO = new GameObject("ConexionStatus_Canvas");
+        var canvas = canvasGO.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 1000;
+        var scaler = canvasGO.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+
+        var go = new GameObject("TextoConexion", typeof(RectTransform));
+        go.transform.SetParent(canvasGO.transform, false);
+        var rt = go.GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(1f, 1f);
+        rt.anchorMax = new Vector2(1f, 1f);
+        rt.pivot = new Vector2(1f, 1f);
+        rt.anchoredPosition = new Vector2(-20f, -20f);
+        rt.sizeDelta = new Vector2(680f, 110f);
+
+        textoConexion = go.AddComponent<Text>();
+        textoConexion.font = ObtenerFuenteUI();
+        textoConexion.fontSize = 20;
+        textoConexion.fontStyle = FontStyle.Bold;
+        textoConexion.alignment = TextAnchor.UpperRight;
+        textoConexion.color = Color.white;
+        textoConexion.text = "PC A -> B: sin datos aun\nB -> PC A: sin datos aun";
+
+        // Banner grande de alerta (oculto hasta que se detecte una desconexion real).
+        var alertaGO = new GameObject("TextoAlertaDesconexion", typeof(RectTransform));
+        alertaGO.transform.SetParent(canvasGO.transform, false);
+        var alertaRT = alertaGO.GetComponent<RectTransform>();
+        alertaRT.anchorMin = new Vector2(0.5f, 1f);
+        alertaRT.anchorMax = new Vector2(0.5f, 1f);
+        alertaRT.pivot = new Vector2(0.5f, 1f);
+        alertaRT.anchoredPosition = new Vector2(0f, -20f);
+        alertaRT.sizeDelta = new Vector2(1400f, 90f);
+
+        textoAlertaDesconexion = alertaGO.AddComponent<Text>();
+        textoAlertaDesconexion.font = ObtenerFuenteUI();
+        textoAlertaDesconexion.fontSize = 42;
+        textoAlertaDesconexion.fontStyle = FontStyle.Bold;
+        textoAlertaDesconexion.alignment = TextAnchor.UpperCenter;
+        textoAlertaDesconexion.color = new Color(1f, 0.3f, 0.3f);
+        textoAlertaDesconexion.text = "¡ALERTA! JUGADOR A DESCONECTADO - Esperando a que se reconecte...";
+        alertaGO.SetActive(false);
+    }
+
+    // Se llama todos los frames (haya o no mensajes nuevos) para que el "hace X.Xs" del
+    // indicador se siga actualizando en vivo, no solo cuando llega algo.
+    private void ActualizarTextoConexion()
+    {
+        if (textoConexion == null) return;
+
+        string recibido = huboRecibido
+            ? $"{ultimoRecibidoMsg} (hace {(Time.time - ultimoRecibidoTiempo):F1}s)"
+            : "sin datos aun";
+        string enviado = huboEnviado
+            ? $"{ultimoEnviadoMsg} (hace {(Time.time - ultimoEnviadoTiempo):F1}s)"
+            : "sin datos aun";
+
+        bool recibidoOk = huboRecibido && (Time.time - ultimoRecibidoTiempo) < 5f;
+        bool enviadoOk = huboEnviado && (Time.time - ultimoEnviadoTiempo) < 5f;
+
+        textoConexion.text = $"PC A -> B: {recibido}\nB -> PC A: {enviado}";
+        textoConexion.color = (recibidoOk && enviadoOk) ? new Color(0.4f, 1f, 0.5f) : new Color(1f, 0.75f, 0.3f);
+    }
+
+    // Se llama todos los frames: prende/apaga el banner de alerta segun si hace mas de
+    // UMBRAL_DESCONEXION segundos que no llega nada de la PC A, y corta cualquier prompt
+    // de pose en curso justo en el momento en que se detecta la desconexion (no en cada
+    // frame despues). La musica de la PC A no depende de esto, sigue sonando igual.
+    private void ActualizarAlertaDesconexion()
+    {
+        if (textoAlertaDesconexion == null) return;
+
+        if (!huboRecibido)
+        {
+            textoAlertaDesconexion.gameObject.SetActive(false);
+            return;
+        }
+
+        bool conectadoAhora = (Time.time - ultimoRecibidoTiempo) < UMBRAL_DESCONEXION;
+        textoAlertaDesconexion.gameObject.SetActive(!conectadoAhora);
+
+        if (conectadoPrevio && !conectadoAhora)
+        {
+            if (promptCoroutineActual != null) StopCoroutine(promptCoroutineActual);
+            if (promptPoseText != null) promptPoseText.gameObject.SetActive(false);
+            if (promptResultadoText != null) promptResultadoText.gameObject.SetActive(false);
+        }
+
+        conectadoPrevio = conectadoAhora;
     }
 
     // Canvas minimo armado por codigo (igual estilo que PoseMapperUI/DJPipelineEvaluator):
@@ -123,6 +254,40 @@ public class CrossPC_KinectBridge : MonoBehaviour
         scaler.referenceResolution = new Vector2(1920, 1080);
         canvasGO.AddComponent<GraphicRaycaster>();
 
+        // Fondo opaco a pantalla completa: sin esto, al ocultar la pantalla de mapeo
+        // (PoseMapperUI) se veia la escena 3D de atras (la consola DJ, igual a lo que
+        // ve el Jugador A). Con este fondo, la pantalla del Jugador B siempre muestra
+        // una pantalla propia y limpia, nunca la vista 3D del otro jugador.
+        var fondoGO = new GameObject("FondoPantallaJuego", typeof(RectTransform));
+        fondoGO.transform.SetParent(canvasGO.transform, false);
+        var fondoRT = fondoGO.GetComponent<RectTransform>();
+        fondoRT.anchorMin = Vector2.zero;
+        fondoRT.anchorMax = Vector2.one;
+        fondoRT.offsetMin = Vector2.zero;
+        fondoRT.offsetMax = Vector2.zero;
+        var fondoImg = fondoGO.AddComponent<Image>();
+        fondoImg.color = new Color(0.05f, 0.05f, 0.09f, 1f);
+
+        // Texto de estado general (entre rondas del pipeline): "esperando al jugador A",
+        // y al terminar, el score final. Mientras hay una pose pedida, este texto se
+        // oculta y le cede el lugar a promptPoseText/promptResultadoText de mas abajo.
+        var estadoGO = new GameObject("TextoEstado", typeof(RectTransform));
+        estadoGO.transform.SetParent(canvasGO.transform, false);
+        var estadoRT = estadoGO.GetComponent<RectTransform>();
+        estadoRT.anchorMin = new Vector2(0.5f, 0.5f);
+        estadoRT.anchorMax = new Vector2(0.5f, 0.5f);
+        estadoRT.pivot = new Vector2(0.5f, 0.5f);
+        estadoRT.anchoredPosition = Vector2.zero;
+        estadoRT.sizeDelta = new Vector2(1700f, 400f);
+
+        textoEstado = estadoGO.AddComponent<Text>();
+        textoEstado.font = ObtenerFuenteUI();
+        textoEstado.fontSize = 55;
+        textoEstado.fontStyle = FontStyle.Bold;
+        textoEstado.alignment = TextAnchor.MiddleCenter;
+        textoEstado.color = Color.white;
+        textoEstado.text = "Esperando a que el Jugador A presione Play...";
+
         var promptGO = new GameObject("PromptPoseText", typeof(RectTransform));
         promptGO.transform.SetParent(canvasGO.transform, false);
         var rt = promptGO.GetComponent<RectTransform>();
@@ -133,7 +298,7 @@ public class CrossPC_KinectBridge : MonoBehaviour
         rt.sizeDelta = new Vector2(1500f, 300f);
 
         promptPoseText = promptGO.AddComponent<Text>();
-        promptPoseText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        promptPoseText.font = ObtenerFuenteUI();
         promptPoseText.fontSize = 90;
         promptPoseText.fontStyle = FontStyle.Bold;
         promptPoseText.alignment = TextAnchor.MiddleCenter;
@@ -151,13 +316,16 @@ public class CrossPC_KinectBridge : MonoBehaviour
         rt2.sizeDelta = new Vector2(1000f, 140f);
 
         promptResultadoText = resultGO.AddComponent<Text>();
-        promptResultadoText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        promptResultadoText.font = ObtenerFuenteUI();
         promptResultadoText.fontSize = 60;
         promptResultadoText.fontStyle = FontStyle.Bold;
         promptResultadoText.alignment = TextAnchor.MiddleCenter;
         promptResultadoText.color = Color.white;
         promptResultadoText.text = "";
         resultGO.SetActive(false);
+
+        canvasPromptGO = canvasGO;
+        canvasGO.SetActive(false);
     }
 
     private void ReceiveLoop()
@@ -196,11 +364,21 @@ public class CrossPC_KinectBridge : MonoBehaviour
             }
         }
 
-        if (toProcess == null) return;
-
-        foreach (string message in toProcess)
+        if (toProcess != null)
         {
-            HandleMessage(message);
+            foreach (string message in toProcess)
+            {
+                HandleMessage(message);
+            }
+        }
+
+        ActualizarTextoConexion();
+        ActualizarAlertaDesconexion();
+
+        if (Time.time >= proximoPingTiempo)
+        {
+            SendOnce("PING");
+            proximoPingTiempo = Time.time + INTERVALO_PING;
         }
     }
 
@@ -209,8 +387,15 @@ public class CrossPC_KinectBridge : MonoBehaviour
         string[] parts = message.Split('|');
         if (parts.Length == 0) return;
 
+        huboRecibido = true;
+        ultimoRecibidoTiempo = Time.time;
+        ultimoRecibidoMsg = parts[0];
+
         switch (parts[0])
         {
+            case "PING":
+                break; // solo sirve para confirmar que la PC A sigue conectada
+
             case "WINDOW_OPEN":
                 if (parts.Length >= 3) HandleWindowOpen(parts[1], parts[2]);
                 break;
@@ -276,9 +461,37 @@ public class CrossPC_KinectBridge : MonoBehaviour
     // --- Pipeline de DJPipelineEvaluator (PC A): por ahora solo logueamos, es la prueba
     // chica para confirmar que el dato llega bien antes de conectarlo con gestos reales. ---
 
+    // Llamado desde PoseMapperUI apenas termina la calibracion del jugador nuevo: muestra
+    // esta pantalla (propia, con fondo opaco) con el mensaje de espera hasta que el
+    // Jugador A arranque el pipeline.
+    public void MostrarPantallaJuego()
+    {
+        if (canvasPromptGO == null) return;
+        canvasPromptGO.SetActive(true);
+
+        if (promptPoseText != null) promptPoseText.gameObject.SetActive(false);
+        if (promptResultadoText != null) promptResultadoText.gameObject.SetActive(false);
+
+        if (textoEstado != null)
+        {
+            textoEstado.gameObject.SetActive(true);
+            textoEstado.color = Color.white;
+            textoEstado.text = "Esperando a que el Jugador A presione Play...";
+        }
+    }
+
+    // Llamado desde PoseMapperUI cuando se vuelve a traer la pantalla de mapeo/debug
+    // (tecla M), para que no quede superpuesta con esta.
+    public void OcultarPantallaJuego()
+    {
+        if (canvasPromptGO != null) canvasPromptGO.SetActive(false);
+    }
+
     private void HandlePipelineWindowOpen()
     {
         Debug.Log("<color=yellow>[CrossPC_KinectBridge] PIPELINE: arranco la ventana de evaluacion en PC A.</color>");
+
+        if (textoEstado != null) textoEstado.gameObject.SetActive(false);
     }
 
     private void HandlePipelineHit(string controlStr, string comboStr)
@@ -320,6 +533,7 @@ public class CrossPC_KinectBridge : MonoBehaviour
     {
         if (promptPoseText == null) yield break;
 
+        if (textoEstado != null) textoEstado.gameObject.SetActive(false);
         promptResultadoText.gameObject.SetActive(false);
         promptPoseText.gameObject.SetActive(true);
         promptPoseText.text = $"HACE:\n{poseEsperada}";
@@ -350,6 +564,17 @@ public class CrossPC_KinectBridge : MonoBehaviour
     private void HandlePipelineWindowClose(string scoreStr)
     {
         Debug.Log($"<color=magenta>[CrossPC_KinectBridge] PIPELINE: se cerro la ventana. Score final recibido: {scoreStr}.</color>");
+
+        if (promptCoroutineActual != null) StopCoroutine(promptCoroutineActual);
+        if (promptPoseText != null) promptPoseText.gameObject.SetActive(false);
+        if (promptResultadoText != null) promptResultadoText.gameObject.SetActive(false);
+
+        if (textoEstado != null)
+        {
+            textoEstado.gameObject.SetActive(true);
+            textoEstado.color = new Color(0.6f, 0.85f, 1f);
+            textoEstado.text = $"Pipeline terminado.\nScore final: {scoreStr}";
+        }
     }
 
     /// <summary>Util para que la UI/voz de esta PC sepa si puede ofrecer seleccion de efecto ahora mismo.</summary>
@@ -400,6 +625,10 @@ public class CrossPC_KinectBridge : MonoBehaviour
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
             udpClient.Send(data, data.Length, remoteIP, remotePort);
+
+            huboEnviado = true;
+            ultimoEnviadoTiempo = Time.time;
+            ultimoEnviadoMsg = message.Split('|')[0];
         }
         catch (Exception e)
         {

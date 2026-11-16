@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Puente UDP del lado PC A (Oculus). Esta PC corre FMOD/DJ_Manager/FXSelector_Ch1/Ch2
@@ -56,6 +57,25 @@ public class CrossPC_OculusBridge : MonoBehaviour
     private readonly Queue<string> inboundQueue = new Queue<string>();
     private readonly object queueLock = new object();
 
+    // Estado de conexion (para el indicador de la esquina superior derecha, siempre visible)
+    private Text textoConexion;
+    private bool huboRecibido = false;
+    private float ultimoRecibidoTiempo = 0f;
+    private string ultimoRecibidoMsg = "";
+    private bool huboEnviado = false;
+    private float ultimoEnviadoTiempo = 0f;
+    private string ultimoEnviadoMsg = "";
+
+    // Deteccion de desconexion: mandamos un PING propio cada INTERVALO_PING segundos (haya
+    // o no otra actividad) para tener siempre trafico con que medir si la otra PC sigue ahi.
+    // Si pasan mas de UMBRAL_DESCONEXION segundos sin recibir NADA (ni PING ni ningun otro
+    // mensaje), asumimos que la otra PC se desconecto.
+    private const float INTERVALO_PING = 1f;
+    private const float UMBRAL_DESCONEXION = 4f;
+    private float proximoPingTiempo = 0f;
+    private Text textoAlertaDesconexion;
+    private bool conectadoPrevio = true;
+
     void Start()
     {
         udpClient = new UdpClient(listenPort);
@@ -64,7 +84,109 @@ public class CrossPC_OculusBridge : MonoBehaviour
         receiveThread.IsBackground = true;
         receiveThread.Start();
 
+        ConstruirUIConexion();
+
         Debug.Log($"[CrossPC_OculusBridge] Escuchando a la PC del Kinect en el puerto UDP {listenPort}. Enviando a {remoteIP}:{remotePort}.");
+    }
+
+    // Mismo indicador que en CrossPC_KinectBridge (PC B), visto desde el lado de la PC A:
+    // confirma a simple vista que los datos realmente estan viajando en ambos sentidos.
+    private Font ObtenerFuenteUI()
+    {
+        Font f = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        if (f == null) f = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        return f;
+    }
+
+    private void ConstruirUIConexion()
+    {
+        var canvasGO = new GameObject("ConexionStatus_Canvas");
+        var canvas = canvasGO.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 1000;
+        var scaler = canvasGO.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+
+        var go = new GameObject("TextoConexion", typeof(RectTransform));
+        go.transform.SetParent(canvasGO.transform, false);
+        var rt = go.GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(1f, 1f);
+        rt.anchorMax = new Vector2(1f, 1f);
+        rt.pivot = new Vector2(1f, 1f);
+        rt.anchoredPosition = new Vector2(-20f, -20f);
+        rt.sizeDelta = new Vector2(680f, 110f);
+
+        textoConexion = go.AddComponent<Text>();
+        textoConexion.font = ObtenerFuenteUI();
+        textoConexion.fontSize = 20;
+        textoConexion.fontStyle = FontStyle.Bold;
+        textoConexion.alignment = TextAnchor.UpperRight;
+        textoConexion.color = Color.white;
+        textoConexion.text = "PC B -> A: sin datos aun\nA -> PC B: sin datos aun";
+
+        // Banner grande de alerta (oculto hasta que se detecte una desconexion real).
+        var alertaGO = new GameObject("TextoAlertaDesconexion", typeof(RectTransform));
+        alertaGO.transform.SetParent(canvasGO.transform, false);
+        var alertaRT = alertaGO.GetComponent<RectTransform>();
+        alertaRT.anchorMin = new Vector2(0.5f, 1f);
+        alertaRT.anchorMax = new Vector2(0.5f, 1f);
+        alertaRT.pivot = new Vector2(0.5f, 1f);
+        alertaRT.anchoredPosition = new Vector2(0f, -20f);
+        alertaRT.sizeDelta = new Vector2(1400f, 90f);
+
+        textoAlertaDesconexion = alertaGO.AddComponent<Text>();
+        textoAlertaDesconexion.font = ObtenerFuenteUI();
+        textoAlertaDesconexion.fontSize = 42;
+        textoAlertaDesconexion.fontStyle = FontStyle.Bold;
+        textoAlertaDesconexion.alignment = TextAnchor.UpperCenter;
+        textoAlertaDesconexion.color = new Color(1f, 0.3f, 0.3f);
+        textoAlertaDesconexion.text = "¡ALERTA! JUGADOR B DESCONECTADO - Esperando a que se reconecte...";
+        alertaGO.SetActive(false);
+    }
+
+    private void ActualizarTextoConexion()
+    {
+        if (textoConexion == null) return;
+
+        string recibido = huboRecibido
+            ? $"{ultimoRecibidoMsg} (hace {(Time.time - ultimoRecibidoTiempo):F1}s)"
+            : "sin datos aun";
+        string enviado = huboEnviado
+            ? $"{ultimoEnviadoMsg} (hace {(Time.time - ultimoEnviadoTiempo):F1}s)"
+            : "sin datos aun";
+
+        bool recibidoOk = huboRecibido && (Time.time - ultimoRecibidoTiempo) < 5f;
+        bool enviadoOk = huboEnviado && (Time.time - ultimoEnviadoTiempo) < 5f;
+
+        textoConexion.text = $"PC B -> A: {recibido}\nA -> PC B: {enviado}";
+        textoConexion.color = (recibidoOk && enviadoOk) ? new Color(0.4f, 1f, 0.5f) : new Color(1f, 0.75f, 0.3f);
+    }
+
+    // Se llama todos los frames: prende/apaga el banner de alerta segun si hace mas de
+    // UMBRAL_DESCONEXION segundos que no llega nada de la PC B, y corta el pipeline en
+    // curso justo en el momento en que se detecta la desconexion (no en cada frame despues).
+    private void ActualizarAlertaDesconexion()
+    {
+        if (textoAlertaDesconexion == null) return;
+
+        // Si nunca recibimos nada todavia no mostramos alerta: no sabemos si esta
+        // desconectado o simplemente todavia no empezo a mandar datos.
+        if (!huboRecibido)
+        {
+            textoAlertaDesconexion.gameObject.SetActive(false);
+            return;
+        }
+
+        bool conectadoAhora = (Time.time - ultimoRecibidoTiempo) < UMBRAL_DESCONEXION;
+        textoAlertaDesconexion.gameObject.SetActive(!conectadoAhora);
+
+        if (conectadoPrevio && !conectadoAhora)
+        {
+            DJPipelineEvaluator.Instance?.AbortarPipeline();
+        }
+
+        conectadoPrevio = conectadoAhora;
     }
 
     private void ReceiveLoop()
@@ -103,11 +225,21 @@ public class CrossPC_OculusBridge : MonoBehaviour
             }
         }
 
-        if (toProcess == null) return;
-
-        foreach (string message in toProcess)
+        if (toProcess != null)
         {
-            HandleMessage(message);
+            foreach (string message in toProcess)
+            {
+                HandleMessage(message);
+            }
+        }
+
+        ActualizarTextoConexion();
+        ActualizarAlertaDesconexion();
+
+        if (Time.time >= proximoPingTiempo)
+        {
+            SendOnce("PING");
+            proximoPingTiempo = Time.time + INTERVALO_PING;
         }
     }
 
@@ -116,8 +248,15 @@ public class CrossPC_OculusBridge : MonoBehaviour
         string[] parts = message.Split('|');
         if (parts.Length == 0) return;
 
+        huboRecibido = true;
+        ultimoRecibidoTiempo = Time.time;
+        ultimoRecibidoMsg = parts[0];
+
         switch (parts[0])
         {
+            case "PING":
+                break; // solo sirve para confirmar que la PC B sigue conectada
+
             case "HAND_RAISED":
                 if (parts.Length >= 2) HandleHandRaised(parts[1]);
                 break;
@@ -240,6 +379,10 @@ public class CrossPC_OculusBridge : MonoBehaviour
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
             udpClient.Send(data, data.Length, remoteIP, remotePort);
+
+            huboEnviado = true;
+            ultimoEnviadoTiempo = Time.time;
+            ultimoEnviadoMsg = message.Split('|')[0];
         }
         catch (Exception e)
         {
