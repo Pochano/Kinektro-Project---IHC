@@ -22,23 +22,21 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
     public float maxAngle = 135f;
 
     [Header("Control de Precision y Fluidez")]
-    [Tooltip("Sensibilidad aumentada: Un valor de 35 a 50 permite recorrer todo el rango con un movimiento de solo 5-10 cm")]
     [Range(1f, 100f)]
     public float sensitivity = 45.0f;
 
     [Header("Canal Asignado")]
-    public int channelNumber = 1; // Ajustar a 1 o 2 en el Inspector
+    public int channelNumber = 1;
 
-    [Tooltip("Rapidez de respuesta visual (80-100 elimina el retardo pegajoso)")]
     [Range(10f, 200f)]
     public float smoothness = 100.0f;
 
+    public float CurrentNormalizedValue => currentNormalizedValue;
+
     [Header("Resaltado del Pipeline (Jugador A)")]
-    [Tooltip("Renderer con el material a teñir para resaltar este knob. Si se deja vacio, se busca automaticamente en los hijos.")]
     public Renderer targetRenderer;
     public Color offColor = Color.white;
-    [Tooltip("Color con el que se ilumina este knob cuando el pipeline le pide al jugador que lo use.")]
-    public Color resaltadoColor = Color.yellow;
+    public Color resaltadoColor = new Color(0f, 1f, 0.2f, 1f);
 
     private Quaternion initialLocalRotation;
     private float targetNormalizedValue = 0.5f;
@@ -54,6 +52,11 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
         initialLocalRotation = knobModel.localRotation;
 
         if (targetRenderer == null) targetRenderer = GetComponentInChildren<Renderer>();
+
+        // Color oscuro original de reposo (ignora el blanco guardado en el Inspector)
+        offColor = new Color(0.12f, 0.12f, 0.12f, 1f);
+        resaltadoColor = new Color(0f, 1f, 0.2f, 1f);
+        SetKnobColor(offColor);
     }
 
     private void Start()
@@ -65,27 +68,22 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
     {
         if (isGrabbed && interactorTransform != null)
         {
-            // 1. Posición del mando en mundo real (metros)
             Vector3 currentHandPosWorld = interactorTransform.position;
             Vector3 deltaHandWorld = currentHandPosWorld - lastHandPosition;
 
-            // 2. Eje horizontal de la cámara o mundo
             Vector3 worldRight = (Camera.main != null) ? Camera.main.transform.right : Vector3.right;
             float deltaX = Vector3.Dot(deltaHandWorld, worldRight);
 
             lastHandPosition = currentHandPosWorld;
 
-            // 3. Calculamos la meta directa sin la traba del Lerp intermedio
             targetNormalizedValue += deltaX * sensitivity;
             targetNormalizedValue = Mathf.Clamp01(targetNormalizedValue);
 
-            // 4. Interpolación ultra reactiva pero fluida
             currentNormalizedValue = Mathf.Lerp(currentNormalizedValue, targetNormalizedValue, Time.deltaTime * smoothness);
             ApplyRotationAndAudio(currentNormalizedValue);
         }
         else
         {
-            // Cuando se suelta, suaviza de forma imperceptible hasta reposar en el punto final
             if (Mathf.Abs(currentNormalizedValue - targetNormalizedValue) > 0.001f)
             {
                 currentNormalizedValue = Mathf.Lerp(currentNormalizedValue, targetNormalizedValue, Time.deltaTime * smoothness);
@@ -121,13 +119,11 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
             }
         }
 
-        // --- NOTIFICACIÓN A ESCENA 2 (TUTORIAL BÁSICO) ---
         if (BasicTutorialManager.Instance != null)
         {
             BasicTutorialManager.Instance.OnKnobHighMoved(value);
         }
 
-        // --- NOTIFICACIÓN A ESCENA 3 (TUTORIAL CONSOLA REAL) ---
         if (TutorialManager.Instance != null)
         {
             TutorialManager.Instance.OnKnobRotated();
@@ -176,11 +172,36 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
         interactorTransform = null;
     }
 
-    // Implementacion de IResaltable: encendido/apagado pedido por DJPipelineEvaluator
-    // cuando se acerca (o termina) el nodo del chart que corresponde a este knob.
+    private Coroutine flashRoutine;
+
     public void SetResaltado(bool activo)
     {
-        SetKnobColor(activo ? resaltadoColor : offColor);
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        SetKnobColor(offColor);
+    }
+
+    public void SetProximidadColor(float cercania)
+    {
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        // Exponente 2.5f: mantiene el rojo en la mayor parte del recorrido y transiciona a verde solo muy cerca del objetivo
+        float factor = Mathf.Pow(Mathf.Clamp01(cercania), 2.5f);
+        Color colorLejos = new Color(1f, 0.08f, 0.08f, 1f);
+        SetKnobColor(Color.Lerp(colorLejos, resaltadoColor, factor));
+    }
+
+
+    public void FlashSuccess()
+    {
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        flashRoutine = StartCoroutine(FlashGreenRoutine());
+    }
+
+    private System.Collections.IEnumerator FlashGreenRoutine()
+    {
+        SetKnobColor(resaltadoColor);
+        yield return new WaitForSeconds(0.45f);
+        SetKnobColor(offColor);
+        flashRoutine = null;
     }
 
     private void SetKnobColor(Color newColor)

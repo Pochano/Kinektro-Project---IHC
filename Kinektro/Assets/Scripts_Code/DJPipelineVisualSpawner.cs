@@ -85,7 +85,6 @@ public class DJPipelineVisualSpawner : MonoBehaviour
             if (activeLaneNotes[i].GetNode() == node)
             {
                 activeLaneNotes[i].ResolveVisual(isHit);
-                activeLaneNotes.RemoveAt(i);
                 return;
             }
         }

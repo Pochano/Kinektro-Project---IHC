@@ -6,4 +6,5 @@
 public interface IResaltable
 {
     void SetResaltado(bool activo);
+    void SetProximidadColor(float cercania);
 }

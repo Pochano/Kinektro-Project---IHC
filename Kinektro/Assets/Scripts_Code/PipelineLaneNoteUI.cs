@@ -12,10 +12,12 @@ public class PipelineLaneNoteUI : MonoBehaviour
     private PipelineNode node;
     private float leadTime;
     private RectTransform rectTransform;
+    private RectTransform containerRect;
     private Vector2 spawnPos;
     private Vector2 hitZoneRightEdge;
     private Vector2 hitZoneLeftEdge;
     private float fastApproachSpeed;
+    private float leftExitBoundary;
     private bool isResolved = false;
 
     public void Initialize(PipelineNode targetNode, ControlVisualEntry visual, float anticipationTime, Vector2 startAnchoredPos, RectTransform hitZoneRect)
@@ -24,11 +26,17 @@ public class PipelineLaneNoteUI : MonoBehaviour
         leadTime = anticipationTime;
         spawnPos = startAnchoredPos;
         rectTransform = GetComponent<RectTransform>();
+        containerRect = transform.parent as RectTransform;
+        transform.localScale = Vector3.one;
 
         if (visual != null)
         {
             if (backgroundBadge != null) backgroundBadge.color = visual.badgeColor;
-            if (controlIcon != null && visual.icon != null) controlIcon.sprite = visual.icon;
+            if (controlIcon != null && visual.icon != null)
+            {
+                controlIcon.sprite = visual.icon;
+                controlIcon.color = Color.white; // Sin filtro mientras viaja
+            }
         }
 
         if (levelText != null)
@@ -36,49 +44,51 @@ public class PipelineLaneNoteUI : MonoBehaviour
             levelText.text = (node.targetLevel == 10 && node.levelTolerance == 0) ? "ACT" : node.targetLevel.ToString();
         }
 
-        // Calculamos los bordes izquierdo y derecho reales de LaneHitZone
         Vector2 hitCenter = hitZoneRect != null ? hitZoneRect.anchoredPosition : Vector2.zero;
         float zoneHalfWidth = hitZoneRect != null ? (hitZoneRect.rect.width * 0.5f) : 50f;
         float noteHalfWidth = rectTransform != null ? (rectTransform.rect.width * 0.5f) : 25f;
 
-        // Borde derecho: punto exacto donde la nota entra en contacto con LaneHitZone
         hitZoneRightEdge = new Vector2(hitCenter.x + zoneHalfWidth + noteHalfWidth, hitCenter.y);
-        // Borde izquierdo: punto exacto donde la nota termina de salir de LaneHitZone
         hitZoneLeftEdge = new Vector2(hitCenter.x - zoneHalfWidth - noteHalfWidth, hitCenter.y);
 
-        // Guardamos la velocidad rápida original (píxeles/segundo) para reutilizarla al salir
         float approachDistance = Mathf.Abs(spawnPos.x - hitZoneRightEdge.x);
         fastApproachSpeed = (leadTime > 0f) ? (approachDistance / leadTime) : 200f;
+
+        float containerHalfWidth = (containerRect != null) ? (containerRect.rect.width * 0.5f) : 500f;
+        leftExitBoundary = -containerHalfWidth - noteHalfWidth;
 
         rectTransform.anchoredPosition = spawnPos;
     }
 
     private void Update()
     {
-        if (isResolved || DJPipelineEvaluator.Instance == null || !DJPipelineEvaluator.Instance.IsRunning) return;
+        if (DJPipelineEvaluator.Instance == null) return;
 
         float currentTime = DJPipelineEvaluator.Instance.CurrentSongTime;
         float windowStart = node.targetTime;
         float windowEnd = node.targetTime + node.timeWindow;
 
-        if (currentTime < windowStart)
+        if (!isResolved && currentTime < windowStart)
         {
-            // FASE 1: Aproximación rápida desde SpawnPoint hasta el borde derecho de LaneHitZone
             float timeRemaining = windowStart - currentTime;
             float progress = 1f - Mathf.Clamp01(timeRemaining / leadTime);
             rectTransform.anchoredPosition = Vector2.Lerp(spawnPos, hitZoneRightEdge, progress);
         }
-        else if (currentTime <= windowEnd && node.timeWindow > 0f)
+        else if (!isResolved && currentTime <= windowEnd && node.timeWindow > 0f)
         {
-            // FASE 2: Cruce lento dentro de LaneHitZone durante exactamente 'timeWindow' segundos
             float windowProgress = (currentTime - windowStart) / node.timeWindow;
             rectTransform.anchoredPosition = Vector2.Lerp(hitZoneRightEdge, hitZoneLeftEdge, windowProgress);
         }
         else
         {
-            // FASE 3 (Miss): Salió por el borde izquierdo y recupera su velocidad rápida normal
-            float overtime = currentTime - windowEnd;
-            rectTransform.anchoredPosition = new Vector2(hitZoneLeftEdge.x - (fastApproachSpeed * overtime), hitZoneLeftEdge.y);
+            Vector2 pos = rectTransform.anchoredPosition;
+            pos.x -= fastApproachSpeed * Time.deltaTime;
+            rectTransform.anchoredPosition = pos;
+
+            if (pos.x <= leftExitBoundary)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -87,13 +97,21 @@ public class PipelineLaneNoteUI : MonoBehaviour
         if (isResolved) return;
         isResolved = true;
 
-        if (backgroundBadge != null)
+        if (isHit)
         {
-            backgroundBadge.color = isHit ? Color.green : Color.red;
+            // Filtro verde manteniendo la silueta del icono
+            Color verdeHit = new Color(0.15f, 1f, 0.25f, 1f);
+            if (controlIcon != null) controlIcon.color = verdeHit;
+            if (backgroundBadge != null) backgroundBadge.color = new Color(0.05f, 0.45f, 0.12f, 1f);
         }
-
-        // Si fue Miss, dejamos que siga saliendo rápido un instante antes de destruirse
-        Destroy(gameObject, isHit ? 0.25f : 0.6f);
+        else
+        {
+            // Filtro rojo + ligero aumento de tamaño para resaltar el Miss
+            Color rojoMiss = new Color(1f, 0.15f, 0.15f, 1f);
+            if (controlIcon != null) controlIcon.color = rojoMiss;
+            if (backgroundBadge != null) backgroundBadge.color = new Color(0.5f, 0.05f, 0.05f, 1f);
+            transform.localScale = Vector3.one * 1.15f;
+        }
     }
 
     public PipelineNode GetNode() => node;
