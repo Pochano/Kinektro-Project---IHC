@@ -14,21 +14,108 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackName: 
   nodes:
-  - targetTime: 3
-    targetControl: 0
-    targetLevel: 8
+  - targetTime: 7
+    targetControl: 3
+    targetLevel: 6
     levelTolerance: 1
-    timeWindow: 2
+    timeWindow: 3
+    isSpawned: 1
     isEvaluated: 1
   - targetTime: 13
-    targetControl: 3
+    targetControl: 4
+    targetLevel: 2
+    levelTolerance: 1
+    timeWindow: 4
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 20
+    targetControl: 4
+    targetLevel: 8
+    levelTolerance: 0
+    timeWindow: 5
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 26
+    targetControl: 6
     targetLevel: 3
     levelTolerance: 1
     timeWindow: 3
+    isSpawned: 1
     isEvaluated: 1
-  - targetTime: 20
+  - targetTime: 28
     targetControl: 7
     targetLevel: 10
     levelTolerance: 0
-    timeWindow: 4
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 32
+    targetControl: 7
+    targetLevel: 10
+    levelTolerance: 0
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 32
+    targetControl: 3
+    targetLevel: 9
+    levelTolerance: 1
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 37
+    targetControl: 1
+    targetLevel: 3
+    levelTolerance: 1
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 40
+    targetControl: 4
+    targetLevel: 0
+    levelTolerance: 0
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 43
+    targetControl: 6
+    targetLevel: 9
+    levelTolerance: 0
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 46
+    targetControl: 4
+    targetLevel: 8
+    levelTolerance: 1
+    timeWindow: 3
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 50
+    targetControl: 9
+    targetLevel: 10
+    levelTolerance: 0
+    timeWindow: 2
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 52
+    targetControl: 9
+    targetLevel: 10
+    levelTolerance: 0
+    timeWindow: 2
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 56
+    targetControl: 9
+    targetLevel: 10
+    levelTolerance: 0
+    timeWindow: 2
+    isSpawned: 1
+    isEvaluated: 1
+  - targetTime: 56
+    targetControl: 8
+    targetLevel: 10
+    levelTolerance: 0
+    timeWindow: 3
+    isSpawned: 1
     isEvaluated: 1

@@ -608,7 +608,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &46412786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2279,7 +2281,9 @@ MonoBehaviour:
   offColor: {r: 0.06666667, g: 0.19215688, b: 0.91372555, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0.10980393, g: 0.882353, b: 0.07450981, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &258303616
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,7 +3139,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &332164464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4134,7 +4140,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &495990240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5369,7 +5377,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &579347388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5788,7 +5798,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &627378575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6470,7 +6482,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &705770451
 GameObject:
   m_ObjectHideFlags: 0
@@ -6509,7 +6523,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &705770453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6712,7 +6728,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &744078496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8309,6 +8327,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Interaction Simulator
       objectReference: {fileID: 0}
+    - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8891,7 +8913,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &894467002
 GameObject:
   m_ObjectHideFlags: 0
@@ -9095,7 +9119,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &944427182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10074,6 +10100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068681988}
   - component: {fileID: 1068681987}
+  - component: {fileID: 1068681989}
   m_Layer: 0
   m_Name: Pipeline_Evaluator
   m_TagString: Untagged
@@ -10097,27 +10124,53 @@ MonoBehaviour:
   activeChart: {fileID: 11400000, guid: 1b908b953f250984d9c1233e2462c3a6, type: 2}
   bridge: {fileID: 1863385651}
   mapeoControlAObjeto:
-  - control: 0
-    objetoControl: {fileID: 6663213866967774200}
   - control: 1
-    objetoControl: {fileID: 9179073996795854087}
+    objetoControl: {fileID: 6663213866967774200}
   - control: 2
-    objetoControl: {fileID: 6994458581951215841}
+    objetoControl: {fileID: 6663213866967774200}
   - control: 3
-    objetoControl: {fileID: 8821492295894533892}
+    objetoControl: {fileID: 9126908054748786301}
   - control: 4
-    objetoControl: {fileID: 8673940632565818214}
+    objetoControl: {fileID: 8821492295894533892}
   - control: 5
-    objetoControl: {fileID: 6320224366878667169}
+    objetoControl: {fileID: 8673940632565818214}
   - control: 6
-    objetoControl: {fileID: 8277052046720047382}
+    objetoControl: {fileID: 6320224366878667169}
   - control: 7
     objetoControl: {fileID: 579347387}
   - control: 8
     objetoControl: {fileID: 1519188004}
   - control: 9
     objetoControl: {fileID: 245165080}
-  anticipacionResaltado: 1.5
+  - control: 10
+    objetoControl: {fileID: 332164464}
+  - control: 11
+    objetoControl: {fileID: 7304252867255619036}
+  - control: 12
+    objetoControl: {fileID: 9179073996795854087}
+  - control: 13
+    objetoControl: {fileID: 8123867185968600503}
+  - control: 14
+    objetoControl: {fileID: 8559851521977772826}
+  - control: 15
+    objetoControl: {fileID: 8300840716739638977}
+  - control: 16
+    objetoControl: {fileID: 5756533230647739185}
+  - control: 17
+    objetoControl: {fileID: 8261601944996121170}
+  - control: 18
+    objetoControl: {fileID: 1867632909}
+  - control: 19
+    objetoControl: {fileID: 1238284466}
+  - control: 20
+    objetoControl: {fileID: 1377296553}
+  - control: 21
+    objetoControl: {fileID: 1671039181}
+  - control: 22
+    objetoControl: {fileID: 8873183022690763291}
+  - control: 23
+    objetoControl: {fileID: 6994458581951215841}
+  anticipacionResaltado: 1
   countdownText: {fileID: 0}
   currentScore: 0
   currentCombo: 0
@@ -10136,6 +10189,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1068681989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068681986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2561083af661844488a4962dd5c51d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visualConfig: {fileID: 11400000, guid: 4dc30e7d3fe7b4845aefe70fdabdf24a, type: 2}
+  leadTime: 3
+  laneNotePrefab: {fileID: 7289831926209816050, guid: fbfd7c80a7a22444bbe2849ca982fbdc, type: 3}
+  notesContainer: {fileID: 2015167197}
+  laneSpawnPoint: {fileID: 2085775364}
+  laneHitZone: {fileID: 1091396530}
 --- !u!1 &1075756180
 GameObject:
   m_ObjectHideFlags: 0
@@ -10407,6 +10478,81 @@ Transform:
   - {fileID: 1140501994}
   m_Father: {fileID: 1254499489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1091396529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1091396530}
+  - component: {fileID: 1091396532}
+  - component: {fileID: 1091396531}
+  m_Layer: 5
+  m_Name: LaneHitZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1091396530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091396529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2015167197}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 4, y: -2.3}
+  m_SizeDelta: {x: 130, y: 360}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1091396531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091396529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.858258, g: 1, b: 0.7528302, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1091396532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091396529}
+  m_CullTransparentMesh: 1
 --- !u!1 &1094282829
 GameObject:
   m_ObjectHideFlags: 0
@@ -10871,7 +11017,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &1136888886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11662,6 +11810,7 @@ RectTransform:
   - {fileID: 1524404026}
   - {fileID: 1452726236}
   - {fileID: 1471765863}
+  - {fileID: 2015167197}
   m_Father: {fileID: 4013441401024230246}
   m_LocalEulerAnglesHint: {x: -117.891, y: 0, z: -180}
   m_AnchorMin: {x: 0, y: 0}
@@ -12239,7 +12388,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &1245578756
 GameObject:
   m_ObjectHideFlags: 0
@@ -12749,7 +12900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1278285104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13499,7 +13650,9 @@ MonoBehaviour:
   offColor: {r: 0.09019608, g: 0.20392159, b: 0.9215687, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0.10980393, g: 0.7686275, b: 0.1254902, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &1377296553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14846,7 +14999,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!4 &1491314046
 Transform:
   m_ObjectHideFlags: 0
@@ -15247,7 +15402,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &1524404025
 GameObject:
   m_ObjectHideFlags: 0
@@ -18104,7 +18261,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &1687873779
 GameObject:
   m_ObjectHideFlags: 0
@@ -19930,7 +20089,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &1867632910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21096,6 +21257,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011714086}
   m_CullTransparentMesh: 1
+--- !u!1 &2015167196
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2015167197}
+  - component: {fileID: 2015167198}
+  m_Layer: 5
+  m_Name: Notes_Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2015167197
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015167196}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1091396530}
+  - {fileID: 2085775364}
+  m_Father: {fileID: 1192471402}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.5, y: 0.6}
+  m_SizeDelta: {x: 910, y: 350}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2015167198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015167196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &2028090192
 GameObject:
   m_ObjectHideFlags: 0
@@ -21469,6 +21682,41 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &2085775363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2085775364}
+  m_Layer: 5
+  m_Name: LaneSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2085775364
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085775363}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2015167197}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 420.3, y: 0}
+  m_SizeDelta: {x: 13.62, y: 123.6}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2094523338
 GameObject:
   m_ObjectHideFlags: 0
@@ -21507,7 +21755,9 @@ MonoBehaviour:
   offColor: {r: 1, g: 1, b: 1, a: 1}
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
+  avisoColor: {r: 1, g: 0.08, b: 0.08, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &2094523340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25590,6 +25840,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &6699340996097354328
 GameObject:
   m_ObjectHideFlags: 0
@@ -25695,6 +25946,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &6994458581951215841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26802,6 +27054,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!65 &8123867185968600504
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27353,6 +27606,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!65 &8277052046720047383
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28875,6 +29129,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!65 &9179073996795854088
 BoxCollider:
   m_ObjectHideFlags: 0
