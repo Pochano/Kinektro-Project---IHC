@@ -141,6 +141,23 @@ public class TurntableDeck : MonoBehaviour
             djManager.UpdateMasterBeatbar();
         }
 
+        if (djManager != null && deckController != null)
+        {
+            djManager.SetPitch(deckController.channelNumber, currentFaderValue);
+            djManager.UpdateMasterBeatbar();
+
+            // --- REPORTE AL PIPELINE (CAMBIO/CARGA DE CANCIÓN) ---
+            if (DJPipelineEvaluator.Instance != null)
+            {
+                DJControlTarget vinylTarget = (deckController.channelNumber == 1)
+                    ? DJControlTarget.LoadVinyl_Ch1
+                    : DJControlTarget.LoadVinyl_Ch2;
+
+                // Enviamos 1.0f (Nivel 10) indicando que el vinilo fue colocado
+                DJPipelineEvaluator.Instance.SubmitInput(vinylTarget, 1.0f);
+            }
+        }
+
         if (TutorialManager.Instance != null) TutorialManager.Instance.OnVinylPlacedOnTurntable();
     }
 
