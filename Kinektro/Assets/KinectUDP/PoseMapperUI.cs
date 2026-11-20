@@ -54,6 +54,13 @@ public class PoseMapperUI : MonoBehaviour
 
     private GameObject canvasMapeoGO;
 
+    // Util para que otros scripts (CrossPC_KinectBridge, modo de prueba sin PC A) puedan
+    // esconder esta pantalla de mapeo/debug sin depender de la tecla M.
+    public void OcultarMapeo()
+    {
+        if (canvasMapeoGO != null) canvasMapeoGO.SetActive(false);
+    }
+
     private PoseLibraryData libreria;
     private bool grabando = false;
     private bool actualizandoCombo = false;

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\KinectUDP\CrossPC_KinectBridge.cs" />
+    <Compile Include="Assets\Scripts_Code\SpriteLoopAnimator.cs" />
     <Compile Include="Assets\Scripts_Code\MusicLibraryManager.cs" />
     <Compile Include="Assets\KinectUDP\CalibracionJugador.cs" />
     <Compile Include="Assets\Scripts_Code\BasicTutorialManager.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\Scripts_Code\TurntableDeck.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\Callout.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\XRPokeFollowAffordanceFill.cs" />
+    <Compile Include="Assets\Scripts_Code\ConfettiEffectUI.cs" />
     <Compile Include="Assets\Scripts_Code\ShelfSocketTrigger.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\CalloutGazeController.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Fader.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Assets\Scripts_Code\VR_Boton.cs" />
     <Compile Include="Assets\Scripts_Code\SongCardUI.cs" />
     <Compile Include="Assets\Scripts_Code\TutorialManager.cs" />
+    <Compile Include="Assets\Scripts_Code\FondoAnimadoUI.cs" />
     <Compile Include="Assets\Scripts_Code\VoiceEffectSelector.cs" />
     <Compile Include="Assets\KinectUDP\KinectSourceProvider.cs" />
     <Compile Include="Assets\Scripts_Code\ShelfManager.cs" />

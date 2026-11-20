@@ -609,6 +609,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &46412786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,6 +2281,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0.10980393, g: 0.882353, b: 0.07450981, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &258303616
 GameObject:
   m_ObjectHideFlags: 0
@@ -3136,6 +3138,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &332164464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4135,6 +4138,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &495990240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5370,6 +5374,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &579347388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5789,6 +5794,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &627378575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6471,6 +6477,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &705770451
 GameObject:
   m_ObjectHideFlags: 0
@@ -6510,6 +6517,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &705770453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6713,6 +6721,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &744078496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8892,6 +8901,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &894467002
 GameObject:
   m_ObjectHideFlags: 0
@@ -9096,6 +9106,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &944427182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10872,6 +10883,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &1136888886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12240,6 +12252,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &1245578756
 GameObject:
   m_ObjectHideFlags: 0
@@ -13500,6 +13513,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0.10980393, g: 0.7686275, b: 0.1254902, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &1377296553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13908,28 +13922,9 @@ MonoBehaviour:
   redundantSends: 3
   requireWindowOpenForVoiceSelection: 0
   poseIdentifier: {fileID: 0}
-  segundosParaHacerGesto: 3
-  mapeoControlAPose:
-  - control: 0
-    nombrePose: BrazosArriba
-  - control: 3
-    nombrePose: DerechaArriba
-  - control: 7
-    nombrePose: IzquierdaArriba
-  - control: 8
-    nombrePose: DerechaArriba
-  - control: 9
-    nombrePose: IzquierdaArriba
-  - control: 1
-    nombrePose: DerechaArriba
-  - control: 2
-    nombrePose: IzquierdaArriba
-  - control: 4
-    nombrePose: DerechaArriba
-  - control: 5
-    nombrePose: IzquierdaArriba
-  - control: 6
-    nombrePose: BrazosArriba
+  permitirModoPrueba: 1
+  teclaSimularPipeline: 30
+
 --- !u!4 &1387308043
 Transform:
   m_ObjectHideFlags: 0
@@ -14847,6 +14842,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!4 &1491314046
 Transform:
   m_ObjectHideFlags: 0
@@ -15248,6 +15244,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &1524404025
 GameObject:
   m_ObjectHideFlags: 0
@@ -18105,6 +18102,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &1687873779
 GameObject:
   m_ObjectHideFlags: 0
@@ -19931,6 +19929,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &1867632910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21508,6 +21507,7 @@ MonoBehaviour:
   inColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &2094523340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21650,6 +21650,7 @@ GameObject:
   - component: {fileID: 2107610385}
   - component: {fileID: 2107610390}
   - component: {fileID: 2107610391}
+  - component: {fileID: 2107610392}
   m_Layer: 0
   m_Name: KinectManager_UDP
   m_TagString: Untagged
@@ -21900,6 +21901,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onBothHandsLowered:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2107610392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107610384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df382a94e888f9645aec64a287c0fb64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceProvider: {fileID: 2107610387}
+  toleranciaDesviaciones: 2.5
+  intervaloSegundos: 0.3
+  onPoseReconocida:
+    m_PersistentCalls:
+      m_Calls: []
+  onNingunaPoseReconocida:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2112029340
@@ -25590,6 +25612,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!1 &6699340996097354328
 GameObject:
   m_ObjectHideFlags: 0
@@ -25695,6 +25718,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!114 &6994458581951215841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26802,6 +26826,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!65 &8123867185968600504
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27353,6 +27378,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!65 &8277052046720047383
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28875,6 +28901,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   offColor: {r: 1, g: 1, b: 1, a: 1}
   resaltadoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pipelineTarget: 0
 --- !u!65 &9179073996795854088
 BoxCollider:
   m_ObjectHideFlags: 0
