@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class VR_Boton : MonoBehaviour, IResaltable
@@ -14,41 +15,70 @@ public class VR_Boton : MonoBehaviour, IResaltable
 
     [Header("Configuración de Colores")]
     public Renderer targetRenderer;
-    public Color offColor = Color.white;
-    public Color inColor = Color.yellow;   // Punto A marcado
-    public Color activeColor = Color.green; // Loop Activo (Punto B)
+    public Color offColor = new Color(0.12f, 0.12f, 0.12f, 1f);
+    public Color inColor = Color.yellow;
+    public Color activeColor = Color.green;
 
     [Header("Resaltado del Pipeline (Jugador A)")]
-    [Tooltip("Color con el que se ilumina este boton cuando el pipeline le pide al jugador que lo use.")]
-    public Color resaltadoColor = Color.yellow;
-
-    private Vector3 unpressedPos;
-    private Vector3 pressedPos;
-    private bool isToggled = false;
-    private Material buttonMaterial;
+    public Color avisoColor = new Color(1f, 0.08f, 0.08f, 1f);
+    public Color resaltadoColor = new Color(0f, 1f, 0.2f, 1f);
 
     [Header("Pipeline Target")]
     public DJControlTarget pipelineTarget = DJControlTarget.None;
 
-    void Awake()
+    private Vector3 unpressedPos;
+    private Vector3 pressedPos;
+    private bool isToggled = false;
+    private Coroutine flashRoutine;
+
+    private void Awake()
     {
         if (buttonMesh == null) buttonMesh = transform;
         unpressedPos = buttonMesh.localPosition;
-        CalculatePressedPosition();
 
         if (targetRenderer == null) targetRenderer = GetComponentInChildren<Renderer>();
-        if (targetRenderer != null)
+
+        // Fuerza colores consistentes de reposo y aviso
+        offColor = new Color(0.12f, 0.12f, 0.12f, 1f);
+        avisoColor = new Color(1f, 0.08f, 0.08f, 1f);
+        resaltadoColor = new Color(0f, 1f, 0.2f, 1f);
+
+        // Si se dejó en None en el Inspector, deduce el control por el nombre del botón y su canal
+        if (pipelineTarget == DJControlTarget.None)
         {
-            buttonMaterial = targetRenderer.material; // Instancia local del material
+            string n = gameObject.name.ToLower();
+            string parentName = transform.parent != null ? transform.parent.name.ToLower() : "";
+            string chTag = (n.Contains("ch2") || n.Contains("2") || parentName.Contains("ch2")) ? "2" : "1";
+
+            string keyword = "";
+            if (n.Contains("play")) keyword = "play";
+            else if (n.Contains("cue")) keyword = "cue";
+            else if (n.Contains("loop")) keyword = "loop";
+            else if (n.Contains("reset") || n.Contains("reinicio") || n.Contains("tempo")) keyword = "reset";
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                foreach (DJControlTarget val in System.Enum.GetValues(typeof(DJControlTarget)))
+                {
+                    string enumName = val.ToString().ToLower();
+                    if (enumName.Contains(keyword) && enumName.Contains(chTag))
+                    {
+                        pipelineTarget = val;
+                        break;
+                    }
+                }
+            }
         }
+
+        SetButtonColor(offColor);
     }
 
-    void Start()
+    private void Start()
     {
         ForceUnpress();
     }
 
-    void CalculatePressedPosition()
+    private void CalculatePressedPosition()
     {
         Vector3 direction = Vector3.zero;
 
@@ -84,17 +114,12 @@ public class VR_Boton : MonoBehaviour, IResaltable
             }
         }
 
+        // Notifica una sola vez al evaluador del pipeline
         if (DJPipelineEvaluator.Instance != null && pipelineTarget != DJControlTarget.None)
         {
-            // Para botones Momentary o Toggle envía 1.0 (Nivel 10) al presionar
-            float val = (type == ButtonType.Toggle) ? (isToggled ? 1f : 0f) : 1f;
-            // Si es un botón tipo Toggle (como Loop), reportamos 1f siempre que se acciona para validar el toque
-            if (type == ButtonType.Toggle) val = 1f;
-
-            DJPipelineEvaluator.Instance.SubmitInput(pipelineTarget, val);
+            DJPipelineEvaluator.Instance.SubmitInput(pipelineTarget, 1f);
         }
 
-        // --- CONEXIÓN CON EL TUTORIAL BÁSICO ---
         if (BasicTutorialManager.Instance != null)
         {
             if (gameObject.name.Contains("Play")) BasicTutorialManager.Instance.OnPlayPressed();
@@ -126,19 +151,14 @@ public class VR_Boton : MonoBehaviour, IResaltable
     {
         if (targetRenderer != null)
         {
-            // Obtenemos los materiales instanciados
             Material[] mats = targetRenderer.materials;
-
             bool colorApplied = false;
 
-            // 1. Busca específicamente el material del aro por nombre ("Color_Sync")
             for (int i = 0; i < mats.Length; i++)
             {
                 if (mats[i].name.Contains("Color_Sync") || mats[i].name.Contains("Sync"))
                 {
                     mats[i].color = newColor;
-
-                    // Si usa Shader URP/Lit con emisión, actualiza la propiedad de brillo
                     if (mats[i].HasProperty("_EmissionColor"))
                     {
                         mats[i].SetColor("_EmissionColor", newColor);
@@ -148,7 +168,6 @@ public class VR_Boton : MonoBehaviour, IResaltable
                 }
             }
 
-            // 2. Si no lo encuentra por nombre, modifica el Element 0 por defecto
             if (!colorApplied && mats.Length > 0)
             {
                 mats[0].color = newColor;
@@ -158,16 +177,34 @@ public class VR_Boton : MonoBehaviour, IResaltable
                 }
             }
 
-            // Reasignamos los materiales actualizados al Mesh Renderer
             targetRenderer.materials = mats;
         }
     }
 
-    // Implementacion de IResaltable: encendido/apagado pedido por DJPipelineEvaluator
-    // cuando se acerca (o termina) el nodo del chart que corresponde a este boton.
     public void SetResaltado(bool activo)
     {
-        SetButtonColor(activo ? resaltadoColor : offColor);
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        SetButtonColor(activo ? avisoColor : offColor);
+    }
+
+    public void SetProximidadColor(float cercania)
+    {
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        SetButtonColor(avisoColor);
+    }
+
+    public void FlashSuccess()
+    {
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        flashRoutine = StartCoroutine(FlashSuccessRoutine());
+    }
+
+    private IEnumerator FlashSuccessRoutine()
+    {
+        SetButtonColor(resaltadoColor);
+        yield return new WaitForSeconds(0.25f);
+        SetButtonColor(offColor);
+        flashRoutine = null;
     }
 
     public bool IsToggled => isToggled;

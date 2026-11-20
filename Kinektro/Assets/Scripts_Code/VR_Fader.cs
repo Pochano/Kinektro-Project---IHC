@@ -32,11 +32,9 @@ public class VR_Fader : MonoBehaviour, IResaltable
     public FaderValueChangedEvent OnValueChanged;
 
     [Header("Resaltado del Pipeline (Jugador A)")]
-    [Tooltip("Renderer con el material a teñir para resaltar este fader. Si se deja vacio, se busca automaticamente en los hijos.")]
     public Renderer targetRenderer;
     public Color offColor = Color.white;
-    [Tooltip("Color con el que se ilumina este fader cuando el pipeline le pide al jugador que lo use.")]
-    public Color resaltadoColor = Color.yellow;
+    public Color resaltadoColor = new Color(0f, 1f, 0.2f, 1f);
 
     [Header("Pipeline Target")]
     public DJControlTarget pipelineTarget = DJControlTarget.None;
@@ -44,18 +42,21 @@ public class VR_Fader : MonoBehaviour, IResaltable
     private Vector3 initialLocalPos;
     private Transform originalParent;
     private float currentOffset;
-    private bool isResetting = false; // Bloquea tirones del LateUpdate al resetear
+    private bool isResetting = false;
 
     void Awake()
     {
         if (faderMesh == null) faderMesh = transform;
         initialLocalPos = faderMesh.localPosition;
         originalParent = transform.parent;
-
-        // En el inicio, el offset relativo es 0 (posición neutral/central)
         currentOffset = 0f;
 
         if (targetRenderer == null) targetRenderer = GetComponentInChildren<Renderer>();
+
+        // Color oscuro original de reposo
+        offColor = new Color(0.12f, 0.12f, 0.12f, 1f);
+        resaltadoColor = new Color(0f, 1f, 0.2f, 1f);
+        SetFaderColor(offColor);
     }
 
     void LateUpdate()
@@ -65,7 +66,6 @@ public class VR_Fader : MonoBehaviour, IResaltable
             transform.SetParent(originalParent, true);
         }
 
-        // Si se acaba de resetear, forzamos la posición centrada inicial y saltamos este frame
         if (isResetting)
         {
             ApplyOffsetToMesh(currentOffset);
@@ -126,32 +126,44 @@ public class VR_Fader : MonoBehaviour, IResaltable
         }
     }
 
-    /// <summary>
-    /// Regresa el fader exactamente a su posición inicial en la escena (centro 0.5)
-    /// </summary>
     public void ResetFaderToDefault()
     {
         currentValue = 0.5f;
-
-        // Vuelve a la posición local original del Start (offset 0)
         currentOffset = 0f;
-
-        // Aplica directamente la posición a la malla
         ApplyOffsetToMesh(currentOffset);
-
-        // Activa la bandera para evitar interferencia en este fotograma
         isResetting = true;
-
         OnValueChanged?.Invoke(currentValue);
-
         Debug.Log($"[VR_Fader] Reseteado al centro exacto original ({currentValue}).");
     }
 
-    // Implementacion de IResaltable: encendido/apagado pedido por DJPipelineEvaluator
-    // cuando se acerca (o termina) el nodo del chart que corresponde a este fader.
+    private Coroutine flashRoutine;
+
     public void SetResaltado(bool activo)
     {
-        SetFaderColor(activo ? resaltadoColor : offColor);
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        SetFaderColor(offColor);
+    }
+    public void SetProximidadColor(float cercania)
+    {
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        // Exponente 2.5f: mantiene el rojo en la mayor parte del recorrido y transiciona a verde solo muy cerca del objetivo
+        float factor = Mathf.Pow(Mathf.Clamp01(cercania), 2.5f);
+        Color colorLejos = new Color(1f, 0.08f, 0.08f, 1f);
+        SetFaderColor(Color.Lerp(colorLejos, resaltadoColor, factor));
+    }
+
+    public void FlashSuccess()
+    {
+        if (flashRoutine != null) StopCoroutine(flashRoutine);
+        flashRoutine = StartCoroutine(FlashGreenRoutine());
+    }
+
+    private System.Collections.IEnumerator FlashGreenRoutine()
+    {
+        SetFaderColor(resaltadoColor);
+        yield return new WaitForSeconds(0.45f);
+        SetFaderColor(offColor);
+        flashRoutine = null;
     }
 
     private void SetFaderColor(Color newColor)

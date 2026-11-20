@@ -23,6 +23,7 @@ public class DJPipelineEvaluator : MonoBehaviour
         [Tooltip("Arrastra aca el VR_Boton, VR_Fader o VR_Knob_Joystick correspondiente a este control.")]
         public MonoBehaviour objetoControl;
     }
+
     [Header("Resaltado de controles fisicos (Jugador A)")]
     [Tooltip("Por cada control del chart, el objeto fisico (boton/fader/knob) que hay que iluminar cuando se acerca su turno.")]
     public List<MapeoControlObjeto> mapeoControlAObjeto = new List<MapeoControlObjeto>();
@@ -32,9 +33,6 @@ public class DJPipelineEvaluator : MonoBehaviour
     [Header("UI de Cuenta Regresiva (Opcional)")]
     public TextMeshProUGUI countdownText;
 
-    // Texto de score/combo siempre visible (arriba a la izquierda). No es [Header]
-    // publico a proposito: se arma solo por codigo en Awake(), no hace falta asignarlo
-    // a mano en el Inspector.
     private TextMeshProUGUI scoreComboText;
 
     [Header("Puntuación")]
@@ -60,10 +58,6 @@ public class DJPipelineEvaluator : MonoBehaviour
         ActualizarScoreComboUI();
     }
 
-    // Si no se asigno "countdownText" a mano en el Inspector, armamos por codigo un
-    // Canvas minimo con la cuenta regresiva (centro, grande) y un marcador de
-    // Score/Combo siempre visible (arriba a la izquierda) - asi se ve algo real en
-    // pantalla al probar, sin depender de que alguien lo cablee manualmente.
     private void ConstruirUIBasica()
     {
         var canvasGO = new GameObject("Pipeline_HUD_Canvas");
@@ -113,18 +107,12 @@ public class DJPipelineEvaluator : MonoBehaviour
         scoreComboText.color = Color.white;
     }
 
-    // Refleja currentScore/currentCombo en el texto de arriba a la izquierda. Se llama
-    // cada vez que cualquiera de los dos cambia (HIT, MISS, y al arrancar).
     private void ActualizarScoreComboUI()
     {
         if (scoreComboText != null)
             scoreComboText.text = $"Score: {currentScore}\nCombo: {currentCombo}";
     }
 
-    // Permite arrancar el pipeline a mano desde el Inspector (click derecho sobre el
-    // componente en Play Mode > "TEST: Iniciar Pipeline"), sin necesidad del casco ni
-    // de apretar el boton StartPipeline fisicamente - util para probar el envio de
-    // datos a la PC B sin hardware VR a mano.
     [ContextMenu("TEST: Iniciar Pipeline (StartCountdown)")]
     public void StartCountdown()
     {
@@ -161,9 +149,6 @@ public class DJPipelineEvaluator : MonoBehaviour
         if (countdownText != null) countdownText.gameObject.SetActive(false);
     }
 
-    // Busca, entre los objetos mapeados en el Inspector, el que corresponde a un
-    // DJControlTarget dado, y lo devuelve como IResaltable (sea VR_Boton, VR_Fader o
-    // VR_Knob_Joystick - no nos importa cual, solo que sepa prenderse/apagarse).
     private IResaltable BuscarResaltable(DJControlTarget control)
     {
         foreach (var mapeo in mapeoControlAObjeto)
@@ -196,10 +181,6 @@ public class DJPipelineEvaluator : MonoBehaviour
         OnPipelineStarted?.Invoke();
     }
 
-    // Llamado desde CrossPC_OculusBridge cuando detecta que la PC B se desconecto a mitad
-    // de una corrida: no tiene sentido seguir evaluando nodos si no hay nadie del otro lado
-    // haciendo gestos. La musica/consola de esta PC A NO se ve afectada - esto solo corta
-    // el minijuego de puntaje. Cuando la PC B vuelva hay que presionar Play de nuevo a mano.
     public void AbortarPipeline()
     {
         if (!isRunning) return;
@@ -210,6 +191,7 @@ public class DJPipelineEvaluator : MonoBehaviour
         {
             foreach (var node in activeChart.nodes)
             {
+                node.resaltadoActivado = false;
                 BuscarResaltable(node.targetControl)?.SetResaltado(false);
             }
         }
@@ -219,12 +201,6 @@ public class DJPipelineEvaluator : MonoBehaviour
 
     private void Update()
     {
-        // Atajos de teclado para poder probar el pipeline sin VR/Kinect a mano - pensados
-        // para el build standalone de demostracion, donde no hay Inspector para el menu
-        // contextual de prueba (eso solo existe dentro del Editor): P arranca el pipeline
-        // (igual que el boton fisico StartPipeline), H fuerza un HIT en el proximo nodo
-        // pendiente del chart (sin validar tiempo/nivel), asi se puede mostrar un
-        // PIPELINE_HIT real viajando entre los dos procesos sin tocar nada de VR.
         if (Keyboard.current != null)
         {
             if (Keyboard.current.pKey.wasPressedThisFrame) StartCountdown();
@@ -246,13 +222,12 @@ public class DJPipelineEvaluator : MonoBehaviour
         {
             PipelineNode node = activeChart.nodes[i];
 
-            if (!node.isEvaluated && !node.resaltadoActivado && songTimer >= (node.targetTime - anticipacionResaltado))
+            if (!node.isEvaluated && songTimer >= (node.targetTime - anticipacionResaltado))
             {
                 node.resaltadoActivado = true;
-                BuscarResaltable(node.targetControl)?.SetResaltado(true);
+                ActualizarColorPorValorActual(node);
             }
 
-            // Miss ocurre exactamente cuando la nota termina de cruzar el borde izquierdo (targetTime + timeWindow)
             if (!node.isEvaluated && songTimer > (node.targetTime + node.timeWindow))
             {
                 node.isEvaluated = true;
@@ -263,8 +238,6 @@ public class DJPipelineEvaluator : MonoBehaviour
         CheckChartFinished();
     }
 
-    // Si ya no queda ningun nodo sin evaluar, el chart termino: avisamos a la PC B
-    // (PIPELINE_WINDOW_CLOSE) y dejamos de correr el cronometro.
     private void CheckChartFinished()
     {
         if (!isRunning || activeChart == null) return;
@@ -285,6 +258,12 @@ public class DJPipelineEvaluator : MonoBehaviour
 
         int playerLevel = Mathf.RoundToInt(Mathf.Clamp01(rawNormalizedValue) * 9f) + 1;
 
+        string controlName = control.ToString();
+        bool isButton = controlName.StartsWith("Play_") ||
+                        controlName.StartsWith("Cue_") ||
+                        controlName.StartsWith("Loop_") ||
+                        controlName.StartsWith("Reset");
+
         for (int i = 0; i < activeChart.nodes.Count; i++)
         {
             PipelineNode node = activeChart.nodes[i];
@@ -293,9 +272,15 @@ public class DJPipelineEvaluator : MonoBehaviour
 
             if (node.targetControl == control)
             {
-                // Ventana activa mientras la nota está cruzando LaneHitZone (desde borde derecho hasta borde izquierdo)
+                if (!isButton && songTimer >= (node.targetTime - anticipacionResaltado) && songTimer <= (node.targetTime + node.timeWindow))
+                {
+                    float distancia = Mathf.Abs(playerLevel - node.targetLevel);
+                    float cercania = 1f - Mathf.Clamp01(distancia / 9f);
+                    BuscarResaltable(control)?.SetProximidadColor(cercania);
+                }
+
                 bool timeValid = songTimer >= (node.targetTime - 0.15f) && songTimer <= (node.targetTime + node.timeWindow);
-                bool levelValid = Mathf.Abs(playerLevel - node.targetLevel) <= node.levelTolerance;
+                bool levelValid = isButton || (Mathf.Abs(playerLevel - node.targetLevel) <= node.levelTolerance);
 
                 if (timeValid && levelValid)
                 {
@@ -307,8 +292,6 @@ public class DJPipelineEvaluator : MonoBehaviour
         }
     }
 
-    // Solo para pruebas sin hardware: marca el proximo nodo sin evaluar como HIT
-    // directamente, salteando los chequeos de tiempo/nivel que usa SubmitInput.
     private void ForzarHitDeProximoNodo()
     {
         if (activeChart == null) return;
@@ -324,13 +307,52 @@ public class DJPipelineEvaluator : MonoBehaviour
         }
     }
 
+    private void ActualizarColorPorValorActual(PipelineNode node)
+    {
+        MonoBehaviour ctrlObj = null;
+        foreach (var mapeo in mapeoControlAObjeto)
+        {
+            if (mapeo.control == node.targetControl)
+            {
+                ctrlObj = mapeo.objetoControl;
+                break;
+            }
+        }
+        if (ctrlObj == null) return;
+
+        float normVal = -1f;
+        if (ctrlObj is VR_Knob_Joystick knob) normVal = knob.CurrentNormalizedValue;
+        else if (ctrlObj is VR_Fader fader) normVal = fader.currentValue;
+
+        if (normVal >= 0f && ctrlObj is IResaltable resaltable)
+        {
+            int currentLevel = Mathf.RoundToInt(Mathf.Clamp01(normVal) * 9f) + 1;
+            float distancia = Mathf.Abs(currentLevel - node.targetLevel);
+            float cercania = 1f - Mathf.Clamp01(distancia / 9f);
+            resaltable.SetProximidadColor(cercania);
+        }
+        else if (ctrlObj is IResaltable btnResaltable)
+        {
+            btnResaltable.SetResaltado(true);
+        }
+    }
+
     private void OnNodeHit(PipelineNode node, int levelReached)
     {
         currentCombo++;
         currentScore += 100 * currentCombo;
         Debug.Log($"<color=green>[HIT!]</color> Control: {node.targetControl} | Nivel Objetivo: {node.targetLevel} | Alcanzado: {levelReached} | Combo: {currentCombo}");
         bridge?.SendPipelineHit(node.targetControl.ToString(), currentCombo);
-        BuscarResaltable(node.targetControl)?.SetResaltado(false);
+
+        foreach (var mapeo in mapeoControlAObjeto)
+        {
+            if (mapeo.control == node.targetControl && mapeo.objetoControl != null)
+            {
+                mapeo.objetoControl.SendMessage("FlashSuccess", SendMessageOptions.DontRequireReceiver);
+                break;
+            }
+        }
+
         ActualizarScoreComboUI();
         OnNodeHitEvent?.Invoke(node, levelReached);
     }
