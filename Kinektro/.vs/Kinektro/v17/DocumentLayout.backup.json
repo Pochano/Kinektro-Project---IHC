@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts_Code\\VR_Boton.cs",
               "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Boton.cs",
               "RelativeToolTip": "Assets\\Scripts_Code\\VR_Boton.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAE0AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAE0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-11-06T17:55:30.273Z",
               "EditorCaption": ""
@@ -59,8 +59,7 @@
               "RelativeToolTip": "Assets\\Scripts_Code\\VR_Knob_Joystick.cs",
               "ViewState": "AgIAAGMAAAAAAAAAAAAAAHEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:54:48.675Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-06T17:54:48.675Z"
             },
             {
               "$type": "Document",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "Assets\\Scripts_Code\\VR_Fader.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAAAFcAAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:51:48.306Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-06T17:51:48.306Z"
             },
             {
               "$type": "Document",
@@ -85,8 +83,7 @@
               "RelativeToolTip": "Assets\\Scripts_Code\\DJPipelineEvaluator.cs",
               "ViewState": "AgIAAIAAAAAAAAAAAAAAwJEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:46:35.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-06T17:46:35.066Z"
             },
             {
               "$type": "Document",
@@ -98,8 +95,7 @@
               "RelativeToolTip": "Assets\\Scripts_Code\\DJPipelineChart.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAAwC4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:45:53.616Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-06T17:45:53.616Z"
             }
           ]
         }

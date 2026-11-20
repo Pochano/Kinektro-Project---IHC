@@ -15,20 +15,23 @@ MonoBehaviour:
   trackName: 
   nodes:
   - targetTime: 3
-    targetControl: 0
-    targetLevel: 8
+    targetControl: 3
+    targetLevel: 7
     levelTolerance: 1
-    timeWindow: 2
+    timeWindow: 5
+    isSpawned: 1
     isEvaluated: 1
   - targetTime: 13
-    targetControl: 3
-    targetLevel: 3
+    targetControl: 4
+    targetLevel: 8
     levelTolerance: 1
     timeWindow: 3
+    isSpawned: 1
     isEvaluated: 1
   - targetTime: 20
-    targetControl: 7
-    targetLevel: 10
-    levelTolerance: 0
+    targetControl: 6
+    targetLevel: 1
+    levelTolerance: 1
     timeWindow: 4
+    isSpawned: 1
     isEvaluated: 1

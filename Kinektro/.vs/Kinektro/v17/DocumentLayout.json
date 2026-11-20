@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Boton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\VR_Boton.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\PipelineLaneNoteUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\PipelineLaneNoteUI.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineVisualSpawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\DJPipelineVisualSpawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineEvaluator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\DJPipelineEvaluator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJControlVisualConfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\DJControlVisualConfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineChart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\DJPipelineChart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Fader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\VR_Fader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Knob_Joystick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts_Code\\VR_Knob_Joystick.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,64 +38,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "VR_Boton.cs",
-              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Boton.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\VR_Boton.cs",
-              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Boton.cs",
-              "RelativeToolTip": "Assets\\Scripts_Code\\VR_Boton.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAE0AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:55:30.273Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "VR_Knob_Joystick.cs",
-              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Knob_Joystick.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\VR_Knob_Joystick.cs",
-              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Knob_Joystick.cs",
-              "RelativeToolTip": "Assets\\Scripts_Code\\VR_Knob_Joystick.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAAAHEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:54:48.675Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "VR_Fader.cs",
-              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Fader.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\VR_Fader.cs",
-              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\VR_Fader.cs",
-              "RelativeToolTip": "Assets\\Scripts_Code\\VR_Fader.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAFcAAABlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:51:48.306Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "DJPipelineEvaluator.cs",
               "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineEvaluator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts_Code\\DJPipelineEvaluator.cs",
               "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineEvaluator.cs",
               "RelativeToolTip": "Assets\\Scripts_Code\\DJPipelineEvaluator.cs",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAAwJEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAkwJ8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:46:35.066Z"
+              "WhenOpened": "2026-11-16T19:25:50.61Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "DJPipelineVisualSpawner.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineVisualSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\DJPipelineVisualSpawner.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineVisualSpawner.cs",
+              "RelativeToolTip": "Assets\\Scripts_Code\\DJPipelineVisualSpawner.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAkwGIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T18:04:31.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "DJPipelineChart.cs",
               "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineChart.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts_Code\\DJPipelineChart.cs",
               "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJPipelineChart.cs",
               "RelativeToolTip": "Assets\\Scripts_Code\\DJPipelineChart.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAwC4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAkwDIAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-06T17:45:53.616Z"
+              "WhenOpened": "2026-11-16T18:04:12.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PipelineLaneNoteUI.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\PipelineLaneNoteUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\PipelineLaneNoteUI.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\PipelineLaneNoteUI.cs",
+              "RelativeToolTip": "Assets\\Scripts_Code\\PipelineLaneNoteUI.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAkwGMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T18:01:46.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DJControlVisualConfig.cs",
+              "DocumentMoniker": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJControlVisualConfig.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts_Code\\DJControlVisualConfig.cs",
+              "ToolTip": "C:\\Users\\Pochano\\Desktop\\Kinektro\\Kinektro\\Assets\\Scripts_Code\\DJControlVisualConfig.cs",
+              "RelativeToolTip": "Assets\\Scripts_Code\\DJControlVisualConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T18:01:16.609Z",
+              "EditorCaption": ""
             }
           ]
         }
