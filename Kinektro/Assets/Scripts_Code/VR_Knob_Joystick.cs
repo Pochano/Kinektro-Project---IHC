@@ -112,14 +112,13 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
         RotateMesh(value);
         ApplyValueToDJManager(value);
 
-        if (DJPipelineEvaluator.Instance != null && channelNumber == 1)
+        if (DJPipelineEvaluator.Instance != null)
         {
-            if (knobType == KnobType.EQLow)
-                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.EqLow_Ch1, value);
-            else if (knobType == KnobType.EQMid)
-                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.EqMid_Ch1, value);
-            else if (knobType == KnobType.EQHigh)
-                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.EqHigh_Ch1, value);
+            DJControlTarget target = GetPipelineTarget();
+            if (target != DJControlTarget.None)
+            {
+                DJPipelineEvaluator.Instance.SubmitInput(target, value);
+            }
         }
 
         // --- NOTIFICACIÓN A ESCENA 2 (TUTORIAL BÁSICO) ---
@@ -209,5 +208,30 @@ public class VR_Knob_Joystick : MonoBehaviour, IResaltable
         }
 
         targetRenderer.materials = mats;
+    }
+
+    private DJControlTarget GetPipelineTarget()
+    {
+        if (channelNumber == 1)
+        {
+            switch (knobType)
+            {
+                case KnobType.Gain: return DJControlTarget.Gain_Ch1;
+                case KnobType.EQLow: return DJControlTarget.EqLow_Ch1;
+                case KnobType.EQMid: return DJControlTarget.EqMid_Ch1;
+                case KnobType.EQHigh: return DJControlTarget.EqHigh_Ch1;
+            }
+        }
+        else if (channelNumber == 2)
+        {
+            switch (knobType)
+            {
+                case KnobType.Gain: return DJControlTarget.Gain_Ch2;
+                case KnobType.EQLow: return DJControlTarget.EqLow_Ch2;
+                case KnobType.EQMid: return DJControlTarget.EqMid_Ch2;
+                case KnobType.EQHigh: return DJControlTarget.EqHigh_Ch2;
+            }
+        }
+        return DJControlTarget.None;
     }
 }

@@ -38,6 +38,9 @@ public class VR_Fader : MonoBehaviour, IResaltable
     [Tooltip("Color con el que se ilumina este fader cuando el pipeline le pide al jugador que lo use.")]
     public Color resaltadoColor = Color.yellow;
 
+    [Header("Pipeline Target")]
+    public DJControlTarget pipelineTarget = DJControlTarget.None;
+
     private Vector3 initialLocalPos;
     private Transform originalParent;
     private float currentOffset;
@@ -91,12 +94,10 @@ public class VR_Fader : MonoBehaviour, IResaltable
             currentValue = calculatedValue;
             OnValueChanged?.Invoke(currentValue);
 
-            if (DJPipelineEvaluator.Instance != null)
+            if (DJPipelineEvaluator.Instance != null && pipelineTarget != DJControlTarget.None)
             {
-                // Puedes pasarle el enum identificador correspondiente al fader
-                DJPipelineEvaluator.Instance.SubmitInput(DJControlTarget.VolFader_Ch1, currentValue);
+                DJPipelineEvaluator.Instance.SubmitInput(pipelineTarget, currentValue);
             }
-
         }
 
         if (TutorialManager.Instance != null)

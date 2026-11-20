@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -40,8 +41,15 @@ public class DJPipelineEvaluator : MonoBehaviour
     public int currentScore = 0;
     public int currentCombo = 0;
 
+    public event Action OnPipelineStarted;
+    public event Action<PipelineNode, int> OnNodeHitEvent;
+    public event Action<PipelineNode> OnNodeMissedEvent;
+
+    public float CurrentSongTime => songTimer;
+    public bool IsRunning => isRunning;
+
     private float songTimer = 0f;
-    private int lastPrintedSecond = -1; // <--- VARIABLE NUEVA PARA RASTREAR EL SEGUNDO
+    private int lastPrintedSecond = -1;
     private bool isRunning = false;
     private bool isCountingDown = false;
 
@@ -168,13 +176,16 @@ public class DJPipelineEvaluator : MonoBehaviour
     public void StartPipeline()
     {
         songTimer = 0f;
-        lastPrintedSecond = -1; // Reiniciar contador de segundos
+        lastPrintedSecond = -1;
+        currentScore = 0;
+        currentCombo = 0;
         isRunning = true;
 
         if (activeChart != null)
         {
             foreach (var node in activeChart.nodes)
             {
+                node.isSpawned = false;
                 node.isEvaluated = false;
                 node.resaltadoActivado = false;
                 BuscarResaltable(node.targetControl)?.SetResaltado(false);
@@ -182,13 +193,13 @@ public class DJPipelineEvaluator : MonoBehaviour
         }
 
         ActualizarScoreComboUI();
+        OnPipelineStarted?.Invoke();
     }
 
     // Llamado desde CrossPC_OculusBridge cuando detecta que la PC B se desconecto a mitad
     // de una corrida: no tiene sentido seguir evaluando nodos si no hay nadie del otro lado
     // haciendo gestos. La musica/consola de esta PC A NO se ve afectada - esto solo corta
-    // el minijuego de puntaje. No resetea currentScore/currentCombo (igual que StartPipeline
-    // no los resetea), y cuando la PC B vuelva hay que presionar Play de nuevo a mano.
+    // el minijuego de puntaje. Cuando la PC B vuelva hay que presionar Play de nuevo a mano.
     public void AbortarPipeline()
     {
         if (!isRunning) return;
@@ -224,7 +235,6 @@ public class DJPipelineEvaluator : MonoBehaviour
 
         songTimer += Time.deltaTime;
 
-        // --- IMPRIMIR CADA SEGUNDO EN LA CONSOLA ---
         int currentSecond = Mathf.FloorToInt(songTimer);
         if (currentSecond > lastPrintedSecond)
         {
@@ -232,7 +242,6 @@ public class DJPipelineEvaluator : MonoBehaviour
             Debug.Log($"<color=cyan>[TIEMPO] {lastPrintedSecond}s</color>");
         }
 
-        // Evaluar nodos expirados (MISS)
         for (int i = 0; i < activeChart.nodes.Count; i++)
         {
             PipelineNode node = activeChart.nodes[i];
@@ -243,6 +252,7 @@ public class DJPipelineEvaluator : MonoBehaviour
                 BuscarResaltable(node.targetControl)?.SetResaltado(true);
             }
 
+            // Miss ocurre exactamente cuando la nota termina de cruzar el borde izquierdo (targetTime + timeWindow)
             if (!node.isEvaluated && songTimer > (node.targetTime + node.timeWindow))
             {
                 node.isEvaluated = true;
@@ -271,7 +281,7 @@ public class DJPipelineEvaluator : MonoBehaviour
 
     public void SubmitInput(DJControlTarget control, float rawNormalizedValue)
     {
-        if (!isRunning || activeChart == null) return;
+        if (!isRunning || activeChart == null || control == DJControlTarget.None) return;
 
         int playerLevel = Mathf.RoundToInt(Mathf.Clamp01(rawNormalizedValue) * 9f) + 1;
 
@@ -283,7 +293,8 @@ public class DJPipelineEvaluator : MonoBehaviour
 
             if (node.targetControl == control)
             {
-                bool timeValid = Mathf.Abs(songTimer - node.targetTime) <= node.timeWindow;
+                // Ventana activa mientras la nota está cruzando LaneHitZone (desde borde derecho hasta borde izquierdo)
+                bool timeValid = songTimer >= (node.targetTime - 0.15f) && songTimer <= (node.targetTime + node.timeWindow);
                 bool levelValid = Mathf.Abs(playerLevel - node.targetLevel) <= node.levelTolerance;
 
                 if (timeValid && levelValid)
@@ -321,6 +332,7 @@ public class DJPipelineEvaluator : MonoBehaviour
         bridge?.SendPipelineHit(node.targetControl.ToString(), currentCombo);
         BuscarResaltable(node.targetControl)?.SetResaltado(false);
         ActualizarScoreComboUI();
+        OnNodeHitEvent?.Invoke(node, levelReached);
     }
 
     private void OnNodeMissed(PipelineNode node)
@@ -329,5 +341,6 @@ public class DJPipelineEvaluator : MonoBehaviour
         Debug.Log($"<color=red>[MISS!]</color> Tiempo agotado para {node.targetControl} (Nivel pedido: {node.targetLevel})");
         BuscarResaltable(node.targetControl)?.SetResaltado(false);
         ActualizarScoreComboUI();
+        OnNodeMissedEvent?.Invoke(node);
     }
 }

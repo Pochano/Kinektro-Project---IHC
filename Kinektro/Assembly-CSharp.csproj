@@ -77,6 +77,7 @@
     <Compile Include="Assets\VRTemplateAssets\Scripts\BooleanToggleVisualsController.cs" />
     <Compile Include="Assets\Scripts_Code\BotonColorSwap.cs" />
     <Compile Include="Assets\KinectUDP\GestureDetector.cs" />
+    <Compile Include="Assets\Scripts_Code\DJPipelineVisualSpawner.cs" />
     <Compile Include="Assets\KinectUDP\GestureAudioController.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\RayAttachModifier.cs" />
     <Compile Include="Assets\Scripts_Code\DJ_Manager.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\VRTemplateAssets\Scripts\CalloutGazeController.cs" />
     <Compile Include="Assets\Scripts_Code\VR_Fader.cs" />
     <Compile Include="Assets\KinectUDP\JointAngleCalculator.cs" />
+    <Compile Include="Assets\Scripts_Code\DJControlVisualConfig.cs" />
     <Compile Include="Assets\Scripts_Code\DJPipelineChart.cs" />
     <Compile Include="Assets\KinectUDP\MockKinectSource.cs" />
     <Compile Include="Assets\Scripts_Code\VinylData.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Assets\VRTemplateAssets\Scripts\LaunchProjectile.cs" />
     <Compile Include="Assets\Scripts_Code\IResaltable.cs" />
     <Compile Include="Assets\VRTemplateAssets\Scripts\StepManager.cs" />
+    <Compile Include="Assets\Scripts_Code\PipelineLaneNoteUI.cs" />
     <Compile Include="Assets\Scripts_Code\FuserBeatbarUI.cs" />
     <Compile Include="Assets\Scripts_Code\FXIntensityMeter.cs" />
     <Compile Include="Assets\Scripts_Code\DJ_DeckController.cs" />
