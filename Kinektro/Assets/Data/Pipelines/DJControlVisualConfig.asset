@@ -12,4 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d038281558c05ea44ac5592f34102fba, type: 3}
   m_Name: DJControlVisualConfig
   m_EditorClassIdentifier: 
-  entries: []
+  entries:
+  - target: 4
+    displayName: Eq_Low_Ch1
+    icon: {fileID: 21300000, guid: a7ca3b5ad5f218b45aec33ec2c9b8ab8, type: 3}
+    badgeColor: {r: 0.8490566, g: 0.8197992, b: 0.66482735, a: 0}
+  - target: 3
+    displayName: Gain_Ch1
+    icon: {fileID: 21300000, guid: c65615347203f7f4681029f089501585, type: 3}
+    badgeColor: {r: 0.85098046, g: 0.8196079, b: 0.6666667, a: 0}
+  - target: 6
+    displayName: Eq_High_Ch1
+    icon: {fileID: 21300000, guid: 251fda70ed608164f94a6cf1a5645a92, type: 3}
+    badgeColor: {r: 0.85098046, g: 0.8196079, b: 0.6666667, a: 0}
+  - target: 1
+    displayName: Vol_Fader_Ch1
+    icon: {fileID: 21300000, guid: 0e60bec170be93149b79c9ca9a9d8a53, type: 3}
+    badgeColor: {r: 0.85098046, g: 0.8196079, b: 0.6666667, a: 0}
+  - target: 7
+    displayName: Play_Buttom_Ch1
+    icon: {fileID: 21300000, guid: 0bdf56957fe320945b5bd75c2350a0fc, type: 3}
+    badgeColor: {r: 0.85098046, g: 0.8196079, b: 0.6666667, a: 0}
+  - target: 8
+    displayName: Cue_Button_Ch1
+    icon: {fileID: 21300000, guid: c6bfd470a532f5c4abedc69354510cde, type: 3}
+    badgeColor: {r: 0.85098046, g: 0.8196079, b: 0.6666667, a: 0}
+  - target: 9
+    displayName: Loop_Toogle_Ch1
+    icon: {fileID: 21300000, guid: 54e9ae8b73f99c54f8036eec1a9adbc7, type: 3}
+    badgeColor: {r: 0.85098046, g: 0.8196079, b: 0.6666667, a: 0}
